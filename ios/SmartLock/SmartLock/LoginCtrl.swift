@@ -41,12 +41,12 @@ class LoginCtrl: UIViewController, UITextFieldDelegate{
         }
     }
 
-//    @IBAction func unwindFromlogout(unwindSegue: UIStoryboardSegue) {
-//        LocksmithSmartLock.deleteUserPass()
-//        if let _ = unwindSegue.sourceViewController as? Profile {
-//            print("Coming from Profile")
-//        }
-//    }
+    @IBAction func unwindFromlogout(unwindSegue: UIStoryboardSegue) {
+        LocksmithSmartLock.deleteUserPass()
+        if let _ = unwindSegue.sourceViewController as? UserCtrl {
+            print("Coming from UserCtrl")
+        }
+    }
 
     @IBAction func onLogin(sender: AnyObject) {
         if(isViewRegister){

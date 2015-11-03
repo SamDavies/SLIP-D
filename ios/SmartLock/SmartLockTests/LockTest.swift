@@ -31,6 +31,16 @@ class LockTest: XCTestCase {
         LocksmithSmartLock.deleteUserPass()
     }
     
+    func testAddLock() {
+        let versionBuild: String = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
+        Lock.addLock(Int(versionBuild)!, name: "sam").then {
+            lock -> Void in
+            XCTAssert(true)
+            self.expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(5.0, handler: nil)
+    }
+    
     func testLockList() {
         Lock.getLockList().then {
             locks -> Void in

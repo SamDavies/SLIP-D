@@ -21,7 +21,7 @@ class Lock {
     
     convenience init(json: JSON){
         let id = json["id"].int!
-        let isLocked = json["is_locked"].bool!
+        let isLocked = json["locked"].boolValue
         
         self.init(id: id, isLocked: isLocked)
     }
@@ -44,6 +44,20 @@ extension Lock {
                 locks.append(Lock(json: subJson))
             }
             return locks
+        }
+    }
+    
+    static func addLock(lockId: Int, name: String) -> Promise<Lock> {
+        let session = TransportSession()
+        session.url = "lock"
+        session.method = .POST
+        session.returnsMultiJson = true
+        session.parameters = ["lock_id": String(lockId), "lock_name": name]
+        
+        // return the promise with an array of objects
+        return session.basicRequestPromise().then {
+            (json: JSON) -> Lock in
+            return Lock(json: json)
         }
     }
 }

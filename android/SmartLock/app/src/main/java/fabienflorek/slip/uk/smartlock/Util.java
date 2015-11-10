@@ -17,10 +17,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONException;
-
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by fabienflorek on 11/2/15.
@@ -52,6 +52,19 @@ public class Util {
         return pass;
     }
 
+    public static void saveLockList(Context context,Set<String> set) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putStringSet("lockList",set);
+        editor.commit();
+    }
+
+    public static Set<String> readLockList(Context context)
+    {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        Set<String> set =  sharedPref.getStringSet("lockList",new HashSet<String>());
+        return set;
+    }
 
     private static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connMgr = (ConnectivityManager)

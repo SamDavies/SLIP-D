@@ -3,11 +3,8 @@ package fabienflorek.slip.uk.smartlock;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PointF;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
 
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 

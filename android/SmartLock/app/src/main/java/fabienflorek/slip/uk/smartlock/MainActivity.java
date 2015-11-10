@@ -60,9 +60,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,LoggedInActivity.class);
         startActivity(intent);
         */
-        Intent intent = new Intent(this,QrScannerActivity.class);
-        //code for given activity, helps to know which activity it is when it returns
-        startActivityForResult(intent,1);
+
+
+
+        Intent intent = new Intent(this,LockListAcitivity.class);
+        startActivity(intent);
 
     }
     @OnClick(R.id.button_register)
@@ -108,20 +110,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        String result = "";
-
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                result=data.getStringExtra("result");
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-            }
-        }
-        Toast.makeText(this, ""+result, Toast.LENGTH_SHORT).show();
-    }
     private void Logging(String msg) {
         Log.d("MainActivity",msg);
     }

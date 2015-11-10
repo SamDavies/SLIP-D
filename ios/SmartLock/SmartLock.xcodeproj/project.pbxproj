@@ -13,16 +13,19 @@
 		2D49D75D61B55A2776A554CC /* LocksmithSmartLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D49D548A999640D8433C536 /* LocksmithSmartLock.swift */; };
 		A547BAE5A991878BA6B87A74 /* Pods_SmartLockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9A3A67E3800C70E6963EA75 /* Pods_SmartLockTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		B90108F51BBC43FC0000023E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90108F41BBC43FC0000023E /* AppDelegate.swift */; };
-		B90108F71BBC43FC0000023E /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90108F61BBC43FC0000023E /* FirstViewController.swift */; };
-		B90108F91BBC43FC0000023E /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90108F81BBC43FC0000023E /* SecondViewController.swift */; };
 		B90108FC1BBC43FC0000023E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B90108FA1BBC43FC0000023E /* Main.storyboard */; };
 		B90108FE1BBC43FC0000023E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B90108FD1BBC43FC0000023E /* Assets.xcassets */; };
 		B90109011BBC43FC0000023E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B90108FF1BBC43FC0000023E /* LaunchScreen.storyboard */; };
 		B901090C1BBC43FC0000023E /* SmartLockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B901090B1BBC43FC0000023E /* SmartLockTests.swift */; };
 		B90109171BBC43FD0000023E /* SmartLockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90109161BBC43FD0000023E /* SmartLockUITests.swift */; };
-		B93B9BDF1BD6C2B80061D303 /* FakeTransportSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B9BDB1BD6C2B80061D303 /* FakeTransportSession.swift */; settings = {ASSET_TAGS = (); }; };
-		B93B9BE01BD6C2B80061D303 /* TransportSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B9BDC1BD6C2B80061D303 /* TransportSession.swift */; settings = {ASSET_TAGS = (); }; };
-		B93B9BE11BD6C2B80061D303 /* TransportSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B9BDD1BD6C2B80061D303 /* TransportSessionProtocol.swift */; settings = {ASSET_TAGS = (); }; };
+		B90F97F41BE6933300FCB329 /* LockCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D49DB5407D373DB36CBB457 /* LockCtrl.swift */; };
+		B90F97FA1BE6CDAB00FCB329 /* LockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F97F91BE6CDAB00FCB329 /* LockModel.swift */; };
+		B93B9BDF1BD6C2B80061D303 /* FakeTransportSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B9BDB1BD6C2B80061D303 /* FakeTransportSession.swift */; };
+		B93B9BE01BD6C2B80061D303 /* TransportSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B9BDC1BD6C2B80061D303 /* TransportSession.swift */; };
+		B93B9BE11BD6C2B80061D303 /* TransportSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B9BDD1BD6C2B80061D303 /* TransportSessionProtocol.swift */; };
+		B93B9BE31BD6DC260061D303 /* LoginCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D49D00AD6E2F2AF506C35F4 /* LoginCtrl.swift */; };
+		B981E73B1BE7A72A00A8B357 /* LockTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B981E73A1BE7A72A00A8B357 /* LockTest.swift */; };
+		B981E73E1BE7B17200A8B357 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B981E73D1BE7B17200A8B357 /* User.swift */; };
 		D117162AF03B889FE02B9E44 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0732EF14C935C681C20E8B7 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -46,8 +49,10 @@
 /* Begin PBXFileReference section */
 		0BB20BCB9F090BDBFB18220F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		2880BC66C48BB45E05DA3084 /* Pods-SmartLockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartLockTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmartLockTests/Pods-SmartLockTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2D49D00AD6E2F2AF506C35F4 /* LoginCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginCtrl.swift; sourceTree = "<group>"; };
 		2D49D2A7F9EEA177BC011848 /* TransportSessionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportSessionTest.swift; sourceTree = "<group>"; };
 		2D49D548A999640D8433C536 /* LocksmithSmartLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocksmithSmartLock.swift; sourceTree = "<group>"; };
+		2D49DB5407D373DB36CBB457 /* LockCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockCtrl.swift; sourceTree = "<group>"; };
 		2D49DC92E4A9348533DADD52 /* LocksmithSmartLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocksmithSmartLock.swift; sourceTree = "<group>"; };
 		2D49DD154EFDBE5610C23E94 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		311C282A2CBF45D022523F42 /* Pods-SmartLockTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartLockTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SmartLockTests/Pods-SmartLockTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -55,8 +60,6 @@
 		B0732EF14C935C681C20E8B7 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B90108F11BBC43FC0000023E /* SmartLock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartLock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B90108F41BBC43FC0000023E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B90108F61BBC43FC0000023E /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		B90108F81BBC43FC0000023E /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		B90108FB1BBC43FC0000023E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B90108FD1BBC43FC0000023E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B90109001BBC43FC0000023E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -67,9 +70,12 @@
 		B90109121BBC43FD0000023E /* SmartLockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartLockUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B90109161BBC43FD0000023E /* SmartLockUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartLockUITests.swift; sourceTree = "<group>"; };
 		B90109181BBC43FD0000023E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B90F97F91BE6CDAB00FCB329 /* LockModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockModel.swift; sourceTree = "<group>"; };
 		B93B9BDB1BD6C2B80061D303 /* FakeTransportSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeTransportSession.swift; sourceTree = "<group>"; };
 		B93B9BDC1BD6C2B80061D303 /* TransportSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportSession.swift; sourceTree = "<group>"; };
 		B93B9BDD1BD6C2B80061D303 /* TransportSessionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportSessionProtocol.swift; sourceTree = "<group>"; };
+		B981E73A1BE7A72A00A8B357 /* LockTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockTest.swift; sourceTree = "<group>"; };
+		B981E73D1BE7B17200A8B357 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B9A3A67E3800C70E6963EA75 /* Pods_SmartLockTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartLockTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -145,16 +151,15 @@
 		B90108F31BBC43FC0000023E /* SmartLock */ = {
 			isa = PBXGroup;
 			children = (
+				B90F97F81BE6CD5100FCB329 /* Modules */,
+				B90F97F71BE6CD4200FCB329 /* Shared */,
 				B93B9BE21BD6C2C40061D303 /* Transport */,
 				B90108F41BBC43FC0000023E /* AppDelegate.swift */,
-				B90108F61BBC43FC0000023E /* FirstViewController.swift */,
-				B90108F81BBC43FC0000023E /* SecondViewController.swift */,
 				B90108FA1BBC43FC0000023E /* Main.storyboard */,
 				B90108FD1BBC43FC0000023E /* Assets.xcassets */,
 				B90108FF1BBC43FC0000023E /* LaunchScreen.storyboard */,
 				B90109021BBC43FC0000023E /* Info.plist */,
 				2D49DD154EFDBE5610C23E94 /* Settings.swift */,
-				2D49DC92E4A9348533DADD52 /* LocksmithSmartLock.swift */,
 			);
 			path = SmartLock;
 			sourceTree = "<group>";
@@ -166,6 +171,7 @@
 				B901090D1BBC43FC0000023E /* Info.plist */,
 				2D49D2A7F9EEA177BC011848 /* TransportSessionTest.swift */,
 				2D49D548A999640D8433C536 /* LocksmithSmartLock.swift */,
+				B981E73A1BE7A72A00A8B357 /* LockTest.swift */,
 			);
 			path = SmartLockTests;
 			sourceTree = "<group>";
@@ -179,6 +185,41 @@
 			path = SmartLockUITests;
 			sourceTree = "<group>";
 		};
+		B90F97F51BE6CD0E00FCB329 /* Lock */ = {
+			isa = PBXGroup;
+			children = (
+				2D49DB5407D373DB36CBB457 /* LockCtrl.swift */,
+				B90F97F91BE6CDAB00FCB329 /* LockModel.swift */,
+			);
+			name = Lock;
+			sourceTree = "<group>";
+		};
+		B90F97F61BE6CD2000FCB329 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				2D49D00AD6E2F2AF506C35F4 /* LoginCtrl.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		B90F97F71BE6CD4200FCB329 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				2D49DC92E4A9348533DADD52 /* LocksmithSmartLock.swift */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+		B90F97F81BE6CD5100FCB329 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				B981E73C1BE7B13C00A8B357 /* User */,
+				B90F97F61BE6CD2000FCB329 /* Login */,
+				B90F97F51BE6CD0E00FCB329 /* Lock */,
+			);
+			name = Modules;
+			sourceTree = "<group>";
+		};
 		B93B9BE21BD6C2C40061D303 /* Transport */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +228,14 @@
 				B93B9BDD1BD6C2B80061D303 /* TransportSessionProtocol.swift */,
 			);
 			name = Transport;
+			sourceTree = "<group>";
+		};
+		B981E73C1BE7B13C00A8B357 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				B981E73D1BE7B17200A8B357 /* User.swift */,
+			);
+			name = User;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,6 +312,7 @@
 				TargetAttributes = {
 					B90108F01BBC43FC0000023E = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = C5LY942R7Y;
 					};
 					B90109061BBC43FC0000023E = {
 						CreatedOnToolsVersion = 7.0;
@@ -419,14 +469,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B90108F91BBC43FC0000023E /* SecondViewController.swift in Sources */,
 				B90108F51BBC43FC0000023E /* AppDelegate.swift in Sources */,
 				B93B9BDF1BD6C2B80061D303 /* FakeTransportSession.swift in Sources */,
+				B93B9BE31BD6DC260061D303 /* LoginCtrl.swift in Sources */,
 				B93B9BE01BD6C2B80061D303 /* TransportSession.swift in Sources */,
+				B90F97FA1BE6CDAB00FCB329 /* LockModel.swift in Sources */,
 				B93B9BE11BD6C2B80061D303 /* TransportSessionProtocol.swift in Sources */,
-				B90108F71BBC43FC0000023E /* FirstViewController.swift in Sources */,
 				2D49D72DC912AD4B5FC34E54 /* Settings.swift in Sources */,
 				2D49D297041B2B8967C6D69E /* LocksmithSmartLock.swift in Sources */,
+				B981E73E1BE7B17200A8B357 /* User.swift in Sources */,
+				B90F97F41BE6933300FCB329 /* LockCtrl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +488,7 @@
 			files = (
 				B901090C1BBC43FC0000023E /* SmartLockTests.swift in Sources */,
 				2D49D0E7A0989A05CDFD622A /* TransportSessionTest.swift in Sources */,
+				B981E73B1BE7A72A00A8B357 /* LockTest.swift in Sources */,
 				2D49D75D61B55A2776A554CC /* LocksmithSmartLock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,7 +572,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -557,7 +610,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -569,6 +622,7 @@
 			baseConfigurationReference = 9CF4C4F8927C408B801F1101 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = SmartLock/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = samdavies.SmartLock;
@@ -581,6 +635,7 @@
 			baseConfigurationReference = 0BB20BCB9F090BDBFB18220F /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = SmartLock/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = samdavies.SmartLock;

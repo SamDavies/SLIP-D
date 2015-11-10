@@ -24,11 +24,11 @@ class TransportSession: TransportSessionProtocol {
     private var password = ""
     
     func basicRequestPromise() -> Promise<SwiftyJSON.JSON> {
-//        let (user, pass, found) = LocksmithThing.getUserPass()
-//        if (found) {
-//            self.username = user
-//            self.password = pass
-//        }
+        let (user, pass, found) = LocksmithSmartLock.getUserPass()
+        if (found) {
+            self.username = user
+            self.password = pass
+        }
 
         return Promise { fulfill, reject in
             // alamofire code that calls either fill or reject

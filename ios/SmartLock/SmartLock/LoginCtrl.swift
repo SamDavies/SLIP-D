@@ -83,7 +83,7 @@ class LoginCtrl: UIViewController, UITextFieldDelegate{
 
         // first test the connection
         let session = TransportSession()
-        session.url = ""
+        session.url = "hello"
         session.method = Alamofire.Method.GET
         session.returnsMultiJson = true
         self.setPrompt("Testing Connection.")

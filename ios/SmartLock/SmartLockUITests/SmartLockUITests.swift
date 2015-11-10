@@ -29,7 +29,7 @@ class SmartLockUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testLogin() {
         let app = XCUIApplication()
         
         // log in the user
@@ -46,7 +46,52 @@ class SmartLockUITests: XCTestCase {
         let tabBarCount = tabBarsQuery.buttons.count
         
         // log the user out
-        app.tabBars.buttons["Second"].tap()
+        app.tabBars.buttons["More"].tap()
+        app.buttons["Log Out"].tap()
+        
+        // check the number of tabs
+        XCTAssertEqual(tabBarCount, 2)
+    }
+    
+    func testRegister() {
+        let app = XCUIApplication()
+        let emailTextField = app.textFields["Email"]
+        emailTextField.tap()
+        emailTextField.typeText("user" + String(arc4random_uniform(1000000)))
+        
+        let passwordSecureTextField = app.secureTextFields["Password"]
+        passwordSecureTextField.tap()
+        passwordSecureTextField.tap()
+        passwordSecureTextField.typeText("python")
+        
+        let registerButton = app.buttons["Register"]
+        registerButton.tap()
+        
+        let retypePasswordSecureTextField = app.secureTextFields["Retype Password"]
+        retypePasswordSecureTextField.tap()
+        retypePasswordSecureTextField.tap()
+        retypePasswordSecureTextField.typeText("python")
+        
+        let firstNameTextField = app.textFields["First Name"]
+        firstNameTextField.tap()
+        firstNameTextField.tap()
+        firstNameTextField.typeText("test")
+        
+        let lastNameTextField = app.textFields["Last Name"]
+        lastNameTextField.tap()
+        lastNameTextField.tap()
+        lastNameTextField.typeText("user")
+        app.buttons["Done"].tap()
+        
+        
+        registerButton.tap()
+        
+        // record the number of tabs
+        let tabBarsQuery = app.tabBars
+        let tabBarCount = tabBarsQuery.buttons.count
+        
+        // log the user out
+        app.tabBars.buttons["More"].tap()
         app.buttons["Log Out"].tap()
         
         // check the number of tabs

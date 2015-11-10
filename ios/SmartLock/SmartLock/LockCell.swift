@@ -17,7 +17,13 @@ class LockCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        openCloseButton.layer.cornerRadius = 150.0
+        openCloseButton.layer.cornerRadius = 30.0
+        openCloseButton.layer.masksToBounds = true
+        
+        openCloseButton.layer.shadowColor = UIColor.blackColor().CGColor
+        openCloseButton.layer.shadowOpacity = 0.8
+        openCloseButton.layer.shadowRadius = 120
+        openCloseButton.layer.shadowOffset = CGSizeMake(12.0, 12.0)
     }
     
     @IBAction func openClose(sender: AnyObject) {
@@ -26,9 +32,9 @@ class LockCell: UICollectionViewCell {
             // swap the open state
             self.lock.isLocked = !self.lock.isLocked
             if(!self.lock.isLocked){
-                self.openCloseButton.setTitle("CLOSE", forState: UIControlState.Normal)
+                self.openCloseButton.setTitle("-", forState: UIControlState.Normal)
             } else {
-                self.openCloseButton.setTitle("OPEN", forState: UIControlState.Normal)
+                self.openCloseButton.setTitle("O", forState: UIControlState.Normal)
             }
         })
     }

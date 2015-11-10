@@ -11,6 +11,9 @@ class LockCtrl: PromiseGridFeed {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
+        self.navigationController!.navigationBar.translucent = false
+        self.automaticallyAdjustsScrollViewInsets = false
     }
     
     /*
@@ -48,6 +51,10 @@ class LockCtrl: PromiseGridFeed {
         }
         
         return CGSizeMake(screenWidth, 651)
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
 
 }

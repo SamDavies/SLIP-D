@@ -24,6 +24,7 @@ class LoginCtrl: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var loginBottomSpace: NSLayoutConstraint!
     @IBOutlet weak var regCenterSpace: NSLayoutConstraint!
     @IBOutlet weak var buttonsTopSpace: NSLayoutConstraint!
+    @IBOutlet weak var loginToView: NSLayoutConstraint!
 
     @IBOutlet weak var userPrompt: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -53,7 +54,11 @@ class LoginCtrl: UIViewController, UITextFieldDelegate{
             self.swapLayout(false)
         }else{
             self.dismissKeyboardAll()
-            self.login()
+            if(self.emailField.text! != ""){
+                self.login()
+            }else{
+                self.setPrompt("Please enter an email")
+            }
         }
     }
 
@@ -64,15 +69,17 @@ class LoginCtrl: UIViewController, UITextFieldDelegate{
             self.swapLayout(true)
         }else{
             self.dismissKeyboardAll()
-            acitvateSpinner()
+            
+            if(self.emailField.text! != ""){
+                acitvateSpinner()
 
-//            let requester = Requester()
-//            requester.register(emailField.text!, password: passwordField.text!, passwordRetype: rePasswordField.text!, firstName: firstNameField.text!, lastName: lastNameField.text!) {
-//                (response: NSHTTPURLResponse) -> Void in
-//                if(response.statusCode == 201){
-//                    self.login()
-//                }
-//            }
+                User.addUser(emailField.text!, password: passwordField.text!, firstName: firstNameField.text!, lastName: lastNameField.text!).then {
+                    lock -> Void in
+                    self.login()
+                }
+            }else{
+                self.setPrompt("Please enter an email")
+            }
         }
     }
 
@@ -140,11 +147,13 @@ class LoginCtrl: UIViewController, UITextFieldDelegate{
     func swapLayout(displayRegister: Bool){
         if(displayRegister){
             self.regView.alpha = 1
+            self.loginToView.constant = 100
             self.loginBottomSpace.constant = 8
-            self.regCenterSpace.constant = 0
+            self.regCenterSpace.constant = -5
             self.buttonsTopSpace.constant = 8
         }else{
             self.regView.alpha = 0
+            self.loginToView.constant = 155
             self.loginBottomSpace.constant = -89
             self.regCenterSpace.constant = self.view.frame.width/2 + 203/2
             self.buttonsTopSpace.constant = -22

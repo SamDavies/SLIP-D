@@ -12,6 +12,13 @@ class LockCell: UICollectionViewCell {
     
     var lock: Lock!
     @IBOutlet var openCloseButton: UIButton!
+    @IBOutlet var lockName: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        openCloseButton.layer.cornerRadius = 150.0
+    }
     
     @IBAction func openClose(sender: AnyObject) {
         // update the button on another thread
@@ -19,14 +26,15 @@ class LockCell: UICollectionViewCell {
             // swap the open state
             self.lock.isLocked = !self.lock.isLocked
             if(!self.lock.isLocked){
-                self.openCloseButton.setTitle("Close Lock", forState: UIControlState.Normal)
+                self.openCloseButton.setTitle("CLOSE", forState: UIControlState.Normal)
             } else {
-                self.openCloseButton.setTitle("Open Lock", forState: UIControlState.Normal)
+                self.openCloseButton.setTitle("OPEN", forState: UIControlState.Normal)
             }
         })
     }
     
     func create(lock: Lock) {
         self.lock = lock
+        lockName.text = lock.name
     }
 }

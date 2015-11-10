@@ -18,6 +18,8 @@
 		B90109011BBC43FC0000023E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B90108FF1BBC43FC0000023E /* LaunchScreen.storyboard */; };
 		B901090C1BBC43FC0000023E /* SmartLockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B901090B1BBC43FC0000023E /* SmartLockTests.swift */; };
 		B90109171BBC43FD0000023E /* SmartLockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90109161BBC43FD0000023E /* SmartLockUITests.swift */; };
+		B90F20941BF24F7000B68F6D /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F20931BF24F7000B68F6D /* UserModel.swift */; };
+		B90F20961BF2537F00B68F6D /* UserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F20951BF2537F00B68F6D /* UserTest.swift */; };
 		B90F97F41BE6933300FCB329 /* LockCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D49DB5407D373DB36CBB457 /* LockCtrl.swift */; };
 		B90F97FA1BE6CDAB00FCB329 /* LockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F97F91BE6CDAB00FCB329 /* LockModel.swift */; };
 		B93B9BDF1BD6C2B80061D303 /* FakeTransportSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B9BDB1BD6C2B80061D303 /* FakeTransportSession.swift */; };
@@ -25,7 +27,10 @@
 		B93B9BE11BD6C2B80061D303 /* TransportSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B9BDD1BD6C2B80061D303 /* TransportSessionProtocol.swift */; };
 		B93B9BE31BD6DC260061D303 /* LoginCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D49D00AD6E2F2AF506C35F4 /* LoginCtrl.swift */; };
 		B981E73B1BE7A72A00A8B357 /* LockTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B981E73A1BE7A72A00A8B357 /* LockTest.swift */; };
-		B981E73E1BE7B17200A8B357 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B981E73D1BE7B17200A8B357 /* User.swift */; };
+		B981E73E1BE7B17200A8B357 /* UserCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B981E73D1BE7B17200A8B357 /* UserCtrl.swift */; };
+		B981E7401BE7C66A00A8B357 /* PromiseGridFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B981E73F1BE7C66A00A8B357 /* PromiseGridFeed.swift */; };
+		B981E7421BE7CA4700A8B357 /* SnapGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B981E7411BE7CA4700A8B357 /* SnapGridLayout.swift */; };
+		B9B592A11BE8F3E800092050 /* LockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B592A01BE8F3E800092050 /* LockCell.swift */; };
 		D117162AF03B889FE02B9E44 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0732EF14C935C681C20E8B7 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -70,13 +75,18 @@
 		B90109121BBC43FD0000023E /* SmartLockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartLockUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B90109161BBC43FD0000023E /* SmartLockUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartLockUITests.swift; sourceTree = "<group>"; };
 		B90109181BBC43FD0000023E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B90F20931BF24F7000B68F6D /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		B90F20951BF2537F00B68F6D /* UserTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTest.swift; sourceTree = "<group>"; };
 		B90F97F91BE6CDAB00FCB329 /* LockModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockModel.swift; sourceTree = "<group>"; };
 		B93B9BDB1BD6C2B80061D303 /* FakeTransportSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeTransportSession.swift; sourceTree = "<group>"; };
 		B93B9BDC1BD6C2B80061D303 /* TransportSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportSession.swift; sourceTree = "<group>"; };
 		B93B9BDD1BD6C2B80061D303 /* TransportSessionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportSessionProtocol.swift; sourceTree = "<group>"; };
 		B981E73A1BE7A72A00A8B357 /* LockTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockTest.swift; sourceTree = "<group>"; };
-		B981E73D1BE7B17200A8B357 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B981E73D1BE7B17200A8B357 /* UserCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCtrl.swift; sourceTree = "<group>"; };
+		B981E73F1BE7C66A00A8B357 /* PromiseGridFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseGridFeed.swift; sourceTree = "<group>"; };
+		B981E7411BE7CA4700A8B357 /* SnapGridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapGridLayout.swift; sourceTree = "<group>"; };
 		B9A3A67E3800C70E6963EA75 /* Pods_SmartLockTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartLockTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9B592A01BE8F3E800092050 /* LockCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +182,7 @@
 				2D49D2A7F9EEA177BC011848 /* TransportSessionTest.swift */,
 				2D49D548A999640D8433C536 /* LocksmithSmartLock.swift */,
 				B981E73A1BE7A72A00A8B357 /* LockTest.swift */,
+				B90F20951BF2537F00B68F6D /* UserTest.swift */,
 			);
 			path = SmartLockTests;
 			sourceTree = "<group>";
@@ -190,6 +201,8 @@
 			children = (
 				2D49DB5407D373DB36CBB457 /* LockCtrl.swift */,
 				B90F97F91BE6CDAB00FCB329 /* LockModel.swift */,
+				B981E7411BE7CA4700A8B357 /* SnapGridLayout.swift */,
+				B9B592A01BE8F3E800092050 /* LockCell.swift */,
 			);
 			name = Lock;
 			sourceTree = "<group>";
@@ -206,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				2D49DC92E4A9348533DADD52 /* LocksmithSmartLock.swift */,
+				B981E73F1BE7C66A00A8B357 /* PromiseGridFeed.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -233,7 +247,8 @@
 		B981E73C1BE7B13C00A8B357 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				B981E73D1BE7B17200A8B357 /* User.swift */,
+				B981E73D1BE7B17200A8B357 /* UserCtrl.swift */,
+				B90F20931BF24F7000B68F6D /* UserModel.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -470,15 +485,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				B90108F51BBC43FC0000023E /* AppDelegate.swift in Sources */,
+				B9B592A11BE8F3E800092050 /* LockCell.swift in Sources */,
 				B93B9BDF1BD6C2B80061D303 /* FakeTransportSession.swift in Sources */,
 				B93B9BE31BD6DC260061D303 /* LoginCtrl.swift in Sources */,
 				B93B9BE01BD6C2B80061D303 /* TransportSession.swift in Sources */,
 				B90F97FA1BE6CDAB00FCB329 /* LockModel.swift in Sources */,
 				B93B9BE11BD6C2B80061D303 /* TransportSessionProtocol.swift in Sources */,
 				2D49D72DC912AD4B5FC34E54 /* Settings.swift in Sources */,
+				B90F20941BF24F7000B68F6D /* UserModel.swift in Sources */,
 				2D49D297041B2B8967C6D69E /* LocksmithSmartLock.swift in Sources */,
-				B981E73E1BE7B17200A8B357 /* User.swift in Sources */,
+				B981E73E1BE7B17200A8B357 /* UserCtrl.swift in Sources */,
+				B981E7421BE7CA4700A8B357 /* SnapGridLayout.swift in Sources */,
 				B90F97F41BE6933300FCB329 /* LockCtrl.swift in Sources */,
+				B981E7401BE7C66A00A8B357 /* PromiseGridFeed.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +509,7 @@
 				2D49D0E7A0989A05CDFD622A /* TransportSessionTest.swift in Sources */,
 				B981E73B1BE7A72A00A8B357 /* LockTest.swift in Sources */,
 				2D49D75D61B55A2776A554CC /* LocksmithSmartLock.swift in Sources */,
+				B90F20961BF2537F00B68F6D /* UserTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

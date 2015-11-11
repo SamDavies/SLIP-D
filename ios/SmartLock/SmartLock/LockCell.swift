@@ -17,7 +17,7 @@ class LockCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        openCloseButton.layer.cornerRadius = 30.0
+        openCloseButton.layer.cornerRadius = 40.0
         openCloseButton.layer.masksToBounds = true
         
         openCloseButton.layer.shadowColor = UIColor.blackColor().CGColor

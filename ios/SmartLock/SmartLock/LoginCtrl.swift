@@ -9,7 +9,7 @@ import SwiftyJSON
 import Locksmith
 import PromiseKit
 
-class LoginCtrl: UIViewController, UITextFieldDelegate{
+class LoginCtrl: UIViewController, UITextFieldDelegate {
 
     // text fields
     @IBOutlet weak var emailField: UITextField!

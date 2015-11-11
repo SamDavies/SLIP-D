@@ -52,9 +52,4 @@ class LockCtrl: PromiseGridFeed {
         
         return CGSizeMake(screenWidth, 651)
     }
-    
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
-
 }

@@ -22,6 +22,7 @@
 		B90F20961BF2537F00B68F6D /* UserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F20951BF2537F00B68F6D /* UserTest.swift */; };
 		B90F97F41BE6933300FCB329 /* LockCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D49DB5407D373DB36CBB457 /* LockCtrl.swift */; };
 		B90F97FA1BE6CDAB00FCB329 /* LockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90F97F91BE6CDAB00FCB329 /* LockModel.swift */; };
+		B9114F0C1BF2B14D00F48070 /* AddLockCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9114F0B1BF2B14D00F48070 /* AddLockCtrl.swift */; };
 		B93B9BDF1BD6C2B80061D303 /* FakeTransportSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B9BDB1BD6C2B80061D303 /* FakeTransportSession.swift */; };
 		B93B9BE01BD6C2B80061D303 /* TransportSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B9BDC1BD6C2B80061D303 /* TransportSession.swift */; };
 		B93B9BE11BD6C2B80061D303 /* TransportSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93B9BDD1BD6C2B80061D303 /* TransportSessionProtocol.swift */; };
@@ -78,6 +79,7 @@
 		B90F20931BF24F7000B68F6D /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		B90F20951BF2537F00B68F6D /* UserTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTest.swift; sourceTree = "<group>"; };
 		B90F97F91BE6CDAB00FCB329 /* LockModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockModel.swift; sourceTree = "<group>"; };
+		B9114F0B1BF2B14D00F48070 /* AddLockCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLockCtrl.swift; sourceTree = "<group>"; };
 		B93B9BDB1BD6C2B80061D303 /* FakeTransportSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeTransportSession.swift; sourceTree = "<group>"; };
 		B93B9BDC1BD6C2B80061D303 /* TransportSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportSession.swift; sourceTree = "<group>"; };
 		B93B9BDD1BD6C2B80061D303 /* TransportSessionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportSessionProtocol.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				B90F97F91BE6CDAB00FCB329 /* LockModel.swift */,
 				B981E7411BE7CA4700A8B357 /* SnapGridLayout.swift */,
 				B9B592A01BE8F3E800092050 /* LockCell.swift */,
+				B9114F0B1BF2B14D00F48070 /* AddLockCtrl.swift */,
 			);
 			name = Lock;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				2D49D72DC912AD4B5FC34E54 /* Settings.swift in Sources */,
 				B90F20941BF24F7000B68F6D /* UserModel.swift in Sources */,
 				2D49D297041B2B8967C6D69E /* LocksmithSmartLock.swift in Sources */,
+				B9114F0C1BF2B14D00F48070 /* AddLockCtrl.swift in Sources */,
 				B981E73E1BE7B17200A8B357 /* UserCtrl.swift in Sources */,
 				B981E7421BE7CA4700A8B357 /* SnapGridLayout.swift in Sources */,
 				B90F97F41BE6933300FCB329 /* LockCtrl.swift in Sources */,

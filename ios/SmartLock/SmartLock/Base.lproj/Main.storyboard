@@ -286,7 +286,7 @@
         <!--Add Lock-->
         <scene sceneID="J4e-AD-PII">
             <objects>
-                <viewController title="Add Lock" id="w53-5v-1Tu" sceneMemberID="viewController">
+                <viewController title="Add Lock" id="w53-5v-1Tu" customClass="AddLockCtrl" customModule="SmartLock" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="N1z-lr-lit"/>
                         <viewControllerLayoutGuide type="bottom" id="fOf-D8-svd"/>
@@ -299,7 +299,7 @@
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="20" y="137" width="360" height="30"/>
                                 </variation>
@@ -307,10 +307,13 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ckE-MD-VFM">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Add Lock"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="20" y="271" width="46" height="30"/>
+                                    <rect key="frame" x="22" y="271" width="65" height="30"/>
                                 </variation>
+                                <connections>
+                                    <action selector="onAddLock:" destination="w53-5v-1Tu" eventType="touchUpInside" id="7Xx-Bc-dsM"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nickname" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wuE-PE-GTJ">
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
@@ -321,6 +324,23 @@
                                     <rect key="frame" x="20" y="197" width="360" height="30"/>
                                 </variation>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0y-Gu-yFP">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="22" y="333" width="358" height="21"/>
+                                </variation>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="gN9-AD-Dhy">
+                                <rect key="frame" x="-10" y="-10" width="20" height="20"/>
+                                <animations/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="190" y="422" width="20" height="20"/>
+                                </variation>
+                            </activityIndicatorView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -329,6 +349,8 @@
                                 <exclude reference="Pgk-dx-l7p"/>
                                 <exclude reference="ckE-MD-VFM"/>
                                 <exclude reference="wuE-PE-GTJ"/>
+                                <exclude reference="h0y-Gu-yFP"/>
+                                <exclude reference="gN9-AD-Dhy"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -336,10 +358,18 @@
                                 <include reference="Pgk-dx-l7p"/>
                                 <include reference="ckE-MD-VFM"/>
                                 <include reference="wuE-PE-GTJ"/>
+                                <include reference="h0y-Gu-yFP"/>
+                                <include reference="gN9-AD-Dhy"/>
                             </mask>
                         </variation>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="gN9-AD-Dhy" id="iCO-S5-cAT"/>
+                        <outlet property="idField" destination="Pgk-dx-l7p" id="rLZ-eO-9Qo"/>
+                        <outlet property="nameField" destination="wuE-PE-GTJ" id="IZB-ss-1yD"/>
+                        <outlet property="userPrompt" destination="h0y-Gu-yFP" id="7lo-UX-blq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A9T-Wy-abs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

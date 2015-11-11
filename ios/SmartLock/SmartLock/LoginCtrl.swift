@@ -29,9 +29,12 @@ class LoginCtrl: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var userPrompt: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var isViewRegister : Bool = false
+    
+    @IBOutlet weak var loginButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loginButton.layer.cornerRadius = 15.0
 
         // try to login if the credentials exist
         let (user, pass, exists) = LocksmithSmartLock.getUserPass()

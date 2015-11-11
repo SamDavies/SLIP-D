@@ -23,6 +23,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="krb-ML-8Kd">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <animations/>
+                                <color key="backgroundColor" red="0.27058823529999998" green="0.35294117650000001" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="KLi-IF-znS" customClass="SnapGridLayout" customModule="SmartLock" customModuleProvider="target">
                                     <size key="itemSize" width="400" height="651"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -569,6 +570,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ctt-mD-2Ti" userLabel="Login">
                                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                 <animations/>
+                                                <color key="backgroundColor" red="1" green="0.3411764706" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Login">
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -815,7 +817,7 @@
                                     </label>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" red="0.32500000000000001" green="0.59583333329999999" blue="0.65000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.37647058823529411" green="0.49019607843137253" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailingMargin" secondItem="hF1-9n-rIn" secondAttribute="trailing" constant="42" id="1sT-JN-Zpt"/>
                                     <constraint firstAttribute="centerX" secondItem="hF1-9n-rIn" secondAttribute="centerX" id="4ZV-1O-iuI">
@@ -951,6 +953,7 @@
                         <outlet property="firstNameField" destination="fkn-RL-wfz" id="AEy-ve-W6g"/>
                         <outlet property="lastNameField" destination="dTs-lL-aLP" id="Vzf-hx-EzG"/>
                         <outlet property="loginBottomSpace" destination="ZOv-Uq-fmF" id="mqg-fr-IOD"/>
+                        <outlet property="loginButton" destination="ctt-mD-2Ti" id="MJW-VF-36F"/>
                         <outlet property="loginToView" destination="osP-Ma-tmp" id="6Z6-uc-r2p"/>
                         <outlet property="passwordField" destination="xBu-9e-snB" id="dKh-Eb-Hqv"/>
                         <outlet property="rePasswordField" destination="qAc-ix-XJd" id="x6d-IN-bBW"/>

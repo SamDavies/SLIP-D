@@ -12,21 +12,24 @@ import PromiseKit
 
 class Lock {
     var id: Int
-    var isLocked: Bool
+    var requestedOpen: Bool
+    var actuallyOpen: Bool
     var name: String
     
-    init(id: Int, isLocked: Bool, name: String) {
+    init(id: Int, requestedOpen: Bool, actuallyOpen: Bool, name: String) {
         self.id = id
-        self.isLocked = isLocked
+        self.requestedOpen = requestedOpen
+        self.actuallyOpen = actuallyOpen
         self.name = name
     }
     
     convenience init(json: JSON){
         let id = json["id"].int!
-        let isLocked = json["locked"].boolValue
-        let name = json["name"].string!
+        let requestedOpen = json["requested_open"].boolValue
+        let actuallyOpen = json["actually_open"].boolValue
+        let name = json["name"].stringValue
         
-        self.init(id: id, isLocked: isLocked, name: name)
+        self.init(id: id, requestedOpen: requestedOpen, actuallyOpen: actuallyOpen, name: name)
     }
 }
 
@@ -64,16 +67,16 @@ extension Lock {
         }
     }
     
-//    static func openLock(lockId: Int) -> Promise<Lock> {
-//        let session = TransportSession()
-//        session.url = "open/" + String(lockId)
-//        session.method = .PUT
-//        session.returnsMultiJson = true
-//        
-//        // return the promise with an array of objects
-//        return session.basicRequestPromise().then {
-//            (json: JSON) -> Lock in
-//            return Lock(json: json)
-//        }
-//    }
+    static func openLock(lockId: Int) -> Promise<Lock> {
+        let session = TransportSession()
+        session.url = "open/" + String(lockId)
+        session.method = .PUT
+        session.returnsMultiJson = true
+        
+        // return the promise with an array of objects
+        return session.basicRequestPromise().then {
+            (json: JSON) -> Lock in
+            return Lock(json: json)
+        }
+    }
 }

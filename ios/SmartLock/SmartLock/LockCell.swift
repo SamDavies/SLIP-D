@@ -30,8 +30,8 @@ class LockCell: UICollectionViewCell {
         // update the button on another thread
         dispatch_async(dispatch_get_main_queue(), {
             // swap the open state
-            self.lock.isLocked = !self.lock.isLocked
-            if(!self.lock.isLocked){
+            self.lock.requestedOpen = !self.lock.requestedOpen
+            if(!self.lock.requestedOpen){
                 self.openCloseButton.setTitle("-", forState: UIControlState.Normal)
             } else {
                 self.openCloseButton.setTitle("O", forState: UIControlState.Normal)

@@ -53,6 +53,19 @@ extension Lock {
         }
     }
     
+    static func getLock(lockId: Int) -> Promise<Lock> {
+        let session = TransportSession()
+        session.url = "lock/" + String(lockId)
+        session.method = .GET
+        session.returnsMultiJson = true
+        
+        // return the promise with an array of objects
+        return session.basicRequestPromise().then {
+            (json: JSON) -> Lock in
+            return Lock(json: json)
+        }
+    }
+    
     static func addLock(lockId: Int, name: String) -> Promise<Lock> {
         let session = TransportSession()
         session.url = "lock"

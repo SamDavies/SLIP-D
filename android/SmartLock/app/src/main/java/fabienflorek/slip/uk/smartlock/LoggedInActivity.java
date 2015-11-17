@@ -28,7 +28,6 @@ public class LoggedInActivity extends AppCompatActivity {
         textViewName.setText(NAME);
         textViewPass.setText(PASS);
 
-        Util.loggedInWorkWithLocks(NAME,PASS,URL,this);
     }
 
 }

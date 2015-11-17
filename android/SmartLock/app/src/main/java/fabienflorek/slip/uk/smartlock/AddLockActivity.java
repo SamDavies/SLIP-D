@@ -65,9 +65,14 @@ public class AddLockActivity extends AppCompatActivity {
             finish();
         int place = radioHome.isChecked() ? 0 : 1;
 
+        int lockId = Integer.parseInt(editTextLockId.getText().toString());
+        String lockName = editTextLockName.getText().toString();
+
+        Util.registerLock(lockId,lockName,this);
+
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("name",editTextLockName.getText().toString());
-        returnIntent.putExtra("id",editTextLockId.getText().toString());
+        returnIntent.putExtra("id",String.valueOf(lockId));
+        returnIntent.putExtra("name",lockName);
         returnIntent.putExtra("place",String.valueOf(place));
         setResult(Activity.RESULT_OK, returnIntent);
         finish();

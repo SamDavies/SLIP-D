@@ -194,7 +194,7 @@
                                                         </mask>
                                                     </variation>
                                                     <connections>
-                                                        <action selector="openClose:" destination="SzM-7a-QbF" eventType="touchUpInside" id="GgD-4l-prZ"/>
+                                                        <action selector="open:" destination="SzM-7a-QbF" eventType="touchUpInside" id="p2h-ll-Tf9"/>
                                                     </connections>
                                                 </button>
                                             </subviews>

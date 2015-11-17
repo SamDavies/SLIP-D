@@ -33,16 +33,29 @@ public class Lock {
     Integer id;
     //false close, true open
     boolean status;
+    int place;
 
 
-    public Lock(String name, Integer id) {
+    public int getPlace() {
+        return place;
+    }
+
+    public void setPlace(int place) {
+        this.place = place;
+    }
+
+
+
+    public Lock(String name, Integer id, int place) {
         this.name = name;
         this.id = id;
         status = false;
+        this.place = place;
     }
 
     @Override
     public String toString() {
-        return name+","+id;
+        return name+","+id+","+ place;
     }
 }
+

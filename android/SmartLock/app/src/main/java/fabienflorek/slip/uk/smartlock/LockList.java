@@ -18,7 +18,7 @@ public class LockList extends ArrayList<Lock>{
     //creates test lock list
     public LockList() {
         super();
-        this.add(new Lock("westminister",1));
+        this.add(new Lock("westminister",1,0));
     }
 
     private Set<String> convertListToStringSet() {
@@ -39,7 +39,7 @@ public class LockList extends ArrayList<Lock>{
 
     private Lock parseStringToLock(String string) {
         String[] parts = string.split(",");
-        Lock lock = new Lock(parts[0],Integer.parseInt(parts[1]));
+        Lock lock = new Lock(parts[0],Integer.parseInt(parts[1]),Integer.parseInt(parts[2]));
         return lock;
     }
 

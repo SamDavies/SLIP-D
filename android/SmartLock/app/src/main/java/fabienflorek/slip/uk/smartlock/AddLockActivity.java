@@ -3,9 +3,12 @@ package fabienflorek.slip.uk.smartlock;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,6 +22,10 @@ public class AddLockActivity extends AppCompatActivity {
     EditText editTextLockId;
     @Bind(R.id.edit_text_lockname)
     EditText editTextLockName;
+    @Bind(R.id.radio_home)
+    RadioButton radioHome;
+    @Bind(R.id.radio_office)
+    RadioButton radioOffice;
 
 
 
@@ -26,6 +33,8 @@ public class AddLockActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_lock);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         ButterKnife.bind(this);
     }
 
@@ -38,15 +47,28 @@ public class AddLockActivity extends AppCompatActivity {
         startActivityForResult(intent, 1);
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @OnClick(R.id.button_confirmadd)
     public void confirmAddLockClick() {
         //if the forms aren't filled out properly don't send anything back
         if (editTextLockName.getText().toString()=="" || editTextLockId.getText().toString()=="" )
             finish();
+        int place = radioHome.isChecked() ? 0 : 1;
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra("name",editTextLockName.getText().toString());
         returnIntent.putExtra("id",editTextLockId.getText().toString());
+        returnIntent.putExtra("place",String.valueOf(place));
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }

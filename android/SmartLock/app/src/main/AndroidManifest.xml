@@ -43,7 +43,8 @@
             android:name=".AddLockActivity"
             android:label="@string/title_activity_add_lock"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:parentActivityName="fabienflorek.slip.uk.smartlock.LockListAcitivity" >
         </activity>
     </application>
 

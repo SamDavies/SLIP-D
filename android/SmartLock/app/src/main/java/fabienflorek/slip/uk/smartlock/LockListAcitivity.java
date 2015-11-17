@@ -64,15 +64,16 @@ public class LockListAcitivity extends AppCompatActivity {
             if(resultCode == Activity.RESULT_OK){
                 String name = data.getStringExtra("name");
                 String id = data.getStringExtra("id");
-               addNewLockSaveAndNotify(name,Integer.parseInt(id));
+                String place = data.getStringExtra("place");
+                addNewLockSaveAndNotify(name, Integer.parseInt(id),Integer.parseInt(place));
             }
             if (resultCode == Activity.RESULT_CANCELED) {
             }
         }
     }
     //adds new lock to lists saves to preferences and updates listview
-    private void addNewLockSaveAndNotify(String name,Integer id) {
-        Lock lock = new Lock(name,id);
+    private void addNewLockSaveAndNotify(String name,Integer id,Integer lockType) {
+        Lock lock = new Lock(name,id,lockType);
         lockList.add(lock);
         lockList.storeListToPref(this);
         lockListAdapter.notifyDataSetChanged();

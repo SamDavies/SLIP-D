@@ -34,11 +34,35 @@ class User {
 }
 
 extension User {
-    static func getUserList() -> Promise<[User]> {
+    static func getUserList(lockId: Int?) -> Promise<[User]> {
         let session = TransportSession()
         session.url = "user"
         session.method = .GET
         session.returnsMultiJson = true
+        if let lockId = lockId{
+            session.parameters = ["lock_id": String(lockId)]
+        }
+        
+        // return the promise with an array of objects
+        return session.basicRequestPromise().then {
+            (json: JSON) -> [User] in
+            
+            var users: [User] = []
+            for (_, subJson): (String, JSON) in json {
+                users.append(User(json: subJson))
+            }
+            return users
+        }
+    }
+    
+    static func getFriendList(search: String?) -> Promise<[User]> {
+        let session = TransportSession()
+        session.url = "friend"
+        session.method = .GET
+        session.returnsMultiJson = true
+        if let search = search{
+            session.parameters = ["search": search]
+        }
         
         // return the promise with an array of objects
         return session.basicRequestPromise().then {

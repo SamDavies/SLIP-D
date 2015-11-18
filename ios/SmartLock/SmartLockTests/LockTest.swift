@@ -77,4 +77,18 @@ class LockTest: XCTestCase {
         }
         waitForExpectationsWithTimeout(5.0, handler: nil)
     }
+    
+    func testCloseLock() {
+        let versionBuild: String = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
+        
+        Lock.addLock(Int(versionBuild)! + 1000, name: "sam").then {
+            lock -> Promise<Lock> in
+            return Lock.closeLock(Int(versionBuild)! + 1000)
+            }.then {
+                lock -> Void in
+                XCTAssertEqual(lock.requestedOpen, false)
+                self.expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(5.0, handler: nil)
+    }
 }

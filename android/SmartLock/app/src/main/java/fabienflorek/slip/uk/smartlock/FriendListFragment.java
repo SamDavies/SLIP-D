@@ -5,11 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 
 import com.melnykov.fab.FloatingActionButton;
 
@@ -18,13 +19,13 @@ import java.util.ArrayList;
 
 public class FriendListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
-    ListView listView;
+    ExpandableListView listView;
     FloatingActionButton floatingActionButton;
 
     SwipeRefreshLayout swipeRefreshLayout;
+    ArrayList<Lock> lockList;
     ArrayList<Friend> friendList;
-    FriendListAdapter friendListAdapter;
-
+    FriendListExpandableAdapter friendListExpandableAdapter;
     String URL_LIST;
 
     /**
@@ -52,25 +53,26 @@ public class FriendListFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main_screen_with_lists, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_main_screen_with_lists_friends, container, false);
 
 
-        listView = (ListView) rootView.findViewById(R.id.listview_lock_list);
-        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
-
-        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+        listView = (ExpandableListView) rootView.findViewById(R.id.expandable_listview_lock_list);
+        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab_friends);
+        lockList = new ArrayList<Lock>();
+        friendList = new ArrayList<Friend>();
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout_friends);
         //create new list of locks from preferences
-        friendList= new ArrayList<Friend>();
+
         //create adapter
-        friendListAdapter = new FriendListAdapter(getContext(), friendList);
-        listView.setAdapter(friendListAdapter);
+        friendListExpandableAdapter = new FriendListExpandableAdapter(getContext(),friendList,lockList,getActivity().getLayoutInflater());
+        listView.setAdapter(friendListExpandableAdapter);
         //handles on click of a lock, opening closing it
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     final int position, long id) {
-                friendListAdapter.notifyDataSetChanged();
+                friendListExpandableAdapter.notifyDataSetChanged();
 
             }
 
@@ -85,7 +87,7 @@ public class FriendListFragment extends Fragment implements SwipeRefreshLayout.O
                                     @Override
                                     public void run() {
                                         swipeRefreshLayout.setRefreshing(true);
-                                        Util.getFriendList(friendList, friendListAdapter, swipeRefreshLayout, getContext());
+                                        onRefresh();
 
                                     }
                                 }
@@ -128,7 +130,7 @@ public class FriendListFragment extends Fragment implements SwipeRefreshLayout.O
                 String id = data.getStringExtra("id");
                 if (id!="") {
                     Util.addFriend(Integer.parseInt(id),getContext());
-                    friendListAdapter.notifyDataSetChanged();
+                    friendListExpandableAdapter.notifyDataSetChanged();
                 }
             }
             if (resultCode == Activity.RESULT_CANCELED) {
@@ -144,6 +146,7 @@ public class FriendListFragment extends Fragment implements SwipeRefreshLayout.O
 
     @Override
     public void onRefresh() {
-        Util.getFriendList(friendList, friendListAdapter, swipeRefreshLayout, getContext());
+        Util.getFriendList(friendList, friendListExpandableAdapter, swipeRefreshLayout, getContext());
+        Util.getLockList(lockList,friendListExpandableAdapter,swipeRefreshLayout,getContext());
     }
 }

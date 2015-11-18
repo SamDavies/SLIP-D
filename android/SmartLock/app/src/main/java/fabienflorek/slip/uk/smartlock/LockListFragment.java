@@ -51,7 +51,7 @@ public class LockListFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main_screen_with_lists, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_main_screen_with_lists_lock, container, false);
 
         int position = getArguments().getInt(ARG_SECTION_NUMBER);
 

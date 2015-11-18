@@ -68,8 +68,6 @@ public class AddLockActivity extends AppCompatActivity {
         int lockId = Integer.parseInt(editTextLockId.getText().toString());
         String lockName = editTextLockName.getText().toString();
 
-        Util.registerLock(lockId,lockName,this);
-
         Intent returnIntent = new Intent();
         returnIntent.putExtra("id",String.valueOf(lockId));
         returnIntent.putExtra("name",lockName);

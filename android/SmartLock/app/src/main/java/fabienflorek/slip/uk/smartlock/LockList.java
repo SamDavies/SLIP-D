@@ -12,13 +12,18 @@ import java.util.TreeSet;
  */
 public class LockList extends ArrayList<Lock>{
 
-    public LockList(Context context) {
+    /*public LockList(Context context) {
         this.addAll(loadListFromPref(context));
-    }
+    }*/
+
     //creates test lock list
     public LockList() {
         super();
-        this.add(new Lock("westminister",1,0));
+        //this.add(new Lock("westminister",1,0));
+    }
+
+    public LockList(Context context) {
+        super();
     }
 
     private Set<String> convertListToStringSet() {

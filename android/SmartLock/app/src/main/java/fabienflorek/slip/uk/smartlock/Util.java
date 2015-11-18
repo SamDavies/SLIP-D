@@ -29,10 +29,12 @@ public class Util {
 
     private static final String nameForPref = "username";
     private static final String passForPref = "password";
-    private static final String URL_REGISTER_USER = "https://slip-d-3.herokuapp.com/user";
-    private static final String URL_LOGIN = "https://slip-d-3.herokuapp.com/me";
+    private static final String URL_REGISTER_USER = "https://slip-d-4.herokuapp.com/user";
+    private static final String URL_LOGIN = "https://slip-d-4.herokuapp.com/me";
     //"https://httpbin.org/get"
-    private static final String URL_REGISTER_LOCK = "https://slip-d-3.herokuapp.com/lock";
+    private static final String URL_REGISTER_LOCK = "https://slip-d-4.herokuapp.com/lock";
+    public static final String URL_LOCK_LIST = "https://slip-d-4.herokuapp.com/lock";
+
 
 
     public static void saveUserNameAndPass(Context context,String name, String pass) {
@@ -70,7 +72,7 @@ public class Util {
         return set;
     }
 
-    private static boolean isNetworkAvailable(Context context) {
+    public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connMgr = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -244,6 +246,118 @@ public class Util {
             Toast.makeText(context,"No internet connection",Toast.LENGTH_LONG).show();
     }
 
+    public static void closeLock(final int lockId, final Context context) {
+        if (isNetworkAvailable(context)) {
+            //create queue for requests
+            RequestQueue queue = Volley.newRequestQueue(context);
+            final String name = Util.readUserName(context);
+            final String pass = Util.readPassword(context);
+
+
+
+            //Start request
+            StringRequest postRequest = new StringRequest(Request.Method.POST, URL_REGISTER_LOCK,
+                    new Response.Listener<String>()
+                    {
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(context, "Closed a lock!", Toast.LENGTH_LONG).show();
+                            Logging(response);
+
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Logging(error.toString());
+                            String response = "";
+                            //deal with error based on status code
+                            switch (error.networkResponse.statusCode) {
+                                case (406): {response = "Lock is owned by someone else!";break;}
+                                case (500): {response = "The server encountered an error, sorry."; break;}
+                                default: response = "unknown response";
+                            }
+                            Toast.makeText(context,response,Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+            ) {
+                //This method adds our basic authentication token
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String>  params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s",name,pass);
+                    String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                    params.put("Authorization", auth);
+                    return params;
+                }
+                // override this to set body with register details
+                @Override
+                public byte[] getBody()  {
+                    String httpPostBody="lock_id="+lockId;
+                    return httpPostBody.getBytes();
+                }
+            };
+
+            //send out request
+            queue.add(postRequest);
+        }else
+            Toast.makeText(context,"No internet connection",Toast.LENGTH_LONG).show();
+    }
+
+    public static void getLockList(final Context context) {
+        if (isNetworkAvailable(context)) {
+            //create queue for requests
+            RequestQueue queue = Volley.newRequestQueue(context);
+            final String name = Util.readUserName(context);
+            final String pass = Util.readPassword(context);
+
+
+
+            //Start request
+            StringRequest postRequest = new StringRequest(Request.Method.GET, URL_LOCK_LIST,
+                    new Response.Listener<String>()
+                    {
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(context, "Registered a lock!", Toast.LENGTH_LONG).show();
+                            Logging(response);
+
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Logging(error.toString());
+                            String response = "";
+                            //deal with error based on status code
+                            switch (error.networkResponse.statusCode) {
+                                case (500): {response = "The server encountered an error, sorry."; break;}
+                                default: response = "unknown response";
+                            }
+                            Toast.makeText(context,response,Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+            ) {
+                //This method adds our basic authentication token
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String>  params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s",name,pass);
+                    String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                    params.put("Authorization", auth);
+                    return params;
+                }
+            };
+
+            //send out request
+            queue.add(postRequest);
+        }else
+            Toast.makeText(context,"No internet connection",Toast.LENGTH_LONG).show();
+    }
 
 
 

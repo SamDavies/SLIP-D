@@ -52,6 +52,12 @@ public class Lock {
         status = false;
         this.place = place;
     }
+    public Lock(String name, Integer id, boolean status,int place) {
+        this.name = name;
+        this.id = id;
+        this.status = status;
+        this.place = place;
+    }
 
     @Override
     public String toString() {

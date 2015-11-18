@@ -8,6 +8,7 @@
     <dimen name="list_name_size">26sp</dimen>
     <dimen name="list_icon_size">40dp</dimen>
     <dimen name="list_circle_size">50dp</dimen>
+    <dimen name="list_identicon_size">50dp</dimen>
 
 
 

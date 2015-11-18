@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,12 +15,19 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -34,7 +42,12 @@ public class Util {
     //"https://httpbin.org/get"
     private static final String URL_REGISTER_LOCK = "https://slip-d-4.herokuapp.com/lock";
     public static final String URL_LOCK_LIST = "https://slip-d-4.herokuapp.com/lock";
+    public static final String URL_FRIEND_LIST = "https://slip-d-4.herokuapp.com/friend";
+    public static final String URL_USER_LIST = "https://slip-d-4.herokuapp.com/user";
     public static final String URL_LOCK_OPEN = "https://slip-d-4.herokuapp.com/open/";
+    public static final String URL_LOCK_CLOSED = "https://slip-d-4.herokuapp.com/close/";
+    public static final String URL_ADD_FRIEND = "https://slip-d-4.herokuapp.com/friend";
+
 
 
 
@@ -100,7 +113,7 @@ public class Util {
                             Toast.makeText(context, "Registered!", Toast.LENGTH_LONG).show();
                             Logging(response);
                             //start Logged in activity
-                            Intent intent = new Intent(context, LockListAcitivity.class);
+                            Intent intent = new Intent(context, MainScreenWithListsActivity.class);
                             context.startActivity(intent);
                         }
                     },
@@ -148,7 +161,7 @@ public class Util {
                             Toast.makeText(context, "Logged In", Toast.LENGTH_LONG).show();
                             Logging(response);
                             //start Logged in activity
-                            Intent intent = new Intent(context, LockListAcitivity.class);
+                            Intent intent = new Intent(context, MainScreenWithListsActivity.class);
                             context.startActivity(intent);
                         }
                     },
@@ -262,7 +275,6 @@ public class Util {
                     {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(context, "Closed a lock!", Toast.LENGTH_LONG).show();
                             Logging(response);
 
                         }
@@ -307,7 +319,8 @@ public class Util {
             Toast.makeText(context,"No internet connection",Toast.LENGTH_LONG).show();
     }
 
-    public static void getLockList(final Context context) {
+
+    public static void closeLock(final int lockId, final Context context) {
         if (isNetworkAvailable(context)) {
             //create queue for requests
             RequestQueue queue = Volley.newRequestQueue(context);
@@ -317,12 +330,11 @@ public class Util {
 
 
             //Start request
-            StringRequest postRequest = new StringRequest(Request.Method.GET, URL_LOCK_LIST,
+            StringRequest postRequest = new StringRequest(Request.Method.PUT, URL_LOCK_CLOSED+lockId,
                     new Response.Listener<String>()
                     {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(context, "Registered a lock!", Toast.LENGTH_LONG).show();
                             Logging(response);
 
                         }
@@ -335,6 +347,7 @@ public class Util {
                             String response = "";
                             //deal with error based on status code
                             switch (error.networkResponse.statusCode) {
+                                case (406): {response = "Lock is owned by someone else!";break;}
                                 case (500): {response = "The server encountered an error, sorry."; break;}
                                 default: response = "unknown response";
                             }
@@ -352,6 +365,12 @@ public class Util {
                     params.put("Authorization", auth);
                     return params;
                 }
+                // override this to set body with register details
+                @Override
+                public byte[] getBody()  {
+                    String httpPostBody="lock_id="+lockId;
+                    return httpPostBody.getBytes();
+                }
             };
 
             //send out request
@@ -359,6 +378,296 @@ public class Util {
         }else
             Toast.makeText(context,"No internet connection",Toast.LENGTH_LONG).show();
     }
+
+
+
+    public static void getLockList(final ArrayList<Lock> lockList,final LockListAdapter lockListAdapter, final SwipeRefreshLayout swipeRefreshLayout,final Context context) {
+        if (Util.isNetworkAvailable(context)) {
+            //create queue for requests
+            RequestQueue queue = Volley.newRequestQueue(context);
+            final String name = Util.readUserName(context);
+            final String pass = Util.readPassword(context);
+
+
+            //Start request
+            JsonArrayRequest jReq = new JsonArrayRequest(Util.URL_LOCK_LIST,
+                    new Response.Listener<JSONArray>() {
+
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            Log.d("List", response.toString());
+                            //clear the list at the start to we won't add more items
+                            lockList.clear();
+                            for (int i = 0; i < response.length(); i++) {
+                                try {
+                                    lockList.add(convertJsonToLock(response
+                                            .getJSONObject(i)));
+                                } catch (JSONException e) {
+                                    Log.e("Json List",e.toString());
+                                }
+                            }
+                            //lockListAdapter.
+                            lockListAdapter.notifyDataSetChanged();
+                            // stopping swipe refresh
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("List", error.toString());
+                    String response = "";
+                    //deal with error based on status code
+                    switch (error.networkResponse.statusCode) {
+                        case (500): {
+                            response = "The server encountered an error, sorry.";
+                            //server encountered an error, retry again
+                            getLockList(lockList,lockListAdapter,swipeRefreshLayout,context);
+                            break;
+                        }
+                        default:
+                            response = "unknown response";
+                    }
+                    // stopping swipe refresh
+                    swipeRefreshLayout.setRefreshing(false);
+                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+
+                }
+            }){
+                //This method adds our basic authentication token
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s", name, pass);
+                    String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                    params.put("Authorization", auth);
+                    return params;
+                }
+            };
+
+            //send out request
+            queue.add(jReq);
+        } else
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+    }
+
+
+
+
+    private static Lock convertJsonToLock(JSONObject obj) throws JSONException {
+        String name = obj.getString("name");
+        boolean status = obj.getBoolean("actually_open");
+        boolean statusRequested = obj.getBoolean("requested_open");
+        int id = obj.getInt("id");
+        //Creating places in random as there is no place for this in the API
+        Random rand = new Random();
+        int place = rand.nextInt(3);
+        return new Lock(name,id,status,statusRequested,place);
+    }
+
+    public static void getFriendList(final ArrayList<Friend> friendList,final FriendListAdapter friendListAdapter, final SwipeRefreshLayout swipeRefreshLayout,final Context context) {
+        if (Util.isNetworkAvailable(context)) {
+            //create queue for requests
+            RequestQueue queue = Volley.newRequestQueue(context);
+            final String name = Util.readUserName(context);
+            final String pass = Util.readPassword(context);
+
+
+            //Start request
+            JsonArrayRequest jReq = new JsonArrayRequest(Util.URL_FRIEND_LIST,
+                    new Response.Listener<JSONArray>() {
+
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            Log.d("Friend List", response.toString());
+                            //clear the list at the start to we won't add more items
+                            friendList.clear();
+                            for (int i = 0; i < response.length(); i++) {
+                                try {
+                                    friendList.add(convertJsonToFriend(response
+                                            .getJSONObject(i)));
+                                } catch (JSONException e) {
+                                    Log.e("Json List",e.toString());
+                                }
+                            }
+                            //lockListAdapter.
+                            friendListAdapter.notifyDataSetChanged();
+                            // stopping swipe refresh
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("List", error.toString());
+                    String response = "";
+                    //deal with error based on status code
+                    switch (error.networkResponse.statusCode) {
+                        case (500): {
+                            response = "The server encountered an error, sorry.";
+                            //server encountered an error, retry again
+                            getFriendList(friendList, friendListAdapter, swipeRefreshLayout, context);
+                            break;
+                        }
+                        default:
+                            response = "unknown response";
+                    }
+                    // stopping swipe refresh
+                    swipeRefreshLayout.setRefreshing(false);
+                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+
+                }
+            }){
+                //This method adds our basic authentication token
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s", name, pass);
+                    String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                    params.put("Authorization", auth);
+                    return params;
+                }
+            };
+
+            //send out request
+            queue.add(jReq);
+        } else
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+    }
+
+
+    private static Friend convertJsonToFriend(JSONObject obj) throws JSONException {
+        String firstName = obj.getString("first_name");
+        String lastName = obj.getString("last_name");
+        int id = obj.getInt("id");
+
+        return new Friend(firstName,lastName,id);
+    }
+
+    public static void getUserList(final ArrayList<Friend> friendList,final FriendListAdapter friendListAdapter,final Context context) {
+        if (Util.isNetworkAvailable(context)) {
+            //create queue for requests
+            RequestQueue queue = Volley.newRequestQueue(context);
+            final String name = Util.readUserName(context);
+            final String pass = Util.readPassword(context);
+
+            //Start request
+            JsonArrayRequest jReq = new JsonArrayRequest(Util.URL_USER_LIST,
+                    new Response.Listener<JSONArray>() {
+
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            Log.d("User List", response.toString());
+                            //clear the list at the start to we won't add more items
+                            friendList.clear();
+                            for (int i = 0; i < response.length(); i++) {
+                                try {
+                                    friendList.add(convertJsonToFriend(response
+                                            .getJSONObject(i)));
+                                } catch (JSONException e) {
+                                    Log.e("Json List",e.toString());
+                                }
+                            }
+                            friendListAdapter.notifyDataSetChanged();
+                        }
+                    }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("List", error.toString());
+                    String response = "";
+                    //deal with error based on status code
+                    switch (error.networkResponse.statusCode) {
+                        case (500): {
+                            response = "The server encountered an error, sorry.";
+                            //server encountered an error, retry again
+                            getUserList(friendList, friendListAdapter, context);
+                            break;
+                        }
+                        default:
+                            response = "unknown response";
+                    }
+                    // stopping swipe refresh
+                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+
+                }
+            }){
+                //This method adds our basic authentication token
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s", name, pass);
+                    String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                    params.put("Authorization", auth);
+                    return params;
+                }
+            };
+
+            //send out request
+            queue.add(jReq);
+        } else
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+    }
+
+    public static void addFriend(final int id, final Context context) {
+        if (isNetworkAvailable(context)) {
+            //create queue for requests
+            RequestQueue queue = Volley.newRequestQueue(context);
+            final String name = Util.readUserName(context);
+            final String pass = Util.readPassword(context);
+
+            //Start request
+            StringRequest postRequest = new StringRequest(Request.Method.POST, URL_ADD_FRIEND,
+                    new Response.Listener<String>()
+                    {
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(context, "Friend added!", Toast.LENGTH_LONG).show();
+                            Logging(response);
+                            //start Logged in activity
+                            Intent intent = new Intent(context, MainScreenWithListsActivity.class);
+                            context.startActivity(intent);
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Logging(error.toString());
+                            String response = "";
+                            //deal with error based on status code
+                            switch (error.networkResponse.statusCode) {
+                                case (401): {response = "Already Friends"; break;}
+                                case (500): {response = "The server encountered an error, sorry."; break;}
+                                default: response = "unknown response";
+                            }
+                            Toast.makeText(context,response,Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+            ) {
+                //This method adds our basic authentication token
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String>  params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s",name,pass);
+                    String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                    params.put("Authorization", auth);
+                    return params;
+                }
+                // override this to set body with register details
+                @Override
+                public byte[] getBody()  {
+                    String httpPostBody="friend_id="+id;
+                    return httpPostBody.getBytes();
+                }
+            };
+            //send out request
+            queue.add(postRequest);
+        }else
+            Toast.makeText(context,"No internet connection",Toast.LENGTH_LONG).show();
+    }
+
 
 
 

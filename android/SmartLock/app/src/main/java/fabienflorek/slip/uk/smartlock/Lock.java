@@ -35,6 +35,17 @@ public class Lock {
     boolean status;
     int place;
 
+    public boolean isStatusRequested() {
+        return statusRequested;
+    }
+
+    public void setStatusRequested(boolean statusRequested) {
+        this.statusRequested = statusRequested;
+    }
+
+    boolean statusRequested;
+
+
 
     public int getPlace() {
         return place;
@@ -57,6 +68,14 @@ public class Lock {
         this.id = id;
         this.status = status;
         this.place = place;
+        this.statusRequested = status;
+    }
+    public Lock(String name, Integer id, boolean status,boolean statusRequested,int place) {
+        this.name = name;
+        this.id = id;
+        this.status = status;
+        this.place = place;
+        this.statusRequested = statusRequested;
     }
 
     @Override

@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/list_size"
+    android:paddingLeft="@dimen/list_horizontal_margin"
+    android:paddingRight="@dimen/list_horizontal_margin"
+    android:paddingTop="@dimen/list_vertical_margin"
+    android:paddingBottom="@dimen/list_vertical_margin" >
+
+
+
+
+    <ImageView
+        android:id="@+id/list_row_friends_iconplace"
+        android:layout_width="@dimen/list_identicon_size"
+        android:layout_height="@dimen/list_identicon_size"
+        android:contentDescription="TODO"
+        android:src="@drawable/ic_perm_identity_white_24dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+    <TextView
+        android:id="@+id/list_row_friends_firstLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="true"
+        android:gravity="center_vertical"
+        android:text="First line"
+        android:layout_marginLeft="36dp"
+        android:textSize="@dimen/list_name_size"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/list_row_friends_iconplace"
+        android:layout_toEndOf="@+id/list_row_friends_iconplace" />
+
+</RelativeLayout> 

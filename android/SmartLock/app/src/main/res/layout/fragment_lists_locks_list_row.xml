@@ -7,7 +7,7 @@
     android:paddingBottom="@dimen/list_vertical_margin" >
 
     <ImageView
-        android:id="@+id/list_row_iconlock"
+        android:id="@+id/list_row_locks_iconlock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="TODO"
@@ -17,7 +17,7 @@
         android:layout_alignParentEnd="true" />
 
     <LinearLayout
-        android:id="@+id/list_row_circle"
+        android:id="@+id/list_row_locks_circle"
         android:layout_width="@dimen/list_circle_size"
         android:layout_height="@dimen/list_circle_size"
         android:contentDescription="TODO"
@@ -29,7 +29,7 @@
 
 
     <ImageView
-        android:id="@+id/list_row_iconplace"
+        android:id="@+id/list_row_locks_iconplace"
         android:layout_width="@dimen/list_icon_size"
         android:layout_height="@dimen/list_icon_size"
         android:contentDescription="TODO"
@@ -41,19 +41,19 @@
 
 
     <TextView
-        android:id="@+id/list_row_secondLine"
+        android:id="@+id/list_row_locks_secondLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
         android:singleLine="true"
         android:text="Second line"
         android:textSize="12sp"
-        android:layout_below="@+id/list_row_firstLine"
-        android:layout_alignLeft="@+id/list_row_firstLine"
-        android:layout_alignStart="@+id/list_row_firstLine" />
+        android:layout_below="@+id/list_row_locks_firstLine"
+        android:layout_alignLeft="@+id/list_row_locks_firstLine"
+        android:layout_alignStart="@+id/list_row_locks_firstLine" />
 
     <TextView
-        android:id="@+id/list_row_firstLine"
+        android:id="@+id/list_row_locks_firstLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
@@ -61,8 +61,8 @@
         android:text="First line"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:textSize="@dimen/list_name_size"
-        android:layout_alignTop="@+id/list_row_circle"
-        android:layout_toRightOf="@+id/list_row_circle"
-        android:layout_toEndOf="@+id/list_row_circle" />
+        android:layout_alignTop="@+id/list_row_locks_circle"
+        android:layout_toRightOf="@+id/list_row_locks_circle"
+        android:layout_toEndOf="@+id/list_row_locks_circle" />
 
 </RelativeLayout> 

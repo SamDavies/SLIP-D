@@ -55,15 +55,20 @@ public class LockListAcitivity extends AppCompatActivity implements SwipeRefresh
         //create adapter
         lockListAdapter = new LockListAdapter(this, lockList);
         listView.setAdapter(lockListAdapter);
-
+        //handles on click of a lock, opening closing it
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     final int position, long id) {
-                lockList.get(position).setStatus(true);
-                Util.openLock(lockList.get(position).getId(), getApplicationContext());
                 lockListAdapter.notifyDataSetChanged();
+                boolean currentStatus = lockList.get(position).isStatus();
+                if (currentStatus) {//lock is open
+                    Util.closeLock(lockList.get(position).getId(), getApplicationContext());
+                }else {
+                    Util.openLock(lockList.get(position).getId(), getApplicationContext());
+                }
+                //lockList.get(position).setStatus(true);
             }
 
         });
@@ -82,7 +87,21 @@ public class LockListAcitivity extends AppCompatActivity implements SwipeRefresh
                                     }
                                 }
         );
+        /*
+        //Refresh list every second
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                getLockList(getApplicationContext());
+                handler.postDelayed(this, 1000);
+            }
+        }, 1000);
+        */
     }
+
+
 
     @OnClick(R.id.fab)
     public void onAddLockFabClick() {
@@ -122,9 +141,7 @@ public class LockListAcitivity extends AppCompatActivity implements SwipeRefresh
 
     //This method cannot be part of Util class as others, beacuse it needs access to the list adapter
     public static void getLockList(final Context context) {
-        //clear the list at the start to we won't add more items
-        lockList.clear();
-        if (Util.isNetworkAvailable(context)) {
+             if (Util.isNetworkAvailable(context)) {
             //create queue for requests
             RequestQueue queue = Volley.newRequestQueue(context);
             final String name = Util.readUserName(context);
@@ -138,7 +155,8 @@ public class LockListAcitivity extends AppCompatActivity implements SwipeRefresh
                         @Override
                         public void onResponse(JSONArray response) {
                             Log.d("List", response.toString());
-                            //lockList = new LockList();
+                            //clear the list at the start to we won't add more items
+                            lockList.clear();
                             for (int i = 0; i < response.length(); i++) {
                                 try {
                                     lockList.add(convertJsonToLock(response
@@ -198,11 +216,12 @@ public class LockListAcitivity extends AppCompatActivity implements SwipeRefresh
     private static Lock convertJsonToLock(JSONObject obj) throws JSONException {
         String name = obj.getString("name");
         boolean status = obj.getBoolean("actually_open");
+        boolean statusRequested = obj.getBoolean("requested_open");
         int id = obj.getInt("id");
         //Creating places in random as there is no place for this in the API
         Random rand = new Random();
         int place = rand.nextInt(3);
-        return new Lock(name,id,status,place);
+        return new Lock(name,id,status,statusRequested,place);
     }
 
 

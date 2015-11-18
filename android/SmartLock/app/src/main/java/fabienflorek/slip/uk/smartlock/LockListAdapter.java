@@ -28,12 +28,12 @@ public class LockListAdapter extends ArrayAdapter<Lock> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.locklist_row, parent, false);
-        TextView textViewFirst = (TextView) rowView.findViewById(R.id.list_row_firstLine);
-        TextView textViewSecond = (TextView) rowView.findViewById(R.id.list_row_secondLine);
-        ImageView imageViewIcon = (ImageView) rowView.findViewById(R.id.list_row_iconlock);
-        ImageView imageViewPlace = (ImageView) rowView.findViewById(R.id.list_row_iconplace);
-        LinearLayout linearLayoutCircle = (LinearLayout) rowView.findViewById(R.id.list_row_circle);
+        View rowView = inflater.inflate(R.layout.fragment_lists_locks_list_row, parent, false);
+        TextView textViewFirst = (TextView) rowView.findViewById(R.id.list_row_locks_firstLine);
+        TextView textViewSecond = (TextView) rowView.findViewById(R.id.list_row_locks_secondLine);
+        ImageView imageViewIcon = (ImageView) rowView.findViewById(R.id.list_row_locks_iconlock);
+        ImageView imageViewPlace = (ImageView) rowView.findViewById(R.id.list_row_locks_iconplace);
+        LinearLayout linearLayoutCircle = (LinearLayout) rowView.findViewById(R.id.list_row_locks_circle);
         textViewFirst.setText(locks.get(position).getName());
 
         if (locks.get(position).status) {
@@ -42,8 +42,14 @@ public class LockListAdapter extends ArrayAdapter<Lock> {
         }
         else {
             imageViewIcon.setImageResource(R.drawable.ic_lock_black_24dp);
-            textViewSecond.setText("Locked" + locks.get(position).getId());
+            if (locks.get(position).isStatusRequested())
+                textViewSecond.setText("Opening" + locks.get(position).getId());
+            else
+                textViewSecond.setText("Locked" + locks.get(position).getId());
         }
+
+        if (locks.get(position).status!=locks.get(position).isStatusRequested())
+            imageViewIcon.setImageResource(R.drawable.ic_sync_black_24dp);
 
         switch (locks.get(position).getPlace()) {
             case 0 : {imageViewPlace.setImageResource(R.drawable.ic_home_white_24dp);break;}

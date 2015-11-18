@@ -48,7 +48,7 @@ public class FriendListAdapter extends ArrayAdapter<Friend> {
         identicon = Bitmap.createScaledBitmap(identicon,size , size, false);
         imageViewPlace.setImageBitmap(identicon);
 
- 
+
 
 
 

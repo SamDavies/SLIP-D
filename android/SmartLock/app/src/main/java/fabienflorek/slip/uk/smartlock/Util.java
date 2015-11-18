@@ -99,7 +99,7 @@ public class Util {
     }
 
 
-    public static void registerUser(final String name, final String pass, final Context context) {
+    public static void registerUser(final String name, final String pass,final String first, final String last, final Context context) {
         if (isNetworkAvailable(context)) {
             //create queue for requests
             RequestQueue queue = Volley.newRequestQueue(context);
@@ -137,7 +137,7 @@ public class Util {
                 // override this to set body with register details
                 @Override
                 public byte[] getBody()  {
-                    String httpPostBody="email="+name+"&password="+pass;
+                    String httpPostBody="email="+name+"&password="+pass+"&first_name="+first+"&last_name="+last;
                     return httpPostBody.getBytes();
                 }
             };

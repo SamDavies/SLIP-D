@@ -38,15 +38,17 @@ public class LockListAdapter extends ArrayAdapter<Lock> {
 
         if (locks.get(position).status) {
             imageViewIcon.setImageResource(R.drawable.ic_lock_open_black_24dp);
-            textViewSecond.setText("Open" + locks.get(position).getId());
+            textViewSecond.setText("Open");
         }
         else {
             imageViewIcon.setImageResource(R.drawable.ic_lock_black_24dp);
             if (locks.get(position).isStatusRequested())
-                textViewSecond.setText("Opening" + locks.get(position).getId());
+                textViewSecond.setText("Opening");
             else
-                textViewSecond.setText("Locked" + locks.get(position).getId());
+                textViewSecond.setText("Locked");
         }
+        imageViewIcon.setColorFilter(context.getResources().getColor(R.color.accent));
+
 
         if (locks.get(position).status!=locks.get(position).isStatusRequested())
             imageViewIcon.setImageResource(R.drawable.ic_sync_black_24dp);

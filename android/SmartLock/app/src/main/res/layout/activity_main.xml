@@ -18,9 +18,10 @@
         android:layout_height="wrap_content"
         android:text="Login"
         android:id="@+id/button_login"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/password_input_layout"
-        android:layout_alignStart="@+id/password_input_layout" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/last_name_input_layout"
+        android:layout_alignStart="@+id/last_name_input_layout"
+        android:layout_marginBottom="67dp" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/email_input_layout_"
@@ -52,7 +53,7 @@
         android:maxLength="30"
         android:layout_below="@+id/email_input_layout_"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="34dp">
+        >
 
 
         <EditText
@@ -68,6 +69,55 @@
             android:text="foo" />
 
     </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/first_name_input_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLength="30"
+        android:layout_below="@+id/password_input_layout"
+        android:layout_alignLeft="@+id/password_input_layout"
+        android:layout_alignStart="@+id/password_input_layout">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText_first"
+            android:hint="First Name"
+            android:textColor="@color/accent"
+            android:layout_above="@+id/button"
+            android:layout_centerHorizontal="true"
+            android:text="John" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/last_name_input_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLength="30"
+        android:layout_below="@+id/first_name_input_layout"
+        android:layout_alignLeft="@+id/first_name_input_layout"
+        android:layout_alignStart="@+id/first_name_input_layout"
+        android:layout_marginBottom="34dp"
+        >
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText_last"
+            android:hint="Last Name"
+            android:textColor="@color/accent"
+            android:layout_above="@+id/button"
+            android:layout_centerHorizontal="true"
+            android:text="Snow" />
+
+    </android.support.design.widget.TextInputLayout>
+
 
     <Button
         android:layout_width="wrap_content"

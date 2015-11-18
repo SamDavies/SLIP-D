@@ -4,8 +4,8 @@
     <color name="primary">#00BCD4</color>
     <color name="primary_dark">#0097A7</color>
     <color name="ripple">#00BCD4</color>
-    <color name="accent">#FF4081</color>
-    <color name="accent_pressed">#EC407A</color>
+    <color name="accent">#FF7A00</color>
+    <color name="accent_pressed">#F47500</color>
     <color name="place_color">#C2185B</color>
     <color name="white">#FFFFFF</color>
     <color name="darker_white">#B2EBF2</color>

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -90,7 +91,7 @@ public class FriendListExpandableAdapter extends BaseExpandableListAdapter {
         identicon = Bitmap.createScaledBitmap(identicon,size , size, false);
         imageViewPlace.setImageBitmap(identicon);
 
-
+        imageViewIndicator.setColorFilter(context.getResources().getColor(R.color.accent));
         if (isExpanded)
             imageViewIndicator.setImageResource(R.drawable.group_up);
         else
@@ -107,6 +108,13 @@ public class FriendListExpandableAdapter extends BaseExpandableListAdapter {
         TextView textViewFirst = (TextView) convertView.findViewById(R.id.list_row_friends_firstLine_detail);
         Lock lock = lockList.get(childPosition);
         textViewFirst.setText(lock.getName());
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,"click",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return convertView;
     }

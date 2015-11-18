@@ -1,10 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="@dimen/list_size"
-    android:paddingLeft="@dimen/list_horizontal_margin"
-    android:paddingRight="@dimen/list_horizontal_margin"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:paddingLeft="32dp"
+    android:paddingRight="32dp"
     android:paddingTop="@dimen/list_vertical_margin"
-    android:paddingBottom="@dimen/list_vertical_margin" >
+    android:paddingBottom="@dimen/list_vertical_margin"
+    android:clickable="true"
+    android:focusable="true">
 
 
 
@@ -17,9 +19,18 @@
         android:layout_alignWithParentIfMissing="true"
         android:gravity="center_vertical"
         android:text="First line"
-        android:layout_marginLeft="36dp"
-        android:textSize="@dimen/list_name_size"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+
         android:layout_centerVertical="true"
-       />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_row_friends_checkBox"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout> 

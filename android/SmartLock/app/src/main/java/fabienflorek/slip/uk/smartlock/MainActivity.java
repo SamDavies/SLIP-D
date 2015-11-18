@@ -23,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
     EditText editTextEmail;
     @Bind(R.id.editText_password)
     EditText editTextPassword;
+    @Bind(R.id.editText_first)
+    EditText editTextFirst;
+    @Bind(R.id.editText_last)
+    EditText editTextLast;
 
     //private final String MY_URL = "https://httpbin.org/get";
     private final String DEFAULT_EMAIL = "test@example.com";
@@ -57,9 +61,11 @@ public class MainActivity extends AppCompatActivity {
         //get name and pass from edit texts and store them in shared pref
         String name = editTextEmail.getText().toString();
         String pass = editTextPassword.getText().toString();
+        String first = editTextFirst.getText().toString();
+        String last = editTextLast.getText().toString();
         Util.saveUserNameAndPass(this, name, pass);
         //start connection to server and register user
-        Util.registerUser(name, pass, this);
+        Util.registerUser(name, pass,first,last, this);
     }
 
 

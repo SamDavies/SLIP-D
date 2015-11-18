@@ -7,11 +7,11 @@
 
     <string name="title_activity_qr_scanner">QR Scanner</string>
     <string name="title_activity_lock_list_acitivity">LockListAcitivity</string>
-    <string name="title_activity_add_lock">Add Lock</string>
+    <string name="title_activity_add_lock">Add a Lock</string>
     <string name="title_activity_main_screen_with_lists">SmartLock</string>
 
     <string name="title_section1">Locks</string>
     <string name="title_section2">Friends</string>
-    <string name="title_activity_add_friend">AddFriendActivity</string>
+    <string name="title_activity_add_friend">Add a Friend</string>
 
 </resources>

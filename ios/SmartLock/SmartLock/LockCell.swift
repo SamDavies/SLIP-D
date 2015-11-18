@@ -26,21 +26,70 @@ class LockCell: UICollectionViewCell {
         openCloseButton.layer.shadowOffset = CGSizeMake(12.0, 12.0)
     }
     
-    @IBAction func openClose(sender: AnyObject) {
+    @IBAction func open(sender: AnyObject) {
         // update the button on another thread
+        Lock.openLock(lock.id).then {
+            lock -> Void in
+            self.setWaiting()
+            self.pollLockIsOpen(lock.id)
+        }
+    }
+    
+    func pollLockIsOpen(id: Int) {
+        Lock.getLock(id).then {
+            lock -> Void in
+            if(lock.actuallyOpen == false){
+                sleep(1)
+                self.pollLockIsOpen(lock.id)
+            }else{
+                debugPrint("lock opened")
+                self.setOpen()
+                self.pollLockIsClosed(lock.id)
+            }
+        }
+    }
+    
+    func pollLockIsClosed(id: Int) {
+        Lock.getLock(id).then {
+            lock -> Void in
+            if(lock.actuallyOpen == true){
+                sleep(1)
+                debugPrint("waiting to close")
+                self.pollLockIsClosed(lock.id)
+            }else{
+                debugPrint("closed")
+                self.setClosed()
+            }
+        }
+    }
+    
+    func setClosed() {
         dispatch_async(dispatch_get_main_queue(), {
             // swap the open state
-            self.lock.isLocked = !self.lock.isLocked
-            if(!self.lock.isLocked){
-                self.openCloseButton.setTitle("-", forState: UIControlState.Normal)
-            } else {
-                self.openCloseButton.setTitle("O", forState: UIControlState.Normal)
-            }
+            self.openCloseButton.setTitle("-", forState: UIControlState.Normal)
+        })
+    }
+    
+    func setWaiting() {
+        dispatch_async(dispatch_get_main_queue(), {
+            // swap the open state
+            self.lock.requestedOpen = true
+            self.openCloseButton.setTitle("...", forState: UIControlState.Normal)
+        })
+    }
+    
+    func setOpen() {
+        dispatch_async(dispatch_get_main_queue(), {
+            // swap the open state
+            self.lock.requestedOpen = false
+            self.openCloseButton.setTitle("O", forState: UIControlState.Normal)
         })
     }
     
     func create(lock: Lock) {
         self.lock = lock
         lockName.text = lock.name
+        
+        setClosed()
     }
 }

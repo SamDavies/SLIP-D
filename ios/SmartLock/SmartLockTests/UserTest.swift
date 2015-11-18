@@ -10,6 +10,7 @@ import UIKit
 import XCTest
 import Alamofire
 import SwiftyJSON
+import PromiseKit
 @testable import SmartLock
 
 class UserTest: XCTestCase {
@@ -42,13 +43,35 @@ class UserTest: XCTestCase {
     }
     
     func testGetUserList() {
-        User.getUserList().then {
+        User.getUserList(nil).then {
             users -> Void in
             XCTAssert(true)
             self.expectation.fulfill()
         }
         waitForExpectationsWithTimeout(5.0, handler: nil)
     }
+    
+    func testGetFriendList() {
+        User.getFriendList(nil).then {
+            users -> Void in
+            XCTAssert(true)
+            self.expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(5.0, handler: nil)
+    }
+    
+//    func testGetUserListFilterByLock() {
+//        let versionBuild: String = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
+//        User.addUser(versionBuild + "@mail.com", password: "python", firstName: "test", lastName: "user").then {
+//            user -> Promise<[User]> in
+//            return User.getUserList(0)
+//        }.then {
+//            users -> Void in
+//            XCTAssertEqual(users.count, 0)
+//            self.expectation.fulfill()
+//        }
+//        waitForExpectationsWithTimeout(5.0, handler: nil)
+//    }
     
     func testGetUser() {
         User.getUser(1).then {

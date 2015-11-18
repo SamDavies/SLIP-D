@@ -10,7 +10,7 @@ import UIKit
 
 struct Settings {
 //    static let API_URL = "http://127.0.0.1:5000/"
-    static let API_URL = "https://slip-d-3.herokuapp.com/"
+    static let API_URL = "https://slip-d-4.herokuapp.com/"
     static let MEDIA_URL = "http://d2wuf2oqs5xulb.cloudfront.net/"
 
     static let IS_IPAD =  (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Pad)

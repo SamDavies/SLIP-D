@@ -148,6 +148,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XvK-Ip-K9V" id="6lJ-Ka-NjP">
+                                                                <rect key="frame" x="0.0" y="0.0" width="240" height="99.5"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <animations/>
                                                             </tableViewCellContentView>
@@ -193,7 +194,7 @@
                                                         </mask>
                                                     </variation>
                                                     <connections>
-                                                        <action selector="openClose:" destination="SzM-7a-QbF" eventType="touchUpInside" id="GgD-4l-prZ"/>
+                                                        <action selector="open:" destination="SzM-7a-QbF" eventType="touchUpInside" id="p2h-ll-Tf9"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -229,14 +230,14 @@
                                                 <exclude reference="5af-ZY-Vbi"/>
                                                 <exclude reference="krc-F5-muC"/>
                                                 <exclude reference="yj9-bO-cMo"/>
-                                                <exclude reference="Xrk-f9-bh0"/>
-                                                <exclude reference="ooP-l4-2bM"/>
-                                                <exclude reference="s2a-Qx-TuB"/>
-                                                <exclude reference="tKp-vU-nan"/>
                                                 <exclude reference="EPR-Ou-K2M"/>
                                                 <exclude reference="Zy9-Be-Dda"/>
                                                 <exclude reference="vQm-sf-0sG"/>
                                                 <exclude reference="wEy-6J-5CJ"/>
+                                                <exclude reference="Xrk-f9-bh0"/>
+                                                <exclude reference="ooP-l4-2bM"/>
+                                                <exclude reference="s2a-Qx-TuB"/>
+                                                <exclude reference="tKp-vU-nan"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=regular-widthClass=compact">
@@ -248,14 +249,14 @@
                                                 <include reference="5af-ZY-Vbi"/>
                                                 <include reference="krc-F5-muC"/>
                                                 <include reference="yj9-bO-cMo"/>
-                                                <include reference="Xrk-f9-bh0"/>
-                                                <include reference="ooP-l4-2bM"/>
-                                                <include reference="s2a-Qx-TuB"/>
-                                                <include reference="tKp-vU-nan"/>
                                                 <include reference="EPR-Ou-K2M"/>
                                                 <exclude reference="Zy9-Be-Dda"/>
                                                 <include reference="vQm-sf-0sG"/>
                                                 <exclude reference="wEy-6J-5CJ"/>
+                                                <include reference="Xrk-f9-bh0"/>
+                                                <include reference="ooP-l4-2bM"/>
+                                                <include reference="s2a-Qx-TuB"/>
+                                                <include reference="tKp-vU-nan"/>
                                             </mask>
                                         </variation>
                                         <connections>

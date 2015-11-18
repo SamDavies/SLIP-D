@@ -10,6 +10,7 @@ import UIKit
 import XCTest
 import Alamofire
 import SwiftyJSON
+import PromiseKit
 @testable import SmartLock
 
 class LockTest: XCTestCase {
@@ -35,7 +36,7 @@ class LockTest: XCTestCase {
         let versionBuild: String = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
         Lock.addLock(Int(versionBuild)!, name: "sam").then {
             lock -> Void in
-            XCTAssert(true)
+            XCTAssertEqual(lock.requestedOpen, false)
             self.expectation.fulfill()
         }
         waitForExpectationsWithTimeout(5.0, handler: nil)
@@ -45,6 +46,33 @@ class LockTest: XCTestCase {
         Lock.getLockList().then {
             locks -> Void in
             XCTAssert(true)
+            self.expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(5.0, handler: nil)
+    }
+    
+    func testGetLock() {
+        let versionBuild: String = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
+        Lock.addLock(Int(versionBuild)! + 2000, name: "sam").then {
+            lock -> Promise<Lock> in
+            return Lock.getLock(lock.id)
+        }.then {
+            lock -> Void in
+            XCTAssert(true)
+            self.expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(5.0, handler: nil)
+    }
+    
+    func testOpenLock() {
+        let versionBuild: String = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
+        
+        Lock.addLock(Int(versionBuild)! + 1000, name: "sam").then {
+            lock -> Promise<Lock> in
+            return Lock.openLock(Int(versionBuild)! + 1000)
+        }.then {
+            lock -> Void in
+            XCTAssertEqual(lock.requestedOpen, true)
             self.expectation.fulfill()
         }
         waitForExpectationsWithTimeout(5.0, handler: nil)

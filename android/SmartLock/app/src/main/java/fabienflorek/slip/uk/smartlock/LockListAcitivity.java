@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -31,13 +32,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LockListAcitivity extends AppCompatActivity {
+public class LockListAcitivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     @Bind(R.id.listview_lock_list)
     ListView listView;
     @Bind(R.id.fab)
     FloatingActionButton floatingActionButton;
 
+    static SwipeRefreshLayout swipeRefreshLayout;
     static LockList lockList;
     static LockListAdapter lockListAdapter;
 
@@ -47,10 +49,9 @@ public class LockListAcitivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lock_list_acitivity);
         ButterKnife.bind(this);
-
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         //create new list of locks from preferences
         lockList = new LockList();
-        getLockList(this);
         //create adapter
         lockListAdapter = new LockListAdapter(this, lockList);
         listView.setAdapter(lockListAdapter);
@@ -61,11 +62,26 @@ public class LockListAcitivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, final View view,
                                     final int position, long id) {
                 lockList.get(position).setStatus(true);
-                Util.closeLock(lockList.get(position).getId(),getApplicationContext());
+                Util.openLock(lockList.get(position).getId(), getApplicationContext());
                 lockListAdapter.notifyDataSetChanged();
             }
 
         });
+
+        swipeRefreshLayout.setOnRefreshListener(this);
+        /**
+         * Showing Swipe Refresh animation on activity create
+         * As animation won't start on onCreate, post runnable is used
+         */
+        swipeRefreshLayout.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        swipeRefreshLayout.setRefreshing(true);
+                                        getLockList(getApplicationContext());
+
+                                    }
+                                }
+        );
     }
 
     @OnClick(R.id.fab)
@@ -106,6 +122,8 @@ public class LockListAcitivity extends AppCompatActivity {
 
     //This method cannot be part of Util class as others, beacuse it needs access to the list adapter
     public static void getLockList(final Context context) {
+        //clear the list at the start to we won't add more items
+        lockList.clear();
         if (Util.isNetworkAvailable(context)) {
             //create queue for requests
             RequestQueue queue = Volley.newRequestQueue(context);
@@ -131,6 +149,8 @@ public class LockListAcitivity extends AppCompatActivity {
                             }
                             //lockListAdapter.
                             lockListAdapter.notifyDataSetChanged();
+                            // stopping swipe refresh
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     }, new Response.ErrorListener() {
 
@@ -149,6 +169,8 @@ public class LockListAcitivity extends AppCompatActivity {
                         default:
                             response = "unknown response";
                     }
+                    // stopping swipe refresh
+                    swipeRefreshLayout.setRefreshing(false);
                     Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
                 }
@@ -184,4 +206,8 @@ public class LockListAcitivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onRefresh() {
+        getLockList(this);
+    }
 }

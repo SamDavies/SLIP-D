@@ -34,6 +34,7 @@ public class Util {
     //"https://httpbin.org/get"
     private static final String URL_REGISTER_LOCK = "https://slip-d-4.herokuapp.com/lock";
     public static final String URL_LOCK_LIST = "https://slip-d-4.herokuapp.com/lock";
+    public static final String URL_LOCK_OPEN = "https://slip-d-4.herokuapp.com/open/";
 
 
 
@@ -246,7 +247,7 @@ public class Util {
             Toast.makeText(context,"No internet connection",Toast.LENGTH_LONG).show();
     }
 
-    public static void closeLock(final int lockId, final Context context) {
+    public static void openLock(final int lockId, final Context context) {
         if (isNetworkAvailable(context)) {
             //create queue for requests
             RequestQueue queue = Volley.newRequestQueue(context);
@@ -256,7 +257,7 @@ public class Util {
 
 
             //Start request
-            StringRequest postRequest = new StringRequest(Request.Method.POST, URL_REGISTER_LOCK,
+            StringRequest postRequest = new StringRequest(Request.Method.PUT, URL_LOCK_OPEN+lockId,
                     new Response.Listener<String>()
                     {
                         @Override

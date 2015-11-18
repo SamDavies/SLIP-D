@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.SparseArray;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,7 +112,6 @@ public class FriendListFragment extends Fragment implements SwipeRefreshLayout.O
             }
         }, 1000);
         */
-
         return rootView;
     }
 
@@ -140,6 +139,24 @@ public class FriendListFragment extends Fragment implements SwipeRefreshLayout.O
 
     }
 
+    private void moveGroupIndicatorRight() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            listView.setIndicatorBounds(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
+        } else {
+            listView.setIndicatorBoundsRelative(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
+        }
+
+
+    }
+    public int GetPixelFromDips(float pixels) {
+        // Get the screen's density scale
+        final float scale = getResources().getDisplayMetrics().density;
+        // Convert the dps to pixels, based on density scale
+        return (int) (pixels * scale + 0.5f);
+    }
 
 
 

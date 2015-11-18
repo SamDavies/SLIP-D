@@ -70,11 +70,13 @@ public class FriendListExpandableAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.fragment_lists_friend_list_row, null);
+            convertView = inflater.inflate(R.layout.fragment_lists_friend_list_row, parent,false);
         }
         Friend friend = (Friend) getGroup(groupPosition);
         TextView textViewFirst = (TextView) convertView.findViewById(R.id.list_row_friends_firstLine);
         ImageView imageViewPlace = (ImageView) convertView.findViewById(R.id.list_row_friends_iconplace);
+        ImageView imageViewIndicator = (ImageView) convertView.findViewById(R.id.list_row_friends_dropdown);
+
         String name = friend.getFirstName() + " " + friend.getLastName();
         textViewFirst.setText(name);
 
@@ -88,13 +90,19 @@ public class FriendListExpandableAdapter extends BaseExpandableListAdapter {
         identicon = Bitmap.createScaledBitmap(identicon,size , size, false);
         imageViewPlace.setImageBitmap(identicon);
 
+
+        if (isExpanded)
+            imageViewIndicator.setImageResource(R.drawable.group_up);
+        else
+            imageViewIndicator.setImageResource(R.drawable.group_down);
+
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.fragment_list_friend_list_row_detail, null);
+            convertView = inflater.inflate(R.layout.fragment_list_friend_list_row_detail, parent,false);
         }
         TextView textViewFirst = (TextView) convertView.findViewById(R.id.list_row_friends_firstLine_detail);
         Lock lock = lockList.get(childPosition);

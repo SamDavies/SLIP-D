@@ -33,4 +33,14 @@
         android:layout_toRightOf="@+id/list_row_friends_iconplace"
         android:layout_toEndOf="@+id/list_row_friends_iconplace" />
 
+    <ImageView
+        android:layout_width="@dimen/list_indicator_size"
+        android:layout_height="@dimen/list_indicator_size"
+        android:src="@drawable/group_down"
+        android:id="@+id/list_row_friends_dropdown"
+        android:layout_alignTop="@+id/list_row_friends_firstLine"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout> 

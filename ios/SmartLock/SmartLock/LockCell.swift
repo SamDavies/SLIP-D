@@ -24,6 +24,11 @@ class LockCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
         openCloseButton.layer.shadowOpacity = 0.8
         openCloseButton.layer.shadowRadius = 120
         openCloseButton.layer.shadowOffset = CGSizeMake(12.0, 12.0)
+        
+        // set initial state
+        if lock != nil {
+            figureOutButton()
+        }
     }
     
     func create(lock: Lock) {
@@ -31,6 +36,15 @@ class LockCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
         lockName.text = lock.name
         
         // set initial state
+        figureOutButton()
+        
+//        User.getUserList(self.lock.id).then {
+//            users -> Void in
+//            
+//        }
+    }
+    
+    func figureOutButton(){
         updateButton()
         
         if(lock.requestedOpen && !lock.actuallyOpen){
@@ -40,11 +54,6 @@ class LockCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
         if(!lock.requestedOpen && lock.actuallyOpen){
             self.pollLockIsClosed(lock.id)
         }
-        
-//        User.getUserList(self.lock.id).then {
-//            users -> Void in
-//            
-//        }
     }
     
     func updateButton(){
@@ -98,9 +107,12 @@ class LockCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
             self.lock = lock
             self.updateButton()
             if(!(lock.requestedOpen && lock.actuallyOpen)){
-                sleep(1)
-                debugPrint("waiting to open")
-                self.pollLockIsOpen(lock.id)
+                let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), 1 * Int64(NSEC_PER_SEC))
+                dispatch_after(time, dispatch_get_main_queue()) {
+                    //put your code which should be executed with a delay here
+                    debugPrint("waiting to open")
+                    self.pollLockIsOpen(lock.id)
+                }
             }
         }
     }
@@ -111,9 +123,12 @@ class LockCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
             self.lock = lock
             self.updateButton()
             if(!(!lock.requestedOpen && !lock.actuallyOpen)){
-                sleep(1)
-                debugPrint("waiting to close")
-                self.pollLockIsClosed(lock.id)
+                let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), 1 * Int64(NSEC_PER_SEC))
+                dispatch_after(time, dispatch_get_main_queue()) {
+                    //put your code which should be executed with a delay here
+                    debugPrint("waiting to close")
+                    self.pollLockIsClosed(lock.id)
+                }
             }
         }
     }

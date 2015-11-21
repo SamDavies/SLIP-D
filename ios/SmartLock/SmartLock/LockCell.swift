@@ -11,8 +11,10 @@ import UIKit
 class LockCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource {
     
     var lock: Lock!
+    var users: [User] = []
     @IBOutlet var openCloseButton: UIButton!
     @IBOutlet var lockName: UILabel!
+    @IBOutlet var table : UITableView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,6 +31,10 @@ class LockCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
         if lock != nil {
             figureOutButton()
         }
+        
+        self.table.dataSource = self
+        self.table.delegate = self
+        self.table.allowsSelection = false
     }
     
     func create(lock: Lock) {
@@ -42,6 +48,12 @@ class LockCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
 //            users -> Void in
 //            
 //        }
+        
+        User.getUserList(lock.id).then {
+            (users) -> Void in
+            self.users = users
+            self.reloadCells()
+        }
     }
     
     func figureOutButton(){
@@ -90,15 +102,23 @@ class LockCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return users.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = table.dequeueReusableCellWithIdentifier("MemberCell", forIndexPath: indexPath) as! MemberCell
+        cell.create(users[indexPath.item])
+        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+    }
+    
+    func reloadCells(){
+        dispatch_async(dispatch_get_main_queue(), {
+            self.table!.reloadData()
+        })
     }
     
     func pollLockIsOpen(id: Int) {

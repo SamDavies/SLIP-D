@@ -14,6 +14,7 @@ class LockCtrl: PromiseGridFeed {
         self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
         self.navigationController!.navigationBar.translucent = false
         self.automaticallyAdjustsScrollViewInsets = false
+        self.grid.allowsSelection = false
     }
     
     /*

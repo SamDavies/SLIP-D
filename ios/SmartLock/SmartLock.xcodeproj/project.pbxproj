@@ -31,6 +31,11 @@
 		B981E73E1BE7B17200A8B357 /* UserCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B981E73D1BE7B17200A8B357 /* UserCtrl.swift */; };
 		B981E7401BE7C66A00A8B357 /* PromiseGridFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B981E73F1BE7C66A00A8B357 /* PromiseGridFeed.swift */; };
 		B981E7421BE7CA4700A8B357 /* SnapGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B981E7411BE7CA4700A8B357 /* SnapGridLayout.swift */; };
+		B983023B1C00FAD1006090BC /* FriendCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B983023A1C00FAD1006090BC /* FriendCtrl.swift */; };
+		B983023D1C00FB93006090BC /* PromiseTableFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B983023C1C00FB93006090BC /* PromiseTableFeed.swift */; };
+		B983023F1C00FDC4006090BC /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B983023E1C00FDC4006090BC /* FriendCell.swift */; };
+		B98302421C00FF41006090BC /* ProfileCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98302411C00FF41006090BC /* ProfileCtrl.swift */; };
+		B98302441C010560006090BC /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98302431C010560006090BC /* UserCell.swift */; };
 		B9B592A11BE8F3E800092050 /* LockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B592A01BE8F3E800092050 /* LockCell.swift */; };
 		D117162AF03B889FE02B9E44 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0732EF14C935C681C20E8B7 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
@@ -87,6 +92,11 @@
 		B981E73D1BE7B17200A8B357 /* UserCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCtrl.swift; sourceTree = "<group>"; };
 		B981E73F1BE7C66A00A8B357 /* PromiseGridFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseGridFeed.swift; sourceTree = "<group>"; };
 		B981E7411BE7CA4700A8B357 /* SnapGridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapGridLayout.swift; sourceTree = "<group>"; };
+		B983023A1C00FAD1006090BC /* FriendCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendCtrl.swift; sourceTree = "<group>"; };
+		B983023C1C00FB93006090BC /* PromiseTableFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseTableFeed.swift; sourceTree = "<group>"; };
+		B983023E1C00FDC4006090BC /* FriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
+		B98302411C00FF41006090BC /* ProfileCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCtrl.swift; sourceTree = "<group>"; };
+		B98302431C010560006090BC /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		B9A3A67E3800C70E6963EA75 /* Pods_SmartLockTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartLockTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9B592A01BE8F3E800092050 /* LockCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -223,6 +233,7 @@
 			children = (
 				2D49DC92E4A9348533DADD52 /* LocksmithSmartLock.swift */,
 				B981E73F1BE7C66A00A8B357 /* PromiseGridFeed.swift */,
+				B983023C1C00FB93006090BC /* PromiseTableFeed.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -230,6 +241,8 @@
 		B90F97F81BE6CD5100FCB329 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				B98302401C00FF1B006090BC /* Profile */,
+				B98302391C00FAA6006090BC /* Friend */,
 				B981E73C1BE7B13C00A8B357 /* User */,
 				B90F97F61BE6CD2000FCB329 /* Login */,
 				B90F97F51BE6CD0E00FCB329 /* Lock */,
@@ -252,8 +265,26 @@
 			children = (
 				B981E73D1BE7B17200A8B357 /* UserCtrl.swift */,
 				B90F20931BF24F7000B68F6D /* UserModel.swift */,
+				B98302431C010560006090BC /* UserCell.swift */,
 			);
 			name = User;
+			sourceTree = "<group>";
+		};
+		B98302391C00FAA6006090BC /* Friend */ = {
+			isa = PBXGroup;
+			children = (
+				B983023A1C00FAD1006090BC /* FriendCtrl.swift */,
+				B983023E1C00FDC4006090BC /* FriendCell.swift */,
+			);
+			name = Friend;
+			sourceTree = "<group>";
+		};
+		B98302401C00FF1B006090BC /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				B98302411C00FF41006090BC /* ProfileCtrl.swift */,
+			);
+			name = Profile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -523,12 +554,17 @@
 				B90F97FA1BE6CDAB00FCB329 /* LockModel.swift in Sources */,
 				B93B9BE11BD6C2B80061D303 /* TransportSessionProtocol.swift in Sources */,
 				2D49D72DC912AD4B5FC34E54 /* Settings.swift in Sources */,
+				B98302441C010560006090BC /* UserCell.swift in Sources */,
+				B983023B1C00FAD1006090BC /* FriendCtrl.swift in Sources */,
 				B90F20941BF24F7000B68F6D /* UserModel.swift in Sources */,
 				2D49D297041B2B8967C6D69E /* LocksmithSmartLock.swift in Sources */,
 				B9114F0C1BF2B14D00F48070 /* AddLockCtrl.swift in Sources */,
 				B981E73E1BE7B17200A8B357 /* UserCtrl.swift in Sources */,
+				B983023F1C00FDC4006090BC /* FriendCell.swift in Sources */,
+				B98302421C00FF41006090BC /* ProfileCtrl.swift in Sources */,
 				B981E7421BE7CA4700A8B357 /* SnapGridLayout.swift in Sources */,
 				B90F97F41BE6933300FCB329 /* LockCtrl.swift in Sources */,
+				B983023D1C00FB93006090BC /* PromiseTableFeed.swift in Sources */,
 				B981E7401BE7C66A00A8B357 /* PromiseGridFeed.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

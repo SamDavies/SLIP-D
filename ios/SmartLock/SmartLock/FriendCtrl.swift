@@ -1,16 +1,16 @@
 //
-//  User.swift
+//  FriendCtrl.swift
 //  SmartLock
 //
-//  Created by Sam Davies on 02/11/2015.
+//  Created by Sam Davies on 21/11/2015.
 //  Copyright © 2015 Sam Davies. All rights reserved.
 //
 
 import UIKit
 
-class UserCtrl: PromiseTableFeed {
+class FriendCtrl: PromiseTableFeed {
     
-    var users: [User] = []
+    var friends: [User] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,20 +24,21 @@ class UserCtrl: PromiseTableFeed {
     */
     override func getGridObjects() {
         //        self.spinner.startAnimating()
-        User.getUserList(nil).then {
-            (users) -> Void in
-            self.users = users
+        User.getFriendList(nil).then {
+            (friends) -> Void in
+            self.friends = friends
             self.reloadCells()
         }
+        
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.users.count
+        return self.friends.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = table.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! UserCell
-        cell.create(users[indexPath.item])
+        let cell = table.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! FriendCell
+        cell.create(friends[indexPath.item])
         return cell
     }
 }

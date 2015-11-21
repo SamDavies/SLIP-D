@@ -50,7 +50,7 @@ class SmartLockUITests: XCTestCase {
         app.buttons["Log Out"].tap()
         
         // check the number of tabs
-        XCTAssertEqual(tabBarCount, 2)
+        XCTAssertEqual(tabBarCount, 3)
     }
     
     func testRegister() {
@@ -95,7 +95,7 @@ class SmartLockUITests: XCTestCase {
         app.buttons["Log Out"].tap()
         
         // check the number of tabs
-        XCTAssertEqual(tabBarCount, 2)
+        XCTAssertEqual(tabBarCount, 3)
     }
     
 }

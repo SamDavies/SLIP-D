@@ -88,6 +88,33 @@ extension User {
         }
     }
     
+    static func addFriend(userId: Int) -> Promise<User> {
+        let session = TransportSession()
+        session.url = "friend"
+        session.method = .POST
+        session.returnsMultiJson = true
+        session.parameters = ["friend_id": String(userId)]
+        
+        // return the promise with an array of objects
+        return session.basicRequestPromise().then {
+            (json: JSON) -> User in
+            return User(json: json)
+        }
+    }
+    
+    static func deleteFriend(userId: Int) -> Promise<Void> {
+        let session = TransportSession()
+        session.url = "friend"
+        session.method = .DELETE
+        session.returnsMultiJson = true
+        session.parameters = ["friend_id": String(userId)]
+        
+        // return the promise with an array of objects
+        return session.basicRequestPromise().then {
+            (json: JSON) -> Void in
+        }
+    }
+    
     static func addUser(email: String, password: String, firstName: String, lastName: String) -> Promise<User> {
         let session = TransportSession()
         session.url = "user"

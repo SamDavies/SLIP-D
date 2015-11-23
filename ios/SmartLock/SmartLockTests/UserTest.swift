@@ -60,22 +60,35 @@ class UserTest: XCTestCase {
         waitForExpectationsWithTimeout(5.0, handler: nil)
     }
     
-//    func testGetUserListFilterByLock() {
-//        let versionBuild: String = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
-//        User.addUser(versionBuild + "@mail.com", password: "python", firstName: "test", lastName: "user").then {
-//            user -> Promise<[User]> in
-//            return User.getUserList(0)
-//        }.then {
-//            users -> Void in
-//            XCTAssertEqual(users.count, 0)
-//            self.expectation.fulfill()
-//        }
-//        waitForExpectationsWithTimeout(5.0, handler: nil)
-//    }
+    func testGetUserListFilterByLock() {
+        let versionBuild: String = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
+        User.addUser(versionBuild + "@mail.com", password: "python", firstName: "test", lastName: "user").then {
+            user -> Promise<[User]> in
+            return User.getUserList(0)
+        }.then {
+            users -> Void in
+            XCTAssertEqual(users.count, 0)
+            self.expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(5.0, handler: nil)
+    }
     
     func testGetUser() {
         User.getUser(1).then {
             user -> Void in
+            XCTAssert(true)
+            self.expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(5.0, handler: nil)
+    }
+    
+    func testAddRemoveFriend() {
+        User.addFriend(1).then {
+            user -> Promise<Void> in
+            XCTAssertEqual(user.id, 1)
+            return User.deleteFriend(1)
+        }.then {
+            users -> Void in
             XCTAssert(true)
             self.expectation.fulfill()
         }

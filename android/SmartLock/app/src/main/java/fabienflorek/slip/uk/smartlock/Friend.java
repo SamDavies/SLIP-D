@@ -1,9 +1,17 @@
 package fabienflorek.slip.uk.smartlock;
 
+import java.util.List;
+
 /**
  * Created by fabienflorek on 11/18/15.
  */
 public class Friend {
+    public Friend(String firstName, String lastName, int id,List<Integer> myLocks) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.id = id;
+        this.myLocks = myLocks;
+    }
     public Friend(String firstName, String lastName, int id) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,4 +45,14 @@ public class Friend {
     String firstName;
     String lastName;
     int id;
+
+    public List<Integer> getMyLocks() {
+        return myLocks;
+    }
+
+    public void setMyLocks(List<Integer> myLocks) {
+        this.myLocks = myLocks;
+    }
+
+    List<Integer> myLocks;
 }

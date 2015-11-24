@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -47,11 +48,11 @@ public class Util {
     public static final String URL_LOCK_OPEN = "https://slip-d-4.herokuapp.com/open/";
     public static final String URL_LOCK_CLOSED = "https://slip-d-4.herokuapp.com/close/";
     public static final String URL_ADD_FRIEND = "https://slip-d-4.herokuapp.com/friend";
+    public static final String URL_ADD_LOCK_TO_FRIEND = "https://slip-d-4.herokuapp.com/friend-lock";
+    public static int MY_ID = 0;
 
 
-
-
-    public static void saveUserNameAndPass(Context context,String name, String pass) {
+    public static void saveUserNameAndPass(Context context, String name, String pass) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(nameForPref, name);
@@ -65,24 +66,22 @@ public class Util {
         return name;
     }
 
-
     public static String readPassword(Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         String pass = sharedPref.getString(passForPref, "");
         return pass;
     }
 
-    public static void saveLockList(Context context,Set<String> set) {
+    public static void saveLockList(Context context, Set<String> set) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putStringSet("lockList",set);
+        editor.putStringSet("lockList", set);
         editor.commit();
     }
 
-    public static Set<String> readLockList(Context context)
-    {
+    public static Set<String> readLockList(Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        Set<String> set =  sharedPref.getStringSet("lockList", new HashSet<String>());
+        Set<String> set = sharedPref.getStringSet("lockList", new HashSet<String>());
         return set;
     }
 
@@ -98,16 +97,14 @@ public class Util {
 
     }
 
-
-    public static void registerUser(final String name, final String pass,final String first, final String last, final Context context) {
+    public static void registerUser(final String name, final String pass, final String first, final String last, final Context context) {
         if (isNetworkAvailable(context)) {
             //create queue for requests
             RequestQueue queue = Volley.newRequestQueue(context);
 
             //Start request
             StringRequest postRequest = new StringRequest(Request.Method.POST, URL_REGISTER_USER,
-                    new Response.Listener<String>()
-                    {
+                    new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             Toast.makeText(context, "Registered!", Toast.LENGTH_LONG).show();
@@ -117,34 +114,44 @@ public class Util {
                             context.startActivity(intent);
                         }
                     },
-                    new Response.ErrorListener()
-                    {
+                    new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Logging(error.toString());
                             String response = "";
                             //deal with error based on status code
                             switch (error.networkResponse.statusCode) {
-                                case (406): {response = "user is already in database"; break;}
-                                case (500): {response = "The server encountered an error, sorry."; break;}
-                                default: response = "unknown response";
+                                case (406): {
+                                    response = "user is already in database";
+                                    break;
+                                }
+                                case (500): {
+                                    response = "The server encountered an error, sorry.";
+                                    break;
+                                }
+                                default:
+                                    response = "unknown response";
                             }
-                            Toast.makeText(context,response,Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
 
                         }
                     }
             ) {
                 // override this to set body with register details
                 @Override
-                public byte[] getBody()  {
-                    String httpPostBody="email="+name+"&password="+pass+"&first_name="+first+"&last_name="+last;
+                public byte[] getBody() {
+                    String httpPostBody = "email=" + name + "&password=" + pass + "&first_name=" + first + "&last_name=" + last;
                     return httpPostBody.getBytes();
                 }
             };
             //send out request
             queue.add(postRequest);
-        }else
-            Toast.makeText(context,"No internet connection",Toast.LENGTH_LONG).show();
+        } else
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+    }
+
+    private static void getIdFromJson(JSONObject obj) throws JSONException {
+        MY_ID = obj.getInt("id");
     }
 
     public static void checkUser(final String name, final String pass, final Context context) {
@@ -154,31 +161,44 @@ public class Util {
 
             //Start request
             StringRequest postRequest = new StringRequest(Request.Method.GET, URL_LOGIN,
-                    new Response.Listener<String>()
-                    {
+                    new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             Toast.makeText(context, "Logged In", Toast.LENGTH_LONG).show();
                             Logging(response);
+                            try {
+                                getIdFromJson(new JSONObject(response));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             //start Logged in activity
                             Intent intent = new Intent(context, MainScreenWithListsActivity.class);
                             context.startActivity(intent);
                         }
                     },
-                    new Response.ErrorListener()
-                    {
+                    new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Logging(error.toString());
                             String response = "";
                             //deal with error based on status code
                             switch (error.networkResponse.statusCode) {
-                                case (401): {response = "User is not present or the password is wrong!";break;}
-                                case (404): {response = "User is not present or the password is wrong!";break;}
-                                case (500): {response = "The server encountered an error, sorry."; break;}
-                                default: response = "unknown response";
+                                case (401): {
+                                    response = "User is not present or the password is wrong!";
+                                    break;
+                                }
+                                case (404): {
+                                    response = "User is not present or the password is wrong!";
+                                    break;
+                                }
+                                case (500): {
+                                    response = "The server encountered an error, sorry.";
+                                    break;
+                                }
+                                default:
+                                    response = "unknown response";
                             }
-                            Toast.makeText(context,response,Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
 
                         }
                     }
@@ -186,8 +206,8 @@ public class Util {
                 //This method adds our basic authentication token
                 @Override
                 public Map<String, String> getHeaders() {
-                    Map<String, String>  params = new HashMap<String, String>();
-                    String creds = String.format("%s:%s",name,pass);
+                    Map<String, String> params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s", name, pass);
                     String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
                     params.put("Authorization", auth);
                     return params;
@@ -195,8 +215,8 @@ public class Util {
             };
             //send out request
             queue.add(postRequest);
-        }else
-            Toast.makeText(context,"No internet connection",Toast.LENGTH_LONG).show();
+        } else
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
     }
 
 
@@ -208,11 +228,9 @@ public class Util {
             final String pass = Util.readPassword(context);
 
 
-
             //Start request
             StringRequest postRequest = new StringRequest(Request.Method.POST, URL_REGISTER_LOCK,
-                    new Response.Listener<String>()
-                    {
+                    new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             Toast.makeText(context, "Registered a lock!", Toast.LENGTH_LONG).show();
@@ -220,19 +238,25 @@ public class Util {
 
                         }
                     },
-                    new Response.ErrorListener()
-                    {
+                    new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Logging(error.toString());
                             String response = "";
                             //deal with error based on status code
                             switch (error.networkResponse.statusCode) {
-                                case (406): {response = "Lock is owned by someone else!";break;}
-                                case (500): {response = "The server encountered an error, sorry."; break;}
-                                default: response = "unknown response";
+                                case (406): {
+                                    response = "Lock is owned by someone else!";
+                                    break;
+                                }
+                                case (500): {
+                                    response = "The server encountered an error, sorry.";
+                                    break;
+                                }
+                                default:
+                                    response = "unknown response";
                             }
-                            Toast.makeText(context,response,Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
 
                         }
                     }
@@ -240,24 +264,25 @@ public class Util {
                 //This method adds our basic authentication token
                 @Override
                 public Map<String, String> getHeaders() {
-                    Map<String, String>  params = new HashMap<String, String>();
-                    String creds = String.format("%s:%s",name,pass);
+                    Map<String, String> params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s", name, pass);
                     String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
                     params.put("Authorization", auth);
                     return params;
                 }
+
                 // override this to set body with register details
                 @Override
-                public byte[] getBody()  {
-                    String httpPostBody="lock_name="+lockName+"&lock_id="+lockId;
+                public byte[] getBody() {
+                    String httpPostBody = "lock_name=" + lockName + "&lock_id=" + lockId;
                     return httpPostBody.getBytes();
                 }
             };
 
             //send out request
             queue.add(postRequest);
-        }else
-            Toast.makeText(context,"No internet connection",Toast.LENGTH_LONG).show();
+        } else
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
     }
 
     public static void openLock(final int lockId, final Context context) {
@@ -268,30 +293,34 @@ public class Util {
             final String pass = Util.readPassword(context);
 
 
-
             //Start request
-            StringRequest postRequest = new StringRequest(Request.Method.PUT, URL_LOCK_OPEN+lockId,
-                    new Response.Listener<String>()
-                    {
+            StringRequest postRequest = new StringRequest(Request.Method.PUT, URL_LOCK_OPEN + lockId,
+                    new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             Logging(response);
 
                         }
                     },
-                    new Response.ErrorListener()
-                    {
+                    new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Logging(error.toString());
                             String response = "";
                             //deal with error based on status code
                             switch (error.networkResponse.statusCode) {
-                                case (406): {response = "Lock is owned by someone else!";break;}
-                                case (500): {response = "The server encountered an error, sorry."; break;}
-                                default: response = "unknown response";
+                                case (406): {
+                                    response = "Lock is owned by someone else!";
+                                    break;
+                                }
+                                case (500): {
+                                    response = "The server encountered an error, sorry.";
+                                    break;
+                                }
+                                default:
+                                    response = "unknown response";
                             }
-                            Toast.makeText(context,response,Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
 
                         }
                     }
@@ -299,24 +328,25 @@ public class Util {
                 //This method adds our basic authentication token
                 @Override
                 public Map<String, String> getHeaders() {
-                    Map<String, String>  params = new HashMap<String, String>();
-                    String creds = String.format("%s:%s",name,pass);
+                    Map<String, String> params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s", name, pass);
                     String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
                     params.put("Authorization", auth);
                     return params;
                 }
+
                 // override this to set body with register details
                 @Override
-                public byte[] getBody()  {
-                    String httpPostBody="lock_id="+lockId;
+                public byte[] getBody() {
+                    String httpPostBody = "lock_id=" + lockId;
                     return httpPostBody.getBytes();
                 }
             };
 
             //send out request
             queue.add(postRequest);
-        }else
-            Toast.makeText(context,"No internet connection",Toast.LENGTH_LONG).show();
+        } else
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
     }
 
 
@@ -328,30 +358,34 @@ public class Util {
             final String pass = Util.readPassword(context);
 
 
-
             //Start request
-            StringRequest postRequest = new StringRequest(Request.Method.PUT, URL_LOCK_CLOSED+lockId,
-                    new Response.Listener<String>()
-                    {
+            StringRequest postRequest = new StringRequest(Request.Method.PUT, URL_LOCK_CLOSED + lockId,
+                    new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             Logging(response);
 
                         }
                     },
-                    new Response.ErrorListener()
-                    {
+                    new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Logging(error.toString());
                             String response = "";
                             //deal with error based on status code
                             switch (error.networkResponse.statusCode) {
-                                case (406): {response = "Lock is owned by someone else!";break;}
-                                case (500): {response = "The server encountered an error, sorry."; break;}
-                                default: response = "unknown response";
+                                case (406): {
+                                    response = "Lock is owned by someone else!";
+                                    break;
+                                }
+                                case (500): {
+                                    response = "The server encountered an error, sorry.";
+                                    break;
+                                }
+                                default:
+                                    response = "unknown response";
                             }
-                            Toast.makeText(context,response,Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
 
                         }
                     }
@@ -359,29 +393,29 @@ public class Util {
                 //This method adds our basic authentication token
                 @Override
                 public Map<String, String> getHeaders() {
-                    Map<String, String>  params = new HashMap<String, String>();
-                    String creds = String.format("%s:%s",name,pass);
+                    Map<String, String> params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s", name, pass);
                     String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
                     params.put("Authorization", auth);
                     return params;
                 }
+
                 // override this to set body with register details
                 @Override
-                public byte[] getBody()  {
-                    String httpPostBody="lock_id="+lockId;
+                public byte[] getBody() {
+                    String httpPostBody = "lock_id=" + lockId;
                     return httpPostBody.getBytes();
                 }
             };
 
             //send out request
             queue.add(postRequest);
-        }else
-            Toast.makeText(context,"No internet connection",Toast.LENGTH_LONG).show();
+        } else
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
     }
 
 
-
-    public static void getLockList(final ArrayList<Lock> lockList,final LockListAdapter lockListAdapter, final SwipeRefreshLayout swipeRefreshLayout,final Context context) {
+    public static void getLockList(final ArrayList<Lock> lockList, final LockListAdapter lockListAdapter, final SwipeRefreshLayout swipeRefreshLayout, final Context context) {
         if (Util.isNetworkAvailable(context)) {
             //create queue for requests
             RequestQueue queue = Volley.newRequestQueue(context);
@@ -403,7 +437,7 @@ public class Util {
                                     lockList.add(convertJsonToLock(response
                                             .getJSONObject(i)));
                                 } catch (JSONException e) {
-                                    Log.e("Json List",e.toString());
+                                    Log.e("Json List", e.toString());
                                 }
                             }
                             //lockListAdapter.
@@ -422,7 +456,7 @@ public class Util {
                         case (500): {
                             response = "The server encountered an error, sorry.";
                             //server encountered an error, retry again
-                            getLockList(lockList,lockListAdapter,swipeRefreshLayout,context);
+                            getLockList(lockList, lockListAdapter, swipeRefreshLayout, context);
                             break;
                         }
                         default:
@@ -433,7 +467,7 @@ public class Util {
                     Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
                 }
-            }){
+            }) {
                 //This method adds our basic authentication token
                 @Override
                 public Map<String, String> getHeaders() {
@@ -452,7 +486,7 @@ public class Util {
     }
 
 
-    public static void getLockList(final ArrayList<Lock> lockList,final FriendListExpandableAdapter friendListExpandableAdapter, final SwipeRefreshLayout swipeRefreshLayout,final Context context) {
+    public static void getLockList(final ArrayList<Lock> lockList, final FriendListExpandableAdapter friendListExpandableAdapter, final SwipeRefreshLayout swipeRefreshLayout, final Context context) {
         if (Util.isNetworkAvailable(context)) {
             //create queue for requests
             RequestQueue queue = Volley.newRequestQueue(context);
@@ -471,10 +505,12 @@ public class Util {
                             lockList.clear();
                             for (int i = 0; i < response.length(); i++) {
                                 try {
-                                    lockList.add(convertJsonToLock(response
-                                            .getJSONObject(i)));
+                                    Lock lock = convertJsonToLock(response
+                                                    .getJSONObject(i));
+                                    //only add lock into list of locks we can add to users if we own it
+                                    if (lock.isOwner()) lockList.add(lock);
                                 } catch (JSONException e) {
-                                    Log.e("Json List",e.toString());
+                                    Log.e("Json List", e.toString());
                                 }
                             }
                             //lockListAdapter.
@@ -493,7 +529,7 @@ public class Util {
                         case (500): {
                             response = "The server encountered an error, sorry.";
                             //server encountered an error, retry again
-                            getLockList(lockList,friendListExpandableAdapter,swipeRefreshLayout,context);
+                            getLockList(lockList, friendListExpandableAdapter, swipeRefreshLayout, context);
                             break;
                         }
                         default:
@@ -504,7 +540,7 @@ public class Util {
                     Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
                 }
-            }){
+            }) {
                 //This method adds our basic authentication token
                 @Override
                 public Map<String, String> getHeaders() {
@@ -531,10 +567,11 @@ public class Util {
         //Creating places in random as there is no place for this in the API
         Random rand = new Random();
         int place = rand.nextInt(3);
-        return new Lock(name,id,status,statusRequested,place);
+        int owner = obj.getInt("owner_id");
+        return new Lock(name, id, status, statusRequested, place, owner);
     }
 
-    public static void getFriendList(final ArrayList<Friend> friendList,final FriendListAdapter friendListAdapter, final SwipeRefreshLayout swipeRefreshLayout,final Context context) {
+    public static void getFriendList(final ArrayList<Friend> friendList, final FriendListAdapter friendListAdapter, final SwipeRefreshLayout swipeRefreshLayout, final Context context) {
         if (Util.isNetworkAvailable(context)) {
             //create queue for requests
             RequestQueue queue = Volley.newRequestQueue(context);
@@ -556,7 +593,7 @@ public class Util {
                                     friendList.add(convertJsonToFriend(response
                                             .getJSONObject(i)));
                                 } catch (JSONException e) {
-                                    Log.e("Json List",e.toString());
+                                    Log.e("Json List", e.toString());
                                 }
                             }
                             //lockListAdapter.
@@ -586,7 +623,7 @@ public class Util {
                     Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
                 }
-            }){
+            }) {
                 //This method adds our basic authentication token
                 @Override
                 public Map<String, String> getHeaders() {
@@ -604,7 +641,7 @@ public class Util {
             Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
     }
 
-    public static void getFriendList(final ArrayList<Friend> friendList,final FriendListExpandableAdapter friendListAdapter, final SwipeRefreshLayout swipeRefreshLayout,final Context context) {
+    public static void getFriendList(final ArrayList<Friend> friendList, final FriendListExpandableAdapter friendListAdapter, final SwipeRefreshLayout swipeRefreshLayout, final Context context) {
         if (Util.isNetworkAvailable(context)) {
             //create queue for requests
             RequestQueue queue = Volley.newRequestQueue(context);
@@ -626,7 +663,7 @@ public class Util {
                                     friendList.add(convertJsonToFriend(response
                                             .getJSONObject(i)));
                                 } catch (JSONException e) {
-                                    Log.e("Json List",e.toString());
+                                    Log.e("Json List", e.toString());
                                 }
                             }
                             //lockListAdapter.
@@ -656,7 +693,7 @@ public class Util {
                     Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
                 }
-            }){
+            }) {
                 //This method adds our basic authentication token
                 @Override
                 public Map<String, String> getHeaders() {
@@ -673,18 +710,32 @@ public class Util {
         } else
             Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
     }
-
 
 
     private static Friend convertJsonToFriend(JSONObject obj) throws JSONException {
         String firstName = obj.getString("first_name");
         String lastName = obj.getString("last_name");
         int id = obj.getInt("id");
-
-        return new Friend(firstName,lastName,id);
+        List<Integer> myLocks = new ArrayList<Integer>();
+        JSONArray lockArray = obj.getJSONArray("your_locks");
+        for (int i=0; i<lockArray.length();i++) {
+            myLocks.add(lockArray.getJSONObject(i).getInt("id"));
+        }
+        return new Friend(firstName, lastName, id,myLocks);
     }
 
-    public static void getUserList(final ArrayList<Friend> friendList,final FriendListAdapter friendListAdapter,final Context context) {
+
+    private static Friend convertJsonToUser(JSONObject obj) throws JSONException {
+        String firstName = obj.getString("first_name");
+        String lastName = obj.getString("last_name");
+        int id = obj.getInt("id");
+        boolean isFriend = obj.getBoolean("is_friend");
+        //if we are already friends we don't want to return this user
+        return isFriend ? null :new Friend(firstName, lastName, id);
+    }
+
+
+    public static void getUserList(final ArrayList<Friend> friendList, final FriendListAdapter friendListAdapter, final Context context) {
         if (Util.isNetworkAvailable(context)) {
             //create queue for requests
             RequestQueue queue = Volley.newRequestQueue(context);
@@ -702,10 +753,11 @@ public class Util {
                             friendList.clear();
                             for (int i = 0; i < response.length(); i++) {
                                 try {
-                                    friendList.add(convertJsonToFriend(response
-                                            .getJSONObject(i)));
+                                    Friend notYetFriend = convertJsonToUser(response
+                                                    .getJSONObject(i));
+                                    if (notYetFriend!=null) friendList.add(notYetFriend);
                                 } catch (JSONException e) {
-                                    Log.e("Json List",e.toString());
+                                    Log.e("Json List", e.toString());
                                 }
                             }
                             friendListAdapter.notifyDataSetChanged();
@@ -731,7 +783,7 @@ public class Util {
                     Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
                 }
-            }){
+            }) {
                 //This method adds our basic authentication token
                 @Override
                 public Map<String, String> getHeaders() {
@@ -758,30 +810,33 @@ public class Util {
 
             //Start request
             StringRequest postRequest = new StringRequest(Request.Method.POST, URL_ADD_FRIEND,
-                    new Response.Listener<String>()
-                    {
+                    new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             Toast.makeText(context, "Friend added!", Toast.LENGTH_LONG).show();
                             Logging(response);
-                            //start Logged in activity
-                            Intent intent = new Intent(context, MainScreenWithListsActivity.class);
-                            context.startActivity(intent);
+
                         }
                     },
-                    new Response.ErrorListener()
-                    {
+                    new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Logging(error.toString());
                             String response = "";
                             //deal with error based on status code
                             switch (error.networkResponse.statusCode) {
-                                case (401): {response = "Already Friends"; break;}
-                                case (500): {response = "The server encountered an error, sorry."; break;}
-                                default: response = "unknown response";
+                                case (401): {
+                                    response = "Already Friends";
+                                    break;
+                                }
+                                case (500): {
+                                    response = "The server encountered an error, sorry.";
+                                    break;
+                                }
+                                default:
+                                    response = "unknown response";
                             }
-                            Toast.makeText(context,response,Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
 
                         }
                     }
@@ -789,26 +844,216 @@ public class Util {
                 //This method adds our basic authentication token
                 @Override
                 public Map<String, String> getHeaders() {
-                    Map<String, String>  params = new HashMap<String, String>();
-                    String creds = String.format("%s:%s",name,pass);
+                    Map<String, String> params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s", name, pass);
                     String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
                     params.put("Authorization", auth);
                     return params;
                 }
+
                 // override this to set body with register details
                 @Override
-                public byte[] getBody()  {
-                    String httpPostBody="friend_id="+id;
+                public byte[] getBody() {
+                    String httpPostBody = "friend_id=" + id;
                     return httpPostBody.getBytes();
                 }
             };
             //send out request
             queue.add(postRequest);
-        }else
-            Toast.makeText(context,"No internet connection",Toast.LENGTH_LONG).show();
+        } else
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
     }
 
 
+    public static void removeFriend(final int id, final Context context) {
+        if (isNetworkAvailable(context)) {
+            //create queue for requests
+            RequestQueue queue = Volley.newRequestQueue(context);
+            final String name = Util.readUserName(context);
+            final String pass = Util.readPassword(context);
+
+            //Start request
+            StringRequest postRequest = new StringRequest(Request.Method.DELETE, URL_ADD_FRIEND,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(context, "Friend added!", Toast.LENGTH_LONG).show();
+                            Logging(response);
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Logging(error.toString());
+                            String response = "";
+                            //deal with error based on status code
+                            switch (error.networkResponse.statusCode) {
+                                case (401): {
+                                    response = "Not a friend";
+                                    break;
+                                }
+                                case (500): {
+                                    response = "The server encountered an error, sorry.";
+                                    break;
+                                }
+                                default:
+                                    response = "unknown response";
+                            }
+                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+            ) {
+                //This method adds our basic authentication token
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s", name, pass);
+                    String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                    params.put("Authorization", auth);
+                    return params;
+                }
+
+                // override this to set body with register details
+                @Override
+                public byte[] getBody() {
+                    String httpPostBody = "friend_id=" + id;
+                    return httpPostBody.getBytes();
+                }
+            };
+            //send out request
+            queue.add(postRequest);
+        } else
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+    }
+
+    public static void addFriendToLock(final int friendId, final int lock_id, final Context context) {
+        if (isNetworkAvailable(context)) {
+            //create queue for requests
+            RequestQueue queue = Volley.newRequestQueue(context);
+            final String name = Util.readUserName(context);
+            final String pass = Util.readPassword(context);
+
+            //Start request
+            StringRequest postRequest = new StringRequest(Request.Method.POST, URL_ADD_LOCK_TO_FRIEND,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(context, "Lock added to friend !", Toast.LENGTH_LONG).show();
+                            Logging(response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Logging(error.toString());
+                            String response = "";
+                            //deal with error based on status code
+                            switch (error.networkResponse.statusCode) {
+                                case (400): {
+                                    response = "You don't own this lock or you are not friends";
+                                    break;
+                                }
+                                case (500): {
+                                    response = "The server encountered an error, sorry.";
+                                    //addFriendToLock(friendId,lock_id,context);
+                                    break;
+                                }
+                                default:
+                                    response = "unknown response";
+                            }
+                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+            ) {
+                //This method adds our basic authentication token
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s", name, pass);
+                    String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                    params.put("Authorization", auth);
+                    return params;
+                }
+
+                // override this to set body with register details
+                @Override
+                public byte[] getBody() {
+                    String httpPostBody = "friend_id=" + friendId + "&lock_id=" + lock_id;
+                    return httpPostBody.getBytes();
+                }
+            };
+            //send out request
+            queue.add(postRequest);
+        } else
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+    }
+
+    public static void removeFriendFromLock(final int friendId, final int lock_id, final Context context) {
+        if (isNetworkAvailable(context)) {
+            //create queue for requests
+            RequestQueue queue = Volley.newRequestQueue(context);
+            final String name = Util.readUserName(context);
+            final String pass = Util.readPassword(context);
+
+            //Start request
+            StringRequest postRequest = new StringRequest(Request.Method.DELETE, URL_ADD_LOCK_TO_FRIEND,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(context, "Lock removed from friend !", Toast.LENGTH_LONG).show();
+                            Logging(response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Logging(error.toString());
+                            String response = "";
+                            //deal with error based on status code
+                            switch (error.networkResponse.statusCode) {
+                                case (400): {
+                                    response = "You don't own this lock or you are not friends";
+                                    break;
+                                }
+                                case (500): {
+                                    response = "The server encountered an error, sorry.";
+                                    //removeFriendFromLock(friendId,lock_id,context);
+
+                                    break;
+                                }
+                                default:
+                                    response = "unknown response";
+                            }
+                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+            ) {
+                //This method adds our basic authentication token
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    String creds = String.format("%s:%s", name, pass);
+                    String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                    params.put("Authorization", auth);
+                    return params;
+                }
+
+                // override this to set body with register details
+                @Override
+                public byte[] getBody() {
+                    String httpPostBody = "friend_id=" + friendId + "&lock_id=" + lock_id;
+                    return httpPostBody.getBytes();
+                }
+            };
+            //send out request
+            queue.add(postRequest);
+        } else
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+    }
 
 
     private static void Logging(String msg) {

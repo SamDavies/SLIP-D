@@ -5,6 +5,7 @@
     android:paddingRight="32dp"
     android:paddingTop="@dimen/list_vertical_margin"
     android:paddingBottom="@dimen/list_vertical_margin"
+    android:background="@color/list_view_row_color"
     android:clickable="true"
     android:focusable="true">
 
@@ -24,11 +25,21 @@
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
+    <!--
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/list_row_friends_checkBox"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+        -->
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/list_row_friends_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:button="@null"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />

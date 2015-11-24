@@ -3,6 +3,7 @@ package fabienflorek.slip.uk.smartlock;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.DisplayMetrics;
@@ -66,16 +67,27 @@ public class FriendListFragment extends Fragment implements SwipeRefreshLayout.O
         //create adapter
         friendListExpandableAdapter = new FriendListExpandableAdapter(getContext(),friendList,lockList,getActivity().getLayoutInflater());
         listView.setAdapter(friendListExpandableAdapter);
-        //handles on click of a lock, opening closing it
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+        //On long press show snack bar with option to delete
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    final int position, long id) {
-                friendListExpandableAdapter.notifyDataSetChanged();
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           final int pos, long id) {
 
+                Snackbar snackbar = Snackbar
+                        .make(listView, "Remove "+friendList.get(pos).getFirstName()
+                                +" "+friendList.get(pos).getLastName()+"?" , Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Remove", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Util.removeFriend(friendList.get(pos).getId(),getContext());
+                                onRefresh();
+                            }
+                        });
+
+                snackbar.show();
+                return true;
             }
-
         });
 
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -88,6 +100,7 @@ public class FriendListFragment extends Fragment implements SwipeRefreshLayout.O
                                     public void run() {
                                         swipeRefreshLayout.setRefreshing(true);
                                         onRefresh();
+                                        friendListExpandableAdapter.notifyDataSetChanged();
 
                                     }
                                 }

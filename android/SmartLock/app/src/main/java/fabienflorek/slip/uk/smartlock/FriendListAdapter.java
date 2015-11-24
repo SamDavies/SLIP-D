@@ -32,7 +32,7 @@ public class FriendListAdapter extends ArrayAdapter<Friend> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.fragment_lists_friend_list_row, parent, false);
+        View rowView = inflater.inflate(R.layout.activity_add_friend_list_row, parent, false);
         TextView textViewFirst = (TextView) rowView.findViewById(R.id.list_row_friends_firstLine);
         ImageView imageViewPlace = (ImageView) rowView.findViewById(R.id.list_row_friends_iconplace);
         String name = friends.get(position).getFirstName() + " " + friends.get(position).getLastName();

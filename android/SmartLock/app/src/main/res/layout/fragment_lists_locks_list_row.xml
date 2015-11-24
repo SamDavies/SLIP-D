@@ -3,6 +3,7 @@
     android:layout_height="@dimen/list_size"
     android:paddingLeft="@dimen/list_horizontal_margin"
     android:paddingRight="@dimen/list_horizontal_margin"
+    android:background="@color/list_view_row_color"
     android:paddingTop="@dimen/list_vertical_margin"
     android:paddingBottom="@dimen/list_vertical_margin" >
 

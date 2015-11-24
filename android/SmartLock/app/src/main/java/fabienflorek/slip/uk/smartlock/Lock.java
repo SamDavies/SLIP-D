@@ -35,6 +35,17 @@ public class Lock {
     boolean status;
     int place;
 
+
+    public boolean isOwner() {
+        return owner;
+    }
+
+    public void setOwner(boolean owner) {
+        this.owner = owner;
+    }
+
+    boolean owner;
+
     public boolean isStatusRequested() {
         return statusRequested;
     }
@@ -70,12 +81,13 @@ public class Lock {
         this.place = place;
         this.statusRequested = status;
     }
-    public Lock(String name, Integer id, boolean status,boolean statusRequested,int place) {
+    public Lock(String name, Integer id, boolean status,boolean statusRequested,int place,int owner) {
         this.name = name;
         this.id = id;
         this.status = status;
         this.place = place;
         this.statusRequested = statusRequested;
+        this.owner = Util.MY_ID == owner;
     }
 
     @Override

@@ -3,6 +3,7 @@ package fabienflorek.slip.uk.smartlock;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -74,12 +75,36 @@ public class LockListFragment extends Fragment implements SwipeRefreshLayout.OnR
                 boolean currentStatus = lockList.get(position).isStatus();
                 if (currentStatus) {//lock is open
                     Util.closeLock(lockList.get(position).getId(), getContext());
-                }else {
+                } else {
                     Util.openLock(lockList.get(position).getId(), getContext());
                 }
                 //lockList.get(position).setStatus(true);
             }
 
+        });
+
+        //On long press show snack bar with option to delete
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           final int pos, long id) {
+
+                Snackbar snackbar = Snackbar
+                        .make(listView, "Remove " + lockList.get(pos).getName()
+                                 + "?", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Remove", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //Util.removeFriend(lockList.get(pos).getId(), getContext());
+                                onRefresh();
+                                //Snackbar snackbar1 = Snackbar.make(listView, "Lock removed!", Snackbar.LENGTH_SHORT);
+                                //snackbar1.show();
+                            }
+                        });
+
+                snackbar.show();
+                return true;
+            }
         });
 
         swipeRefreshLayout.setOnRefreshListener(this);

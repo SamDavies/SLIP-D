@@ -2,13 +2,14 @@ package fabienflorek.slip.uk.smartlock;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -101,7 +102,7 @@ public class FriendListExpandableAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.fragment_list_friend_list_row_detail, parent,false);
         }
@@ -109,14 +110,65 @@ public class FriendListExpandableAdapter extends BaseExpandableListAdapter {
         Lock lock = lockList.get(childPosition);
         textViewFirst.setText(lock.getName());
 
+
+        final SwitchCompat switchCompat = (SwitchCompat) convertView.findViewById(R.id.list_row_friends_switch);
+        //if current lock is present in the list of locks the friends has access to
+        if (friendList.get(groupPosition).getMyLocks().contains(lockList.get(childPosition).getId()))
+            switchCompat.setChecked(true);
+        else
+            switchCompat.setChecked(false);
+        /*
+        switchCompat.setOnCheckedChangeListener(new SwitchCompat.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                switch (buttonView.getId()) {
+
+                    case R.id.list_row_friends_switch:
+
+                        if(isChecked){
+                            Log.e("checking","checked");
+                            //Util.addFriendToLock(friendList.get(groupPosition).getId(), lockList.get(childPosition).getId(), context);
+                        }else{
+                            //Util.removeFriendFromLock(friendList.get(groupPosition).getId(), lockList.get(childPosition).getId(), context);
+
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        });
+        */
+
+        switchCompat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("checking", "checked" + switchCompat.isChecked());
+                checkChanged(switchCompat,groupPosition,childPosition);
+
+            }
+        });
+
+        //anywhere on the item you click it will be intercepted as checking the switch
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"click",Toast.LENGTH_SHORT).show();
+                switchCompat.setChecked(!switchCompat.isChecked());
+                checkChanged(switchCompat,groupPosition,childPosition);
             }
         });
 
         return convertView;
+    }
+
+    private void checkChanged(SwitchCompat switchCompat,int groupPosition, int childPosition) {
+        if (switchCompat.isChecked())
+            Util.addFriendToLock(friendList.get(groupPosition).getId(), lockList.get(childPosition).getId(), context);
+         else
+            Util.removeFriendFromLock(friendList.get(groupPosition).getId(), lockList.get(childPosition).getId(), context);
+        
+
     }
 
     @Override

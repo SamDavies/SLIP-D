@@ -53,11 +53,14 @@ public class LockListAdapter extends ArrayAdapter<Lock> {
         if (locks.get(position).status!=locks.get(position).isStatusRequested())
             imageViewIcon.setImageResource(R.drawable.ic_sync_black_24dp);
 
-        switch (locks.get(position).getPlace()) {
-            case 0 : {imageViewPlace.setImageResource(R.drawable.ic_home_white_24dp);break;}
-            case 1 : {imageViewPlace.setImageResource(R.drawable.ic_store_white_24dp);break;}
-            case 2 : {imageViewPlace.setImageResource(R.drawable.ic_perm_identity_white_24dp);break;}
-        }
+        //if the lock is from a friend set person icon for it
+        if (!locks.get(position).isOwner())
+            imageViewPlace.setImageResource(R.drawable.ic_perm_identity_white_24dp);
+        else
+            switch (position % 2) {
+                case 0 : {imageViewPlace.setImageResource(R.drawable.ic_home_white_24dp);break;}
+                case 1 : {imageViewPlace.setImageResource(R.drawable.ic_store_white_24dp);break;}
+            }
 
         switch (position % 3) {
             case 0 :  {linearLayoutCircle.getBackground().setLevel(0);break;}

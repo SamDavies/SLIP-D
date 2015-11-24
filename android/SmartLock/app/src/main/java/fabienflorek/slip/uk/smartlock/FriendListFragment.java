@@ -142,7 +142,7 @@ public class FriendListFragment extends Fragment implements SwipeRefreshLayout.O
                 String id = data.getStringExtra("id");
                 if (id!="") {
                     Util.addFriend(Integer.parseInt(id),getContext());
-                    friendListExpandableAdapter.notifyDataSetChanged();
+                    onRefresh();
                 }
             }
             if (resultCode == Activity.RESULT_CANCELED) {

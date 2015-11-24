@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.button_register)
     public void onRegisterButtonClick(){
         if (!areCredentialsValid()) {
-            Toast.makeText(this, "Credentials are not valid", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Credentials are not valid", Toast.LENGTH_SHORT).show();
             return;
         }
         //get name and pass from edit texts and store them in shared pref

@@ -3,7 +3,6 @@ package fabienflorek.slip.uk.smartlock;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -144,7 +143,6 @@ public class FriendListExpandableAdapter extends BaseExpandableListAdapter {
         switchCompat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("checking", "checked" + switchCompat.isChecked());
                 checkChanged(switchCompat,groupPosition,childPosition);
 
             }
@@ -167,7 +165,7 @@ public class FriendListExpandableAdapter extends BaseExpandableListAdapter {
             Util.addFriendToLock(friendList.get(groupPosition).getId(), lockList.get(childPosition).getId(), context);
          else
             Util.removeFriendFromLock(friendList.get(groupPosition).getId(), lockList.get(childPosition).getId(), context);
-        
+
 
     }
 

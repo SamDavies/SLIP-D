@@ -48,7 +48,10 @@ public class Util {
     public static final String URL_LOCK_OPEN = "https://slip-d-4.herokuapp.com/open/";
     public static final String URL_LOCK_CLOSED = "https://slip-d-4.herokuapp.com/close/";
     public static final String URL_ADD_FRIEND = "https://slip-d-4.herokuapp.com/friend";
+    public static final String URL_DELETE_FRIEND = "https://slip-d-4.herokuapp.com/friend?friend_id=";
     public static final String URL_ADD_LOCK_TO_FRIEND = "https://slip-d-4.herokuapp.com/friend-lock";
+    public static final String URL_REMOVE_LOCK_FROM_FRIEND = "https://slip-d-4.herokuapp.com/friend-lock?friend_id=";
+
     public static int MY_ID = 0;
 
 
@@ -89,10 +92,7 @@ public class Util {
         ConnectivityManager connMgr = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected())
-            return true;
-        else
-            return false;
+        return networkInfo != null && networkInfo.isConnected();
 
 
     }
@@ -107,7 +107,7 @@ public class Util {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(context, "Registered!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Registered!", Toast.LENGTH_SHORT).show();
                             Logging(response);
                             //start Logged in activity
                             Intent intent = new Intent(context, MainScreenWithListsActivity.class);
@@ -132,7 +132,7 @@ public class Util {
                                 default:
                                     response = "unknown response";
                             }
-                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -147,7 +147,7 @@ public class Util {
             //send out request
             queue.add(postRequest);
         } else
-            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
     }
 
     private static void getIdFromJson(JSONObject obj) throws JSONException {
@@ -164,7 +164,7 @@ public class Util {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(context, "Logged In", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Logged In", Toast.LENGTH_SHORT).show();
                             Logging(response);
                             try {
                                 getIdFromJson(new JSONObject(response));
@@ -198,7 +198,7 @@ public class Util {
                                 default:
                                     response = "unknown response";
                             }
-                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -216,7 +216,7 @@ public class Util {
             //send out request
             queue.add(postRequest);
         } else
-            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -233,7 +233,7 @@ public class Util {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(context, "Registered a lock!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Registered a lock!", Toast.LENGTH_SHORT).show();
                             Logging(response);
 
                         }
@@ -256,7 +256,7 @@ public class Util {
                                 default:
                                     response = "unknown response";
                             }
-                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -282,7 +282,7 @@ public class Util {
             //send out request
             queue.add(postRequest);
         } else
-            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
     }
 
     public static void openLock(final int lockId, final Context context) {
@@ -320,7 +320,7 @@ public class Util {
                                 default:
                                     response = "unknown response";
                             }
-                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -346,7 +346,7 @@ public class Util {
             //send out request
             queue.add(postRequest);
         } else
-            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -385,7 +385,7 @@ public class Util {
                                 default:
                                     response = "unknown response";
                             }
-                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -411,7 +411,7 @@ public class Util {
             //send out request
             queue.add(postRequest);
         } else
-            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -482,7 +482,7 @@ public class Util {
             //send out request
             queue.add(jReq);
         } else
-            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -555,7 +555,7 @@ public class Util {
             //send out request
             queue.add(jReq);
         } else
-            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -638,7 +638,7 @@ public class Util {
             //send out request
             queue.add(jReq);
         } else
-            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
     }
 
     public static void getFriendList(final ArrayList<Friend> friendList, final FriendListExpandableAdapter friendListAdapter, final SwipeRefreshLayout swipeRefreshLayout, final Context context) {
@@ -708,7 +708,7 @@ public class Util {
             //send out request
             queue.add(jReq);
         } else
-            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -719,7 +719,8 @@ public class Util {
         List<Integer> myLocks = new ArrayList<Integer>();
         JSONArray lockArray = obj.getJSONArray("your_locks");
         for (int i=0; i<lockArray.length();i++) {
-            myLocks.add(lockArray.getJSONObject(i).getInt("id"));
+            if (lockArray.getJSONObject(i).getBoolean("has_access"))
+                myLocks.add(lockArray.getJSONObject(i).getInt("id"));
         }
         return new Friend(firstName, lastName, id,myLocks);
     }
@@ -798,7 +799,7 @@ public class Util {
             //send out request
             queue.add(jReq);
         } else
-            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
     }
 
     public static void addFriend(final int id, final Context context) {
@@ -813,7 +814,7 @@ public class Util {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(context, "Friend added!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Friend added!", Toast.LENGTH_SHORT).show();
                             Logging(response);
 
                         }
@@ -836,7 +837,7 @@ public class Util {
                                 default:
                                     response = "unknown response";
                             }
-                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -861,9 +862,8 @@ public class Util {
             //send out request
             queue.add(postRequest);
         } else
-            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
     }
-
 
     public static void removeFriend(final int id, final Context context) {
         if (isNetworkAvailable(context)) {
@@ -873,11 +873,11 @@ public class Util {
             final String pass = Util.readPassword(context);
 
             //Start request
-            StringRequest postRequest = new StringRequest(Request.Method.DELETE, URL_ADD_FRIEND,
+            StringRequest postRequest = new StringRequest(Request.Method.DELETE, URL_DELETE_FRIEND+id,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(context, "Friend added!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Friend added!", Toast.LENGTH_SHORT).show();
                             Logging(response);
 
                         }
@@ -900,7 +900,7 @@ public class Util {
                                 default:
                                     response = "unknown response";
                             }
-                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -925,7 +925,7 @@ public class Util {
             //send out request
             queue.add(postRequest);
         } else
-            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
     }
 
     public static void addFriendToLock(final int friendId, final int lock_id, final Context context) {
@@ -940,7 +940,7 @@ public class Util {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(context, "Lock added to friend !", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Lock added to friend !", Toast.LENGTH_SHORT).show();
                             Logging(response);
                         }
                     },
@@ -963,7 +963,7 @@ public class Util {
                                 default:
                                     response = "unknown response";
                             }
-                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -988,7 +988,7 @@ public class Util {
             //send out request
             queue.add(postRequest);
         } else
-            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
     }
 
     public static void removeFriendFromLock(final int friendId, final int lock_id, final Context context) {
@@ -999,11 +999,11 @@ public class Util {
             final String pass = Util.readPassword(context);
 
             //Start request
-            StringRequest postRequest = new StringRequest(Request.Method.DELETE, URL_ADD_LOCK_TO_FRIEND,
+            StringRequest postRequest = new StringRequest(Request.Method.DELETE, URL_REMOVE_LOCK_FROM_FRIEND+friendId+"&lock_id="+lock_id,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(context, "Lock removed from friend !", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Lock removed from friend !", Toast.LENGTH_SHORT).show();
                             Logging(response);
                         }
                     },
@@ -1027,7 +1027,7 @@ public class Util {
                                 default:
                                     response = "unknown response";
                             }
-                            Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -1052,7 +1052,7 @@ public class Util {
             //send out request
             queue.add(postRequest);
         } else
-            Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
     }
 
 

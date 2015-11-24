@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -147,7 +146,6 @@ public class LockListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     public void onAddLockFabClick() {
         Intent intent = new Intent(getContext(), AddLockActivity.class);
-        Log.e("fragment", section + "");
         startActivityForResult(intent, 2);
     }
 

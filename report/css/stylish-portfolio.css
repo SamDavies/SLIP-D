@@ -171,6 +171,10 @@ hr.small {
     min-height: 320px;
     color: white;
 }
+
+.banner-top .text-vertical-center > * {
+    margin-left: -240px;
+}
 .banner-top .text-vertical-center {
     width: 100%;
 }

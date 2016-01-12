@@ -72,7 +72,185 @@
             <h3>Android App</h3>
         </div>
     </header>
-    Report goes here!
+    <div class="container">
+        <div class="page-header">
+            <h2>Introduction</h2>
+        </div>
+        <p>
+            The project focused on building a lock connected to the internet that could be operated remotely and hence removing the need for keys to open doors. There are two main uses of the lock. First is at homes where people could fit the main door, or doors on garages and sheds. This is not only for personal use but also allows for giving temporary access to friends or contractors needing to come in.<br />
+            The second use is at offices, acknowledging the large number of locks and people using them and this time allowing to give access to clients coming in for a meeting. <br />
+            This part of the project targets the Android application from which the lock would be operated, trying to capture both of the main use cases.
+        </p>
+        <div class="page-header">
+            <h2>Requirements</h2>
+        </div>
+        <ul>
+            <li>Capture all of the main functionality allowed by the server: register, log in, operate the locks, add friends and give them access to your locks.
+            </li>
+            <li>Material and native design to make the application easily usable for all Android users.
+            </li>
+            <li>Optimal design and layouts, for use at homes, where we expect small number of locks.
+            </li>
+            <li>Optimal design and layouts, for use at offices, where we expect large number of locks and people using them.
+            </li>
+            <li>QR scanner for ease of registering a lock.
+            </li>
+        </ul>
+        <div class="page-header">
+            <h2>Libraries</h2>
+        </div>
+        <ul>
+            <li>ButterKnife – Allows for injecting views without loss of performance, reducing the boilerplate code for all views and elements like buttons or forms.
+            </li>
+            <div align="middle">
+                <img src="Fabien%20img/butterknife.png" width="25%" height="25%" >
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="Fabien%20img/no-butterknife.png" width="25%" height="25%" >
+                <br />
+                <i>Simple comparison of ButterKnife and standard view invocation in Android. First picure – ButterKnife, Second picture – Android</i>
+            </div>
+            <li>QrCodeReaderView – Makes implementing a QR scanner tremendously easier to the most common alternative ZXing, more about this in a latter section.
+            </li>
+            <li>Volley – Google made library for easier HTTP communications.
+            </li>
+            <li>Android support and design library – Improving backwards compatibility.</li>
+            <li>Other design support libraries – Adding more material design elements for use on older devices.</li>
+        </ul>
+        <div class="page-header">
+            <h2>Compatibility</h2>
+        </div>
+        <p>
+            Android 5.0 brought material design which was accepted as a standard, however 37% of users are still running Android 4.4. Not to single these users out, the application is compatible from this version and significant effort was put in to allow for the material feel even on this version. This was all through help of many user-made libraries porting elements like the floating action button to the older versions.
+        </p>
+        <div align="middle">
+                <img src="Fabien%20img/versions.png" width="30%" height="30%" >
+                <img src="Fabien%20img/fab.png" width="7%" height="7%" >
+                <br />
+                <i>Android versions : 4.4 (KitKat) still showing relevant contribution. Second image - Floating action button</i>
+        </div>
+        <div class="page-header">
+            <h2>Security</h2>
+        </div>
+        <p>
+            The server accepts authentication in the form of BasicAuth. For each message, you need to include username and password in the HTTP form. This creates a constraint that this information needs to be stored on the device, creating an obvious security flaw. I have decided to store this information in the application’s private storage, preventing access from other malicious applications. 
+        </p>  
+        <p>
+            This solution is safe unless the phone is misplaced or stolen, there are methods for an attacker to gain root access to the phone and then retrieve the user credentials. In this light, the phone behaves exactly like keys, if you lose your keys someone can use them to open your door, same applies here. 
+        </p>
+        <p>
+            There only exist ways to make the retrieval a lot harder but not impossible. The most common one would be encrypting the plaintext data in the private storage, although now we have the same problem again. The key needs to be stored on the device and hence an attacker with root access would have access to it. We could break the key into pieces and scatter it across the code of the application, then building it on the go while obfuscating the code. But an attacker with enough wit and time would still be able to get the information they want.
+        </p>
+        <p>
+            The safe approach is to use Token authentication with the server. Whenever the token expires the user would need to log in again. Removing the need to store credentials on the device. Alternatively, Google released a password manager this year called Smart Lock, using a similar idea of token authorization. Just for the name it would be fitting to use it for our purposes. 
+        </p>
+        <div class="page-header">
+            <h2>Main functionalities</h2>
+        </div>
+        <p>
+            Using the specified HTTP message format the application covers all of the provided functionality from the server. Taking the user from registration, through opening locks, to adding new ones. The same goes for listing and adding friends. The trickier part was being able to allow a friend to use one of your locks. But after some discussions and improvements to the server successfully solved.
+        </p>
+        <div align="middle">
+                <img src="Fabien%20img/friends-locks.jpg" width="15%" height="15%" >
+                <br />
+                <i>Giving access to locks to your friends</i>
+        </div>
+        <div class="page-header">
+            <h2>Material design and decisions</h2>
+        </div>
+        <p>
+            A lot of focus was placed on creating good looking and usable design. Both of these go hand in hand with adhering to the material design guidelines[1]. The colour scheme uses vibrant colours which go well together, while keeping a simple white background. A lot of inspiration was taken from Google’s Gmail app.
+        </p>
+        <div align="middle">
+            <img src="Fabien%20img/gmail.png" width="15%" height="15%" > 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="Fabien%20img/main.jpg" width="15%" height="15%" >
+            <br />
+            <i>Gmail and SmartLock application comparison</i>    
+        </div>
+        <p>
+            They might look rather similar but this only makes the the SmartLock application more usable, demonstrating correct use of navigational elements. The locks and friends are ordered into a list and adding a new one is through the Floating action button which moves with the list. Removing a lock or a friend is done by a long-press familiar to Android users. The locks and friends are ordered into a Swipe layout where you swipe between the list of friends and list of locks.
+        </p>
+        <p>
+            Making use of swiping, long press and the present Floating action button allowed for a clean and native design, removing a need for any extra buttons.
+        </p>
+        <p>
+            To make the lists more playful while including extra functionality, each item has an icon with extra information on the left and right side to the name. With the lock lists we are displaying whenever the lock is opened/closed. Also we are able to show whether the lock is from home, office or borrowed from a friend.
+        </p>
+        <div align="middle">
+            <img src="Fabien%20img/friends.jpg" width="15%" height="15%" > 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="Fabien%20img/friends-locks.jpg" width="15%" height="15%" >
+            <br />
+            <i>Friends list and expanded friend list with locks assigned to them.</i>    
+        </div>
+        <p>
+            The friends list expands upon click to display which locks we have given to our friends to use. This was a rather clever solution to where to place this functionality without needing to add any more screens to the application. On the left side we have a placeholder icon for photos of our friends which could be pulled from Facebook or other social network. For now, this became a place for identicons. This idea is from Github where if a user does not have a profile picture, they will get a nice blocky image generated for them. Same applies here, from the friend’s email address, which we take for a unique identifier, a hash is created and an image generated. This was supposed to be a short term solution but it solves the issue of missing profile picture rather well.
+        </p>
+        <p>
+            When a user opens the application they are immediately brought to the lock list, the core functionality. Thinking that when they open it they want to open the door as quickly as possible with just one click. Similarly, this is how size of the list elements was chosen. They need to be big enough so they can be quickly tapped without causing mis-clicks. Therefore, they are almost double the size of a standard list elements. But there also an another reason for this.
+        </p>
+            <div align="middle">
+                <img src="Fabien%20img/main.jpg" width="15%" height="15%" >
+                <br />
+                <i>Lock list screen.</i>
+            </div>
+        <p>
+            Thinking about the use cases, one in homes and other in offices. The application needs to look good on both. For homes we are assuming the user has only one or two locks, if the list elements would be too small, the screen would look empty, but we can’t make them too big either. This is for the office use, where we expect 20-50 locks and they need to be easily scrolled between.
+        </p>
+        <p>
+            To register a lock user needs to put in the lock id and it’s nickname. The lock id is unique and should not be guessable, this can be alleviated by using long randomly generated strings. However, the process of typing a long string of gibberish into a phone is tedious and error-prone. To solve this issue, I came up with an idea of QR codes. Each lock would be shipped with a QR code attached, which incorporates the string and is easily scanable by the phone. 
+        </p>
+        <p>
+            With some playing around the QR codes can be made to be branded for our purposes, whilst still being easily readable by the phone.
+        </p>
+        <div align="middle">
+            <img src="Fabien%20img/qr.png" width="15%" height="15%" >
+            <br />
+            <i>Lock list screen.</i>
+        </div>
+        <p>
+            Incorporating a QR scanner used to be a long and hard process, there were two methods both relying on open-source library ZXing. First would be that when opening the scanner, the user would be prompted to download the official app and these would communicate between each other. This would make for a rather unsmooth experience, launching another application within the first one. Second option was to compile their large library, take bits for the scanner and incorporate those, but in my experience this took way too much time and making any small changes was almost impossible. So instead I finally found a library on Github that already did this, compiled the library and provided simple, out of the box working QR scanner and I am really happy with this solution.
+        </p>
+        <div class="page-header">
+            <h2>User Testing</h2>
+        </div>
+        <p>
+            The graph below shows the results of some user tests with a small number of test subjects. Chart 1 shows that all of the users found the design fitting well with the Android environment and had a “native feel”. Chart 2 shows that all of the users also found that the application was well designed when explained all of the functionality beforehand. However, the difficulties arisen when presented with a harder task, to assign a lock to a friend on the chart 3. Only a 3/5 users have managed to achieve this task in a reasonable time, there was no time limit but rather just a feeling for it. This is most likely due to the fact that they were presented with an empty screen and not told that they needed to add a friend to have someone on the list. Following this, also finding the long press functionality was a lengthy process, but once discovered it was obvious.
+        </p>
+        <p>
+            Testing with a larger user base would be helpful, but just observing the users showed how they interact with the application. There is definitely a need for some pointers of what the application is for, or rather what it can do on the first opening. This would be a screen showing locks and friends filled in and walking the user through the process of adding and removing items from the list. This could be clear to many users, so the screen would have to be easily dismissible for the more experienced users but nonetheless still present for the first run of the application.
+        </p>
+        <div align="middle">
+            <img src="Fabien%20img/chart.png" width="30%" height="30%" >
+            <br />
+            <i>Charts showing user testing performed with a small group of users.</i>
+        </div>
+        <div class="page-header">
+            <h2>Evaluation and improvements</h2>
+        </div>
+        <p>
+            The requirements set at the beginning accounted well for the deadline we were working with. All of the requirements were successfully completed. The application uses all of the possible messages with the server and can complete the tasks well. making for a great minimal viable product. It also succeeded at choosing an optimal design to fit into the Android environment as well as to be usable by the two customer bases, offices and personal use. User testing also showed that design is minimalistic enough to present all of the information rather concisely. 
+        </p>
+        <p>
+            There were plenty of possible improvements touched on by this report, showing that the application is still in the need for improvement, for it to be considered a final product.
+        </p>
+        <ul>
+            <li>The screen layout is not optimized for different screen sizes, making it usable on all screen sizes, but not making the most of the space provided by tablets, where the lock and friends lists could be side by side.</li>
+            <li>The application’s security is linked to the server’s and both should be improved by using some type of token authentication. If this weren’t an option, then encrypting the credentials on the phone and obfuscating the code. </li>
+            <li>Usability of the application would greatly benefit from a well made walk-through at the first run.</li>
+            <li>Testing with a larger user-base would show a more reliable results.</li>
+            <li>Including a larger variety of user tests, focusing on checking that all of the functionalities are easily usable and discoverable.</li>
+            <li>Allowing to grant a lock to a user only for a specified period of time. This would be especially handy for use cases like contractors coming to the flat.</li>
+            <li>Including lock statistics, showing locks in order of usage rather then of time added. Making sure that the lock the user is looking for is at the top of the list rather then at the bottom.</li>
+        </ul>
+        <div class="page-header">
+            <h2>References</h2>
+        </div>
+        <p>[1] Android design guidelines - <a href="http://www.google.com/design/spec/material-design/introduction.html">http://www.google.com/design/spec/material-design/introduction.html</a>
+        </p>
+    </div>
+
+
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

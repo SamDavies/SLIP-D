@@ -53,7 +53,11 @@ public class Util {
     public static final String URL_REMOVE_LOCK_FROM_FRIEND = "https://slip-d-4.herokuapp.com/friend-lock?friend_id=";
 
     public static int MY_ID = 0;
+    private static RequestQueue queue;
 
+    public static void instantiate(Context context) {
+        queue = Volley.newRequestQueue(context);
+    }
 
     public static void saveUserNameAndPass(Context context, String name, String pass) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -100,7 +104,6 @@ public class Util {
     public static void registerUser(final String name, final String pass, final String first, final String last, final Context context) {
         if (isNetworkAvailable(context)) {
             //create queue for requests
-            RequestQueue queue = Volley.newRequestQueue(context);
 
             //Start request
             StringRequest postRequest = new StringRequest(Request.Method.POST, URL_REGISTER_USER,
@@ -157,7 +160,6 @@ public class Util {
     public static void checkUser(final String name, final String pass, final Context context) {
         if (isNetworkAvailable(context)) {
             //create queue for requests
-            RequestQueue queue = Volley.newRequestQueue(context);
 
             //Start request
             StringRequest postRequest = new StringRequest(Request.Method.GET, URL_LOGIN,
@@ -223,7 +225,6 @@ public class Util {
     public static void registerLock(final int lockId, final String lockName, final Context context) {
         if (isNetworkAvailable(context)) {
             //create queue for requests
-            RequestQueue queue = Volley.newRequestQueue(context);
             final String name = Util.readUserName(context);
             final String pass = Util.readPassword(context);
 
@@ -288,7 +289,6 @@ public class Util {
     public static void openLock(final int lockId, final Context context) {
         if (isNetworkAvailable(context)) {
             //create queue for requests
-            RequestQueue queue = Volley.newRequestQueue(context);
             final String name = Util.readUserName(context);
             final String pass = Util.readPassword(context);
 
@@ -353,7 +353,6 @@ public class Util {
     public static void closeLock(final int lockId, final Context context) {
         if (isNetworkAvailable(context)) {
             //create queue for requests
-            RequestQueue queue = Volley.newRequestQueue(context);
             final String name = Util.readUserName(context);
             final String pass = Util.readPassword(context);
 
@@ -418,7 +417,6 @@ public class Util {
     public static void getLockList(final ArrayList<Lock> lockList, final LockListAdapter lockListAdapter, final SwipeRefreshLayout swipeRefreshLayout, final Context context) {
         if (Util.isNetworkAvailable(context)) {
             //create queue for requests
-            RequestQueue queue = Volley.newRequestQueue(context);
             final String name = Util.readUserName(context);
             final String pass = Util.readPassword(context);
 
@@ -489,7 +487,6 @@ public class Util {
     public static void getLockList(final ArrayList<Lock> lockList, final FriendListExpandableAdapter friendListExpandableAdapter, final SwipeRefreshLayout swipeRefreshLayout, final Context context) {
         if (Util.isNetworkAvailable(context)) {
             //create queue for requests
-            RequestQueue queue = Volley.newRequestQueue(context);
             final String name = Util.readUserName(context);
             final String pass = Util.readPassword(context);
 
@@ -574,7 +571,6 @@ public class Util {
     public static void getFriendList(final ArrayList<Friend> friendList, final FriendListAdapter friendListAdapter, final SwipeRefreshLayout swipeRefreshLayout, final Context context) {
         if (Util.isNetworkAvailable(context)) {
             //create queue for requests
-            RequestQueue queue = Volley.newRequestQueue(context);
             final String name = Util.readUserName(context);
             final String pass = Util.readPassword(context);
 
@@ -644,7 +640,6 @@ public class Util {
     public static void getFriendList(final ArrayList<Friend> friendList, final FriendListExpandableAdapter friendListAdapter, final SwipeRefreshLayout swipeRefreshLayout, final Context context) {
         if (Util.isNetworkAvailable(context)) {
             //create queue for requests
-            RequestQueue queue = Volley.newRequestQueue(context);
             final String name = Util.readUserName(context);
             final String pass = Util.readPassword(context);
 
@@ -739,7 +734,6 @@ public class Util {
     public static void getUserList(final ArrayList<Friend> friendList, final FriendListAdapter friendListAdapter, final Context context) {
         if (Util.isNetworkAvailable(context)) {
             //create queue for requests
-            RequestQueue queue = Volley.newRequestQueue(context);
             final String name = Util.readUserName(context);
             final String pass = Util.readPassword(context);
 
@@ -805,7 +799,6 @@ public class Util {
     public static void addFriend(final int id, final Context context) {
         if (isNetworkAvailable(context)) {
             //create queue for requests
-            RequestQueue queue = Volley.newRequestQueue(context);
             final String name = Util.readUserName(context);
             final String pass = Util.readPassword(context);
 
@@ -868,7 +861,6 @@ public class Util {
     public static void removeFriend(final int id, final Context context) {
         if (isNetworkAvailable(context)) {
             //create queue for requests
-            RequestQueue queue = Volley.newRequestQueue(context);
             final String name = Util.readUserName(context);
             final String pass = Util.readPassword(context);
 
@@ -931,7 +923,6 @@ public class Util {
     public static void addFriendToLock(final int friendId, final int lock_id, final Context context) {
         if (isNetworkAvailable(context)) {
             //create queue for requests
-            RequestQueue queue = Volley.newRequestQueue(context);
             final String name = Util.readUserName(context);
             final String pass = Util.readPassword(context);
 
@@ -994,7 +985,6 @@ public class Util {
     public static void removeFriendFromLock(final int friendId, final int lock_id, final Context context) {
         if (isNetworkAvailable(context)) {
             //create queue for requests
-            RequestQueue queue = Volley.newRequestQueue(context);
             final String name = Util.readUserName(context);
             final String pass = Util.readPassword(context);
 

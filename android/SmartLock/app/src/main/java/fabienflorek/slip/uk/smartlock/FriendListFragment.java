@@ -3,6 +3,7 @@ package fabienflorek.slip.uk.smartlock;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -28,6 +29,8 @@ public class FriendListFragment extends Fragment implements SwipeRefreshLayout.O
     ArrayList<Friend> friendList;
     FriendListExpandableAdapter friendListExpandableAdapter;
     String URL_LIST;
+    final Handler handler = new Handler();
+    Runnable runnable;
 
     /**
      * The fragment argument representing the section number for this
@@ -113,20 +116,34 @@ public class FriendListFragment extends Fragment implements SwipeRefreshLayout.O
                                                     }
                                                 }
         );
-        /*
-        //Refresh list every second
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+/*
+        runnable =new Runnable() {
 
             @Override
             public void run() {
-                getLockList(getApplicationContext());
+                onRefresh();
                 handler.postDelayed(this, 1000);
             }
-        }, 1000);
-        */
+        };
+        //Refresh list every second
+        handler.postDelayed(runnable,1000);
+
+*/
         return rootView;
     }
+
+    @Override
+    public void onResume() {
+       // handler.postDelayed(runnable,1000);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        //handler.removeCallbacks(runnable);
+        super.onPause();
+    }
+
 
     public void onAddFriendFabClick() {
         Intent intent = new Intent(getContext(), AddFriendActivity.class);
@@ -176,7 +193,10 @@ public class FriendListFragment extends Fragment implements SwipeRefreshLayout.O
 
     @Override
     public void onRefresh() {
-        Util.getFriendList(friendList, friendListExpandableAdapter, swipeRefreshLayout, getContext());
-        Util.getLockList(lockList,friendListExpandableAdapter,swipeRefreshLayout,getContext());
+        if(getContext()!=null) {
+            Util.getFriendList(friendList, friendListExpandableAdapter, swipeRefreshLayout, getContext());
+            Util.getLockList(lockList, friendListExpandableAdapter, swipeRefreshLayout, getContext());
+            friendListExpandableAdapter.notifyDataSetChanged();
+        }
     }
 }

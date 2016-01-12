@@ -43,7 +43,8 @@
             android:ems="10"
             android:maxLength="40"
             android:hint="Lock Nickname"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:text="The Death Star" />
     </android.support.design.widget.TextInputLayout>
 
     <Button

@@ -17,6 +17,19 @@ class LockCtrl: PromiseGridFeed {
         self.grid.allowsSelection = false
     }
     
+    override func viewDidAppear(animated: Bool) {
+        refreshLocks()
+    }
+    
+    func refreshLocks(){
+        let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), 1 * Int64(NSEC_PER_SEC))
+        dispatch_after(time, dispatch_get_main_queue()) {
+            //put your code which should be executed with a delay here
+            self.getGridObjects()
+            self.refreshLocks()
+        }
+    }
+    
     /*
     Get the post feed for the specified thing
     */

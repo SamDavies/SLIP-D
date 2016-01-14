@@ -70,7 +70,144 @@
             <h3>Hardware/API comms, security</h3>
         </div>
     </header>
-    Report goes here!
+    <div class="container">
+        <div class="page-header">
+            <h2>Introduction</h2>
+        </div>
+        <p>
+            More and more everyday items are now Internet enabled, allowing remote control from mobile phones for the convenience of the user. Refrigerators, central heating, home entertainment systems, even kettles can now be part of the user's personal network, all controlled from apps or web interfaces. As part of the Internet of Things (IoT) a user can have full control over their environment all from their phone. Because of this we thought building an IoT lock, a SmartLock&trade; to give the user control over a door through the Internet would fit right in to the increasingly connected world surrounding us.</p>
+        <p>
+            A project to construct an IoT lock comes with significant security concerns, as vulnerabilities could allow unauthorized access to doors secured using the SmartLock. A rigorous analysis of possible attack vectors was required for the project to be viable in any real world scenario. This is evident from the multiple high profile hacks that have surfaced recently, compromising users' wireless networks[2] or email accounts[1]. In the case of our lock, commands are sent to it from the apps through a server, not directly, which further complicates the security as there are multiple points of failure.
+        </p>
+        <p>
+            The communication between the lock and server was done using a SIM900 GPRS module which allowed the lock to connect to the Internet, and query the server at intervals about its status. Implementation of the comms was done in stages, tooling to assist development and debugging was created first, after which a plain HTTP connection was developed, then attempts were made at integrating security features.
+        </p>
+        <div class="page-header">
+            <h2>Requirements</h2>
+        </div>
+        <ul>
+            <li>
+                <b>Identify attacker motivations.</b> Developing a good understanding of what a potential attacker would hope to obtain by attacking our system.
+            </li>
+            <li>
+                <b>Identify attack vectors.</b> Understanding where vulnerabilities might lie and how they could be exploited by an attacker.
+            </li>
+            <li>
+                <b>Connect lock to the server securely and reliably.</b> The communications between the lock and the server must be done over a secure channel in a resilient manner.
+            </li>
+        </ul>
+        <div class="page-header">
+            <h2>Security</h2>
+        </div>
+        <h3>Potential attackers</h3>
+        <p>
+            An IoT lock presents a tempting target for many attackers for a variety of reasons. Understanding and cataloging these reasons can help narrow down potential attack vectors and direct our time-limited efforts in securing the system to the most critical aspects. The most obvious motivation to compromise the system is gain access to a door secured using the smart lock. The worst case scenario is an attacker compromising the entire system, allowing her access to all locks in the database, opening and closing them at will. Such a scenario would completely destroy user trust in a real-world application and, as such, steps must be taken to prevent it.
+        </p>
+        <p>
+            Possibly less damaging but still a security concern is a passive eavesdropper that uses the lock to build a profile of a user, a record of the door's operation can give insight into a user's schedule. This could potentially be dangerous for the user, as it could be used by thieves to learn when to break into a home or by stalkers.
+        </p>
+        <p>
+            An IoT lock, by its nature, would also attract the attention of attackers that may not be malicious but only attempting to attack it to test the security or their own abilities. This presents additional concerns and an interesting dynamic, vulnerabilities are much more likely to be found and any hole found by such an attack may then be exploited by a malicious attacker, but at the same time vulnerabilities discovered by such attacks are more likely to be reported and fixed before any malicious attacker can exploit them. This dynamic is present in many high risk systems connected to the internet such as banks.
+        </p>
+        <h3>Possible attacks and attack vectors</h3>
+        <p>
+            As can be seen in the diagram below that details the components of our system, there are multiple components and connections that must be secured against attackers. The most dangerous attacks can be mounted against the API and database, as they are at the heart of the project, managing all locks and users. An attack compromising the server could potentially allow an attacker to access all locks and all user data.
+        </p>
+        <div align="middle">
+            <img src="img/structure.png">
+            <br>
+            <i>Fig 1. Project structure</i>
+        </div>
+        <p>
+            The server is deployed on Heroku, and therefore, excluding programming error, is reasonably secure against attacks aimed at taking over the hardware[3] and all sensitive data on it sits behind authentication. These factors combined with other security best practices such as salted and hashed passwords[4] create a reasonably secure server at the core of the system.
+        </p>
+        <p>
+            Another attack focused on the server is to attempt a phishing attack. This could potentially be done through DNS hijacking, tricking the apps or the lock into sending and receiving packets to and from a malicious server which could then use this to open locks. Phishing attacks could also be mounted on the web interface to trick users into giving an attacker their credentials by inputting their username and password. Phishing attacks can be partially mitigated by using security certificates but recently many such attacks were done through servers that had valid security certificates[5], therefore such attacks can be very dangerous.
+        </p>
+        <p>
+            Replay attacks are done by intercepting a stream of messages and replaying them to a target, which then interprets them as legitimate messages giving the attacker the ability to do repeatedly do an otherwise legitimate action [6]. With our system a replay attack could be used to either send a request to open the lock from the frontend to the server or from the server to the lock. Such an attack can be mitigated by implementing a secure communication protocol such as HTTPS to send messages that are vulnerable to such an attack. The communication between the server and the frontends is done over HTTPS preventing replay attacks. HTTPS also prevents eavesdropping on the channel to determine what the state of lock is by encrypting all communications. Discussion on the way the lock communicates with the server and the challenges faced while attempting to secure the communication channel can be found in the next section.
+        </p>
+        <div class="page-header">
+            <h2>Implementation of lock/server communication</h2>
+        </div>
+        <p>
+            The first challenge encountered while developing the code that ran on the hardware was that debugging could not be easily done through J-Link. As such we had to find another way to verify the code running on the board. To do this we used the Bluetooth module on the board to act as a serial debugger by connecting to it through a phone using the nRF UART app provided by Nordic Semiconductors[7]. It was configured to mirror all output from the SIM900 module, such as responses to commands or replies from the server, and take input, look for specific commands to execute (e.g. "get" would trigger the sequence of AT commands that would query the server once), and otherwise to send the input to the GPRS module. This allowed us to easily see communications between the board and the server, and to test sequences of commands.
+        </p>
+        <p>
+            We decided to have the lock ping the server with its status every 2 seconds so the server is aware of all locks and their status, and that the server need only respond to a lock if it needs to open or close. This made the server need only reply to requests made to it through the API, and the lock need only to listen to replies. This made the system simpler to develop. The plan to implement the communications between the lock and the server was to start by creating the simplest form of communication possible to allow the other parts of the system to be tested together and then build on that to further enhance the security of the system. Starting simple prevented comms from being a bottleneck for either the server or the hardware development. The most straight forward method of communication between lock and server was to use HTTP over the GRPS module's built-in TCP/IP stack[8]. This proved to be a a good decision as establishing a stable connection using this method was relatively quick, which let me write the code that parsed the reply from the server and thus allow the hardware to communicate with the server.
+        </p>
+        <p>
+            To build on this, my first attempt was to use built-in HTTPS support on the SIM900[9] but this proved to be impossible as, although the hardware was capable of using HTTPS, the firmware installed on it did not support it. According to the TA, upgrading the firmware to a version that supports HTTPS was not possible within the time frame we had so I had to look for alternative solutions.
+        </p>
+        <p>
+            Creating a security protocol of our own was briefly discussed but previous incident argued strongly against it[11]. After searching for an exiting security solutions, we came across mbed TLS [10], a library maintained by ARM for mbed that could be used to establish connections over SSL, which was very promising. It also implemented many useful security features such as security certificate support. Although the library is developed by ARM and it is meant for the mbed platform, it is not availble on their online compiler because it is not compatible with all mbed boards, which caused a minor delay. To interface the library with the SIM900 module I need to use the TCP/IP commands to create a connection that the library could use, but this proved to be a difficult undertaking. Although Bluetooth debugging was useful, it suffered from problems that slowed down progress significantly: the range of the signal was very low which meant I had to have my phone right on top of the board for it connect and interrupts were still common. This meant that testing longer sequences of complex AT commands was difficult. The connection established using the TCP/IP commands was not stable, the GPRS module responding to commands with errors frequently. I attempted to debug the sequence of commands I was using, and compare it online tutorials but I could not find the source of the errors despite my best efforts. This meant that trying to enable the mbed TLS library was very difficult. For this reason, and because of the unreliability of the connection, I reverted the communication between server and lock to use plain HTTP, which leaves it vulnerable to a range of possible attacks discussed above.
+        </p>
+        <div class="page-header">
+            <h2>Possible improvements</h2>
+        </div>
+        <p>
+            The communications between the lock and the server are currently completely unsecured, so implementation of HTTPS would be a top priority in any effort to continue development. Either of the two methods described above to implement HTTPS would provide adequate security.
+        </p>
+        <p>
+            Currently the server requires users to authenticate to access data but lock endpoints do not require authentication. Making locks authenticate with a lock id and password would prevent any unauthorized person learning the status of a lock at a given moment.
+        </p>
+        <p>
+            Security certificates can mitigate some security risks and the lock is capable of checking them. Implementing certificates on the server and making the apps and locks check them would add to the security of the system. With the release of LetsEncrypt[12], creating a certificate for the server is both free and easy.
+        </p>
+        <p>
+            Another possible improvement, this time in terms of performance not security, is for the lock to establish a socket with the server and then all communication to be done through it. This would mean that once established, a secure channel would not have to be renegotiated which would lower data usage and power consumption on the lock.
+        </p>
+        <div class="page-header">
+            <h2>Evaluation and conclusions</h2>
+        </div>
+        <p>
+            The security analysis covered many possible scenarios and produced solutions for many of the possible attacks against our system. The implementation of security features was time constrained but the frontend and server components have included security features that guard against some attacks. With more time, such as when working on a fully featured product, security can be upgraded to the level required by a project as security focused as this. The analysis provides a good framework for future improvements across the system therefore achieves the goals set out for it.
+        </p>
+        <p>
+            The lock to server communication only partially achieved the requirements. The current system establishes a reliable communication channel, and a solid base for future development, but it did not achieve its objective of reliable secure communications due to the issues listed above. With more time or the possibility of different hardware, this could be achieved by implementing the security features listed in the "Possible improvements" section. If implemented correctly, they would bring the lock in line with the security of most similar products.
+        </p>
+        <div class="page-header">
+            <h2>References</h2>
+        </div>
+        <ol>
+            <li>
+                <a href="http://www.theregister.co.uk/2015/08/24/smart_fridge_security_fubar/">Leyden, John. "Samsung Smart Fridge Leaves Gmail Logins Open To Attack". The Register 2015. Web. 14 Jan. 2016.</a>
+            </li>
+            <li>
+                <a href="http://www.theregister.co.uk/2015/10/19/bods_brew_ikettle_20_hack_plot_vulnerable_london_pots/">Pauli, Darren. "Connected Kettles Boil Over, Spill Wi-Fi Passwords Over London". The Register 2015. Web. 14 Jan. 2016.</a>
+            </li>
+            <li>
+                <a href="https://www.heroku.com/policy/security">Heroku.com,. "Heroku | Security". N.p., 2016. Web. 14 Jan. 2016.</a>
+            </li>
+            <li>
+                <a href="https://www.owasp.org/index.php/Password_Storage_Cheat_Sheet">Owasp.org,. "Password Storage Cheat Sheet - OWASP". N.p., 2015. Web. 14 Jan. 2016.</a>
+            </li>
+            <li>
+                <a href="http://www.scmagazineuk.com/fraudsters-exploit-weak-ssl-certificate-security-to-set-up-hundreds-of-phishing-sites/article/444708/">Ring, Tim. "Fraudsters Exploit Weak SSL Certificate Security To Set Up Hundreds Of Phishing Sites". SC Magazine UK 2016: 2. Web. 14 Jan. 2016.</a>
+            </li>
+            <li>
+                <a href="https://msdn.microsoft.com/en-us/library/aa738652%28v=vs.110%29.aspx">Msdn.microsoft.com,. "Replay Attacks". Web. 14 Jan. 2016.</a>
+            </li>
+            <li>
+                <a href="https://play.google.com/store/apps/details?id=com.nordicsemi.nrfUARTv2&hl=en_GB">play.google.com, nRF UART 2.0. Web. 14 Jan. 2016.</a>
+            </li>
+            <li>
+                <a href="http://www.espruino.com/datasheets/SIM900_AT.pdf">  SIM900 AT Command  Manual  V1.03. 2010. Web. 14 Jan. 2016. </a>
+            </li>
+            <li>
+                <a href="http://mt-system.ru/sites/default/files/sim900_https_at_command_set_v1_00.pdf">  SIM900 HTTPS AT Commands Set V1.00  2012. Web. 14 Jan. 2016. </a>
+            </li>
+            <li>
+                <a href="https://tls.mbed.org/">mbed TLS. Web. 14 Jan. 2016. </a>
+            </li>
+            <li>
+                <a href="http://cybergibbons.com/security-2/csl-dualcom-cs2300-signalling-unit-vulnerabilities/">Cybergibbons,. "CSL Dualcom CS2300-R Signalling Unit Vulnerabilities". N.p., 2015. Web. 14 Jan. 2016.</a>
+            </li>
+            <li>
+                <a href="https://letsencrypt.org/">Let’s Encrypt. Web. 14 Jan. 2016. </a>
+            </li>
+        </ol>
+    </div>
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

@@ -70,7 +70,7 @@
         </div>
         <div class="text-vertical-center">
             <h1>Sam Davies</h1>
-            <h3>iOS App</h3>
+            <h3>iOS App & Flask API</h3>
         </div>
     </header>
 
@@ -113,35 +113,34 @@
 
                 <p> I contributed considerably to the success of this task. My
                 main contribution was the design and implementation of the iOS
-                application, the element which ultimately controlled by the
-                lock, via the API. I also worked extensively on both the design
-                and implementation of the API, collaboration closely with
+                application, the element which ultimately controlled the
+                lock. I also worked extensively on both the design
+                and implementation of the API, collaborating closely with
                 Michael to ensure it was extensive enough for the feature set I
                 wanted to implement within the iOS Application and to give us a
-                strong integration, fully utilising every aspect of the API.
+                strong integration, fully utilising every aspect of the system.
                 </p>
-
-                <p> I designed and structure the oral and visual presentation
-                which the team gave earlier in the semester. To efficiently
-                incorporate the aspects of the system that the team wanted to
-                describe in the presentation, I opened the content up in a
-                google slide collaboration document. On the day of the
-                presentation I was also the main speaker. </p>
 
                 <p> The server would handle all the traffic between the lock and
                 the server; providing an API to register users, open locks and
                 grant access to friends in order to open the locks.
                 </p>
 
-                <p> Nowadays we consider a smartphone a very common device and
-                therefore it seemed a logical choice of front end. We decided to
-                implement the front end on the two main operating systems, iOS
-                and Android. Furthermore, since we had the skill set and
-                resources available we also implemented an admin interface on a
-                web app. </p>
+                <p>I designed and structure the oral and visual presentation
+                which the team gave earlier in the semester. To efficiently
+                incorporate the aspects of the system that the team wanted to
+                describe in the presentation, I opened the content up in a
+                google slide collaboration document. On the day of the
+                presentation I was also the main speaker. </p>
+
+                <p>Nowadays we consider a smartphone a very common device. It
+                seemed a logical choice to implement the front end on the two
+                main operating systems, iOS and Android. Furthermore, since we
+                had the skill set and resources available, we also implemented an
+                admin interface on a web app. </p>
 
                 <p> In this report I will further detail and explain my work
-                load.  </p>
+                load.</p>
 
             </subsection>
 
@@ -153,15 +152,16 @@
 
             <subsection class="col-md-12">
 
-                <p> I chose to do Behaviour driven development from the outset
-                of the project, so the collaborative code that we developed as a
-                team always had the behaviour that we intended. The people who
-                benefit most from software testing are the people who are
-                further adding to the lines of code and therefore instead of
-                waiting till the end of the project to write the tests we
-                developed them simultaneously to the application code. </p>
+                <p>I chose to develop the system using <i>Behaviour Driven
+                Development</i> from the outset of the project, such that the
+                collaborative code we develope as a team always has the
+                behaviour that we intended. The people who benefit most from
+                software testing are the people who are further adding to the
+                lines of code. Therefore, instead of waiting till the end of
+                the project to write the tests we developed them simultaneously
+                to the application code. </p>
 
-
+                The <i>Behaviour Driven Development</i> is performed as follows:
                 <ol>
                     <li>Write a test</li>
                     <li>Run all of the tests, making sure that the new test fails</li>
@@ -170,7 +170,7 @@
                     <li>Refactor your code</li>
                 </ol>
 
-                <p> Behaviour driven development provides a scaffold for when
+                <p>Behaviour driven development provides a scaffold for when
                 one is unsure about how to implement something. It allows you to
                 have a conversation with the code, asking it questions, getting
                 answers and then adjusting. This makes it a great exploratory
@@ -183,7 +183,7 @@
                 <p> The benefits of Behaviour driven development are:
                     <ul>
                         <li>Reduced number of lines of code</li>
-                        <li>Prevents breaking of old code (regressions)</li>
+                        <li>Prevents the breaking of old code (regressions)</li>
                         <li>Better APIs since the API naturally written from an user’s perspective</li>
                         <li>Refactoring Encourages Improvements therefore the codebase does not grow unless it needs to</li>
                         <li>Provides executable documentation which is a series of example on how the code works</li>
@@ -201,9 +201,7 @@
 
             <subsection class="col-md-12">
 
-                <h2 class="page-header">A System Level View</h2>
-
-                <p> The API is the central hub of the SmartLock system,
+                <p>The API is the central hub of the SmartLock system,
                 therefore it is vital that the reliability of the API remains
                 very high. The API maintains a database which records
                 information about the locks and users. Additionally the lock
@@ -214,7 +212,7 @@
 
                 <p> When the apps send a request to open a lock, the API updates
                 the database. When the lock next communicates with the API, the
-                API will tell it to open.  </p>
+                API will tell it to open.</p>
 
                 <div class="img-row">
 
@@ -234,10 +232,10 @@
 
             <subsection class="col-md-12">
 
-                <p> When I designed the API, I had several frameworks to choose
-                from, in many languages. In the end, I chose Flask. The decision
+                <p> When I designed the API, we had several frameworks to choose
+                from, in many languages. In the end, Michael and I chose Flask. The decision
                 to adopt Flask was primarily based on the opinion that we felt
-                it best suited the style of development I wanted to use
+                it best suited the style of development that I wanted to use
                 throughout the project, enabling us to prototype the system and
                 iteratively improve it. </p>
 
@@ -272,7 +270,7 @@
                 database could offer. I spent a vast amount of time optimising
                 the SQLAlchemy code on the API such that this could be achieved.
                 This meant that the response time to the iOS Application and the
-                physical lock was as short as possible. </p>
+                physical lock were as short as possible. </p>
 
                 <p> The Cyclic Dependencies in python gave us some problems with
                 the boilerplate code when beginning the project. By moving the
@@ -282,16 +280,16 @@
                 not surface again.
                 </p>
 
-                <p> Ayrton, Michael, JP and myself spent a considerable amount
+                <p> Michael, Ayrton, JP and myself spent a considerable amount
                 of time designing the part of the API which interfaced with the
                 Lock itself. I came up with a ‘follow the leader’ protocol which
                 makes the lock follow the state of the lock on the server which
-                Ayrton and I implemented in the flask API. I then went onto
-                design a use case which would simulate every possible scenario
+                Ayrton and I implemented in the flask API. I then
+                designed a use case which would simulate every possible scenario
                 for this protocol and create automated unit tests to ensure that
                 this important behavior remained the same. I think this was
                 imperative to enable our system to reach maximum efficiency; the
-                protocol is further explained in Aytrons report, here.
+                protocol is further explained in Aytrons report <a href="ayrton.html#LockCommunication">here</a>.
                 </p>
 
                 <p> The friends endpoint required very specific behavior on the

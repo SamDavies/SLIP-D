@@ -308,3 +308,10 @@ footer {
 h4 {
     font-weight: 300;
 }
+
+.dropshadow {
+	height: auto;
+	-webkit-box-shadow: -5px 10px 20px 3px rgba(0,0,0,0.80);
+	-moz-box-shadow: -5px 10px 20px 3px rgba(0,0,0,0.80);
+	box-shadow: -5px 10px 20px 3px rgba(0,0,0,0.80);
+}

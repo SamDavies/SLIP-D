@@ -11,6 +11,9 @@
 
     <title>SLIP group D - Smart Lock</title>
 
+    <!-- tocify CSS -->
+    <link type="text/css" rel="stylesheet" href="css/jquery.tocify.css" />
+    
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -71,6 +74,13 @@
         </div>
     </header>
 
+    <div class="col-md-3" id="toc-container">
+        <div style="padding-top:40px">
+        </div>
+        <div id="toc">
+        </div>
+    </div>
+    
     <div class="col-md-9" id="report-context">
         <section class="col-md-12">
             <h1 class="page-header">Introduction</h1>
@@ -831,27 +841,60 @@
 
     </div>
 
-
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
+    <!-- tocify scripts -->
+    <script src="js/jquery-ui-1.9.1.custom.min.js"></script>
+    <script src="js/jquery.tocify.min.js""></script>
+
+    
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script>
-    // Closes the sidebar menu
-    $("#menu-close").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
+     // Closes the sidebar menu
+     $("#menu-close").click(function(e) {
+         e.preventDefault();
+         $("#sidebar-wrapper").toggleClass("active");
+     });
 
-    // Opens the sidebar menu
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
+     // Opens the sidebar menu
+     $("#menu-toggle").click(function(e) {
+         e.preventDefault();
+         $("#sidebar-wrapper").toggleClass("active");
+     });
 
+     //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+     $(function() {
+         //Calls the tocify method on your HTML div.
+         $("#toc").tocify({context: '#report-context',
+                           scrollTo: 0});
+         $(function($) {
+             var $cache = $('#toc');
+             w = $cache.outerWidth();
+             ml = $cache.css('margin-left');
+             function fixDiv() {
+                 if ($(window).scrollTop() > $("header").outerHeight()) {
+                     $cache.css({
+                         'position': 'fixed',
+                         'top': '40px',
+                         'width': w
+                     });
+                 } else {
+                     $cache.css({
+                         'position': 'static',
+                         'width': w,
+                         'margin-left': ml,
+                     });
+                 }
+             }
+             $(window).scroll(fixDiv);
+             fixDiv();
+         });
+     });
+     
     </script>
 
 </body>

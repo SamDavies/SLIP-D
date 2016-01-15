@@ -115,11 +115,18 @@
                 main contribution was the design and implementation of the iOS
                 application, the element which ultimately controlled by the
                 lock, via the API. I also worked extensively on both the design
-                and implementation of the API, collaberation closely with
+                and implementation of the API, collaboration closely with
                 Michael to ensure it was extensive enough for the feature set I
                 wanted to implement within the iOS Application and to give us a
                 strong integration, fully utilising every aspect of the API.
                 </p>
+
+                <p> I designed and structure the oral and visual presentation
+                which the team gave earlier in the semester. To efficiently
+                incorporate the aspects of the system that the team wanted to
+                describe in the presentation, I opened the content up in a
+                google slide collaboration document. On the day of the
+                presentation I was also the main speaker. </p>
 
                 <p> The server would handle all the traffic between the lock and
                 the server; providing an API to register users, open locks and
@@ -162,14 +169,6 @@
                     <li>Make sure that all of the previous tests still pass</li>
                     <li>Refactor your code</li>
                 </ol>
-
-                <div class="img-row">
-
-                    <div class="img-container outside desktop">
-                        <img src="img/sam/rgr.png" width=200 />
-                    </div>
-
-                </div>
 
                 <p> Behaviour driven development provides a scaffold for when
                 one is unsure about how to implement something. It allows you to
@@ -323,8 +322,9 @@
                 <p> I want the system to be created initially as a minimum
                 viable product which could be iteratively improved in the
                 future. The authentication protocol that I chose to implement
-                between the application and the server was HTTP basic auth.
-                </p>
+                between the application and the server was <a
+                href="https://en.wikipedia.org/wiki/Basic_access_authentication">HTTP
+                basic auth</a>. </p>
 
                 <div class="img-row">
 
@@ -356,7 +356,7 @@
                 </div>
 
                 <p> If we were to move the project into production we would use
-                the more sure OAuth protocol which involves passing tokens with
+                the more secure <a href="http://oauth.net/2/">OAuth protocol</a> which involves passing tokens with
                 the request instead of the user's password and email. This means
                 that even if a request was intercepted and decrypted, the attack
                 would only gain access to the users account for a limited time.
@@ -556,11 +556,11 @@
                 <div class="img-row">
 
                     <div class="img-container outside desktop">
-                        <img src="img/sam/1.png" width=200 class="dropshadow"/>
+                        <img src="img/sam/app1.png" width=200 class="dropshadow"/>
                     </div>
 
                     <div class="img-container outside desktop">
-                        <img src="img/sam/2.png" width=200 class="dropshadow"/>
+                        <img src="img/sam/app2.png" width=200 class="dropshadow"/>
                     </div>
 
                 </div>
@@ -597,15 +597,15 @@
                 <div class="row">
                     <br>
                     <div class="col-xs-4" >
-                        <img src="img/sam/3.png" height=400 width=220 class="dropshadow"/>
+                        <img src="img/sam/app3.png" height=400 width=220 class="dropshadow"/>
                     </div>
 
                     <div class="col-xs-4">
-                        <img src="img/sam/4.png" height=400 width=220 class="dropshadow"/>
+                        <img src="img/sam/app4.png" height=400 width=220 class="dropshadow"/>
                     </div>
 
                     <div class="col-xs-4">
-                        <img src="img/sam/5.png" height=400 width=220 class="dropshadow"/>
+                        <img src="img/sam/app5.png" height=400 width=220 class="dropshadow"/>
                     </div>
                 </div>
 
@@ -629,15 +629,15 @@
                 <div class="row">
                     <br>
                     <div class="col-xs-4" >
-                        <img src="img/sam/6.png" height=400 width=220 class="dropshadow"/>
+                        <img src="img/sam/app6.png" height=400 width=220 class="dropshadow"/>
                     </div>
 
                     <div class="col-xs-4">
-                        <img src="img/sam/7.png" height=400 width=220 class="dropshadow"/>
+                        <img src="img/sam/app7.png" height=400 width=220 class="dropshadow"/>
                     </div>
 
                     <div class="col-xs-4">
-                        <img src="img/sam/8.png" height=400 width=220 class="dropshadow"/>
+                        <img src="img/sam/app8.png" height=400 width=220 class="dropshadow"/>
                     </div>
                 </div>
 
@@ -654,34 +654,144 @@
 
             </subsection>
 
+            <subsection class="col-md-12">
+
+                <h2 class="page-header">Code Structure</h2>
+
+                <p> The iOS application design plan was formulated following an
+                augmented MVC design pattern, utilising five layers over the
+                traditional three. By separating the modules of the application
+                code into this structure I was able to keep the modules more
+                maintainable, extensible and more easily write unit tests for
+                it.</p>
+
+                <h4>Network Layer</h4>
+
+                <p> The lowest level layer was the Network layer. It comprises
+                of the functions which call and receive from the API, converting
+                the command received from the Model Layer into a request before
+                attaching the authorisation headers. It also handles the
+                authentication which was discussed in the security section. </p>
+
+                <p> The Network layer waits for as long as the timeout permits,
+                hopefully receiving a response from the API. If the response is
+                received, the layer decodes the result into JSON, passing it to
+                the Model Layer. </p>
+
+                <h4>Model Layer</h4>
+
+                <p> The Model layer supplies the url of the data it wishes to
+                receive to the Network Layer. Once the Network layer has
+                returned the expected data, this layer takes the received raw
+                JSON and converts it to one of the objects seen above so it can
+                be easily accessed throughout the project, increasing
+                readability as it allows us only to deal with one programming
+                language. </p>
+
+                <h4>View-Model Layer</h4>
+
+                <p> The View-Model layer holds collections of models and
+                performs the ‘business logic’ of the application, requesting
+                models from the model layer and sending data to the view
+                controller. </p>
+
+                <h4>View-Controller</h4>
+
+                <p> The Model-View layer responds to commands by the user by
+                registering finger-swipes and button presses. It then asks the
+                view-model for the correct logic to perform. It also updates the
+                UI based of the data that it recieves from the layer above.</p>
+
+                <h4>View</h4>
+
+                <p>This is a static layer which is used to customise the
+                presentation and the layout of user interface and generally how
+                to display data. It is assigned a view-controller which has
+                ownership over the view, telling it what to display. </p>
+
+
+            </subsection>
+
+            <subsection class="col-md-12">
+
+                <h2 class="page-header">iOS Application Security</h2>
+
+                <p> The network layer implements the HTTP Basic which the API is
+                using to authenticate the user. The application stores the
+                username and password securely in iOS keychain, which is the
+                most secure way of storing user credentials in iOS. I have also
+                allowed to the authorisation method to be swapped in the iOS
+                application if the OAuth authentication or facebook
+                authentication is implemented in the future. </p>
+
+            </subsection>
+
+            <subsection class="col-md-12">
+
+                <h2 class="page-header">Automated Testing</h2>
+
+                <p> I have performed behavioral driven development in the same
+                way as the API, meaning that the tests for the iOS application
+                were developed at the same time as the code, bringing all the
+                benefits discussed in the testing section. I have also
+                implemented UI tests which run all of the use cases as a series
+                of simulated user actions. This ensures that the quality of the
+                user interaction in the final product is high and that it will
+                always remain high as long as  behavioral driven development is
+                used when developing the application in the future.</p>
+
+            </subsection>
+
+            <subsection class="col-md-12">
+
+                <h2 class="page-header">Evaluation</h2>
+
+                <p>Features that could be added to the iOS application to
+                improve the user experience are the QR scanner and push
+                notification. The QR scanner will read in the lock ID
+                automatically so that the user no longer has to type in the
+                identification code of their locks when they are looking to
+                register them to an account. The push notifications will alert
+                the owner when there has been a malicious entry, however this
+                machine learning task was never implemented on the API. There
+                are limited useful situations where push notification could be
+                used if the automatic fraud detection is not implemented. For
+                this reason I did not add push notifications to the application
+                but thanks to the modular design of the code, this could be
+                added with minimal time and effort.</p>
+
+                <p> I have implemented the basic features of the system, making
+                them reasonably reliable and designing the code to be highly
+                modular and scaleable for future development. However the
+                security of the whole system still needs to be evaluated to
+                ensure that it meets the level we set out at the start of the
+                project. </p>
+
+            </subsection>
+
         </section>
 
         <section class="col-md-12">
 
-            <h1 class="page-header">References</h1>
+            <h1 class="page-header">Presentation</h1>
 
             <subsection class="col-md-12">
 
-                <h2 class="page-header">Subsection Header</h2>
+                <p> The presentation involved bring together all the different
+                components of the project so that the system could be presented
+                as one uniform entity. To do this I separated out the
+                presentation into equal portions section where the person on the
+                team with the most expertise would be the main speaker for that
+                section. </p>
 
-                <div align="middle">
-                    <img src="img/ayrton.jpg" width=200 height=200 style="text-align: center" />
-                </div>
-
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing
-                    elit. Pellentesque aliquet, erat nec cursus faucibus,
-                    ipsum arcu laoreet metus, tincidunt convallis magna
-                    libero ac felis. Aenean ornare justo a massa mattis
-                    aliquam. Integer leo ex, commodo euismod lacus sed,
-                    auctor pharetra turpis. Donec interdum malesuada
-                    elit. Sed suscipit porttitor lorem eget aliquet. Etiam
-                    a pharetra neque. Aliquam lacus nisi, facilisis vitae
-                    risus vitae, consectetur tempus neque. Praesent dictum
-                    sapien quis vehicula dictum. Mauris vitae tellus eu
-                    nulla fringilla egestas. Proin varius laoreet libero
-                    at finibus.
-                </p>
+                <p> We also developed a demo of the system as a whole to
+                showcase every aspect of the system in a succinct but detailed
+                part of the presentation. The video recording backup was created
+                as a team and michael did a good job of editing it the final cut
+                with audio and visual effects. By introducing the presentation,
+                describing the iOS application, speaking during the demo and
+                concluding the presentation I believe that I was the main
+                presenter on the day. </p>
 
             </subsection>
 

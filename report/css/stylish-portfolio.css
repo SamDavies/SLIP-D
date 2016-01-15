@@ -273,6 +273,8 @@ footer {
     flex: 0 0 auto;
     text-align: center;
     position: relative;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 .img-container.mobile {
@@ -281,6 +283,10 @@ footer {
 
 .img-container.desktop {
     flex-basis: 500px;
+}
+
+.img-container.small {
+    flex-basis: 300px;
 }
 
 .img-container.outside {
@@ -297,4 +303,8 @@ footer {
     width: 100%;
     font-style: italic;
     margin: 0;
+}
+
+h4 {
+    font-weight: 300;
 }

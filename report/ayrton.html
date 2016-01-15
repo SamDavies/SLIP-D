@@ -256,11 +256,16 @@
                         vandalism) and keeping information about the lock
                         up-to-date at all times.</p>
 
-                    <div class="img-container outside">
-                        <img src="img/ayrton/communications.png" />
-                        <p class="caption">Communication between the Web Application and a SmartLock device</p>
+                    <div class="img-row">
+                        
+                        <div class="img-container outside desktop">
+                            <img src="img/ayrton/communications.png" width=400 />
+                            <p class="caption">The user profile page on a desktop computer.</p>
+                        </div>
+                        
                     </div>
-
+                    
+                    
                     <p>Communicating this information to the user is
                         where I come in. Using a central API allows us to
                         develop a suite of applications to display
@@ -378,10 +383,7 @@
 
                     <subsection>
 
-                        <h3>
-                            Lock Communication
-                            <sup><a href="#gh-lock-logic">[2]</a></sup>
-                        </h3>
+                        <h3>Lock Communication</h3>
 
                         <p>Once the lock hardware was built we
                             discovered that our initial design for the
@@ -395,15 +397,17 @@
                             physical key: if the lock believed it
                             should be closed, it would continue to try
                             to close the lock even when a key was
-                            used. Together with <a href="jp.html">JP</a>,
-                            <a href="sam.html">Sam</a>, and Michael, I
-                            re-designed the logic for the lock system
-                            to use a follow-the-leader approach with
-                            the lock being the leader. This design
-                            caused the API to work in conjunction with
-                            a physical key, making <em>requests</em>
-                            for the lock to close but never forcing it
-                            to do so.</p>
+                            used. Together with <a
+                            href="jp.html">JP</a>, <a
+                            href="sam.html">Sam</a>, and Michael, I
+                            re-designed the logic<sup><a
+                            href="#gh-lock-logic">[2]</a></sup> for
+                            the lock system to use a follow-the-leader
+                            approach with the lock being the
+                            leader. This design caused the API to work
+                            in conjunction with a physical key, making
+                            <em>requests</em> for the lock to close
+                            but never forcing it to do so.</p>
 
                         <table class="table table-striped">
                             
@@ -538,15 +542,22 @@
                             avoid overloading the user with
                             information and provide quick access to
                             the specific functionality they require.</p>
-
-                        <subsection>
-                            
-                            <h4>Possible Improvements</h4>
-                                                        
-                            <p>Currently, the user is unable </p>
-
-                        </subsection>
-
+                        
+                        <p>The mobile image features one of the many
+                            alerts the application shows to the user. In
+                            the event of an error (whether caused by the
+                            API or by erroneous user input) or upon
+                            success of an action the user is shown a
+                            message box informing them of what has just
+                            occurred. This is useful for communicating
+                            back-end operations to the user, clearing up
+                            any concerns they may have. For example,
+                            if the user attempts to register a lock but
+                            the operation fails due to a database error,
+                            they may ask: <em>why was my lock not
+                            registered?</em> Using the message flashing
+                            system we can dynamically show an error
+                            message to explain why.</p>
                         
                         <div class="img-row">
                             
@@ -562,6 +573,107 @@
                             
                         </div>
                         
+                        <subsection>
+                            
+                            <h4>Potential Improvements</h4>
+                                                        
+                            <p>The user is currently unable to change
+                            any of their details. Given more time I
+                            would add this functionality. However,
+                            this was difficult to co-ordinate after
+                            the presentation as each of us had other
+                            obligations. Although I managed to add
+                            some API features, this was a low
+                            priority.</p>
+
+                        </subsection>
+                        
+                    </subsection>
+
+                    <subsection>
+
+                        <h3>Friend Overview</h3>
+
+                        <p>The friend overview page allows a user to
+                        add and remove friends. The page uses a
+                        typeahead to suggest friends to users based on
+                        their input - for example, if I enter
+                        "<em>Mich</em>" then the typeahead might
+                        suggest "<em>Mich</em>ael Inglis" as a
+                        friend. This can be seen in the box
+                        below. This feature is also available on
+                        mobile devices.</p>
+
+                        <p>The typeahead also suggests people you are
+                        already friends with. If you select a user you
+                        are already friends with, the green plus
+                        button will change to a red minus, allowing
+                        you to remove that person as a friend.</p>
+                        
+                        <div class="img-row">
+                            
+                            <div class="img-container inside desktop">
+                                <img src="img/ayrton/friends.png" width=500 />
+                                <p class="caption">The friend overview page on a desktop computer.</p>
+                            </div>
+                            
+                            <div class="img-container inside mobile">
+                                <img src="img/ayrton/friends-profile.png" width=200 />
+                                <p class="caption">...and on a mobile device.</p>
+                            </div>
+
+                        </div>
+
+                    </subsection>
+
+                    <subsection>
+
+                        <h3>Friend Profile</h3>
+
+                        <p>The friend profile page allows you to view
+                            other user's profiles. These pages display any
+                            locks that you own which they have access to
+                            and vice-versa.</p>
+
+                        <p>If you are not friends with the user, a
+                            button will be present to remove them and
+                            vice-versa.</p>
+                         
+                        <div class="img-row">
+                            
+                            <div class="img-container inside desktop">
+                                <img src="img/ayrton/other-user-profile.png" width=500 />
+                                <p class="caption">The friend profile page on a desktop computer.</p>
+                            </div>
+                            
+                            <div class="img-container inside mobile">
+                                <img src="img/ayrton/friends-profile.png" width=200 />
+                                <p class="caption">...and on a mobile device.</p>
+                            </div>
+
+                        </div>
+
+                        <subsection>
+
+                            <h4>Potential Improvements</h4>
+
+                            <p>Unlike the lock profile page, the
+                                friend profile page does not allow you to
+                                control access to locks you have shared
+                                with other users. This feature could be
+                                added to the locks under the "Your Locks"
+                                section of the page to complete the
+                                functionality.</p>
+
+                            <p>This functionality was not added before
+                                the submission deadline because the
+                                endpoint which provides the friend profile
+                                data was a last-minute addition to the
+                                API. Given more time, I would add this
+                                feature.</p>
+
+                        </subsection>
+
                     </subsection>
                     
                     <subsection>
@@ -574,10 +686,24 @@
                             section). The states are actually buttons
                             which can be used to control the respective
                             lock.</p>
+                        
+                        <div class="img-row">
+                            
+                            <div class="img-container inside desktop">
+                                <img src="img/ayrton/locks.png" width=500 />
+                                <p class="caption">The lock overview page on a desktop computer.</p>
+                            </div>
+                            
+                            <div class="img-container inside mobile">
+                                <img src="img/ayrton/locks-mobile.png" width=200 />
+                                <p class="caption">...and on a mobile device.</p>
+                            </div>
 
+                        </div>
+                        
                         <subsection>
                             
-                            <h4>Possible Improvements</h4>
+                            <h4>Potential Improvements</h4>
                             
                             <p>To improve this display I could separate
                                 the user's own locks from locks they have
@@ -595,21 +721,7 @@
                                 order the locks by most frequently or most
                                 recently used.</p>
 
-                        </subsection>           
-                        
-                        <div class="img-row">
-                            
-                            <div class="img-container inside desktop">
-                                <img src="img/ayrton/locks.png" width=500 />
-                                <p class="caption">The user profile page on a desktop computer.</p>
-                            </div>
-                            
-                            <div class="img-container inside mobile">
-                                <img src="img/ayrton/locks-mobile.png" width=200 />
-                                <p class="caption">...and on a mobile device.</p>
-                            </div>
-
-                        </div>
+                        </subsection>
 
                     </subsection>
                     
@@ -617,11 +729,173 @@
                         
                         <h3>Lock Detail</h3>
                         
-                        <p>This
+                        <p>This page displays information about a
+                        user's locks. Notice the difference between
+                        the mobile and desktop versions: on mobile the
+                        lock button takes up most of the screen,
+                        whereas on the desktop it takes up a small
+                        portion.</p>
+
+                        <p>This has been done intentionally. When
+                        accessing the website on a mobile device the
+                        user is most likely looking to open or close
+                        their locks, so priority is given to that
+                        functionality. On the desktop we have much
+                        more room to display elements of the page and
+                        it is more likely that a user will want to
+                        manage access to their lock, so we give
+                        priority to those elements. This is one of the
+                        many applications of <strong>responsive
+                        design</strong> in my work.<p>
+
+                        <div class="img-row">
+                            
+                            <div class="img-container inside desktop">
+                                <img src="img/ayrton/lock.png" width=500 />
+                                <p class="caption">The lock detail page on a desktop computer.</p>
+                            </div>
+                            
+                            <div class="img-container inside mobile">
+                                <img src="img/ayrton/lock-button-mobile.png" width=200 />
+                                <p class="caption">The responsive lock button.</p>
+                            </div>
+
+                            <div class="img-container inside mobile">
+                                <img src="img/ayrton/lock-details-mobile.png" width=200 />
+                                <p class="caption">Mobile management controls.</p>
+                            </div>
+
+                        </div>
+                            
+                    </subsection>
+
+                    <subsection>
+
+                        <h3>Registration</h3>
+
+                        <p>This page allows the user to register a new
+                            account. The forms have been set up to use
+                            responsive design, making them easy to
+                            fill out both on mobile and desktop
+                            platforms.If a field is filled in
+                            correctly, a message will be flashed upon
+                            submission indicating the error.</p>
+
+                        <p>The form also provides alerts in browsers
+                            which are capable: using HTML5 validation
+                            tags, required fields which are left blank
+                            will force the user to fill them in before
+                            submission is possible.</p>
+
+                        <div class="img-row">
+                            
+                            <div class="img-container inside desktop-small">
+                                <img src="img/ayrton/register.png" width=300 />
+                                <p class="caption">The registration page on a desktop computer.</p>
+                            </div>
+                            
+                            <div class="img-container inside desktop-small">
+                                <img src="img/ayrton/error-message.png" width=300 />
+                                <p class="caption">Incorrect input causes an error message.</p>
+                            </div>
+
+                            <div class="img-container inside mobile">
+                                <img src="img/ayrton/register-mobile.png" width=200 />
+                                <p class="caption">... and on a mobile device.</p>
+                            </div>
+
+                        </div>
+
+                        <subsection>
+                            
+                            <h4>Potential Improvements</h4>
+
+                            <p>The form could be altered to provide
+                            more client-side validation, for example by
+                            measuring and displaying password strength using
+                            JavaScript. This would alert the user to
+                            any errors before they submit the form,
+                            which would provide better ease-of-use:
+                            less submissions requires less typing.</p>
+                        
+                        </subsection>
+
+                    </subsection>
+
+                    <subsection>
+
+                        <h3>Login</h3>
+
+                        <p>This page allows the user to log in to a
+                            registered account. The forms have been
+                            set up to use responsive design, making
+                            them easy to fill out both on mobile and
+                            desktop platforms. If a field is filled in
+                            correctly, a message will be flashed upon
+                            submission indicating the error.</p>
+
+                        <p>If the user enters details which do not
+                            match any user account they will be shown
+                            an error, but the error does not indicate
+                            which field was filled out
+                            incorrectly. This is to avoid alerting
+                            attackers that they have found a valid
+                            username whose account they could then
+                            attempt to brute force access to.</p>
+
+                        <div class="img-row">
+                            
+                            <div class="img-container inside desktop">
+                                <img src="img/ayrton/login.png" width=500 />
+                                <p class="caption">The login page on a desktop computer.</p>
+                            </div>
+                            
+                            <div class="img-container inside mobile">
+                                <img src="img/ayrton/login-mobile.png" width=200 />
+                                <p class="caption">... and on a mobile device.</p>
+                            </div>
+
+                        </div>
+
+                    </subsection>
+                    
+                </subsection>
+
+                <subsection>
+
+                        <h3>Lock Registration</h3>
+
+                        <p>This page allows the user to register a new
+                            lock by entering the lock's ID.</p>
+
+                        <p>As we have no physical locks, the user is
+                        currently able to register any lock ID as a
+                        lock. In a production system we would maintain
+                        a database of valid lock IDs and prevent the
+                        user from registering a fake lock, but for
+                        demonstration purposes the current system is
+                        adequate.</p>
+
+                        <div class="img-row">
+                            
+                            <div class="img-container inside desktop">
+                                <img src="img/ayrton/register-lock.png" width=500 />
+                                <p class="caption">The lock
+                                registration page on a desktop
+                                computer.</p>
+                            </div>
+                            
+                            <div class="img-container inside mobile">
+                                <img src="img/ayrton/register-lock.png" width=200 />
+                                <p class="caption">... and on a mobile device.</p>
+                            </div>
+
+                        </div>
                         
                     </subsection>
                     
                 </subsection>
+
                         
             </section>
 

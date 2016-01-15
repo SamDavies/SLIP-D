@@ -647,7 +647,7 @@
                             </div>
                             
                             <div class="img-container inside mobile">
-                                <img src="img/ayrton/friends-profile.png" width=200 />
+                                <img src="img/ayrton/other-user-profile-mobile.png" width=200 />
                                 <p class="caption">...and on a mobile device.</p>
                             </div>
 
@@ -886,7 +886,7 @@
                             </div>
                             
                             <div class="img-container inside mobile">
-                                <img src="img/ayrton/register-lock.png" width=200 />
+                                <img src="img/ayrton/register-lock-mobile.png" width=200 />
                                 <p class="caption">... and on a mobile device.</p>
                             </div>
 
@@ -896,9 +896,137 @@
                     
                 </subsection>
 
+                <subsection>
+
+                    <h2>Responsive Design</h2>
+
+                    <p>As shown in the above sections, the application
+                        uses responsive design throughout. Below are some
+                        examples of the how this increases accessibility for
+                        mobile users:</p>
+
+
+                    <div class="img-row">
                         
+                        <div class="img-container inside mobile">
+                            <img src="img/ayrton/lock-button-mobile.png" width=200 />
+                            <p class="caption">Responsive unlock button.</p>
+                        </div>
+                        
+                        <div class="img-container inside mobile">
+                            <img src="img/ayrton/responsive-mobile.png" width=200 />
+                            <p class="caption">Collapsed menu.</p>
+                        </div>
+
+                        <div class="img-container inside mobile">
+                            <img src="img/ayrton/other-user-profile-mobile.png" width=200 />
+                            <p class="caption">Resized components.</p>
+                        </div>
+
+                    </div>
+
+                    <p>Instead of being presented with the same
+                        website on a mobile device with all of the
+                        content scaled to an unreadable size, the
+                        responsive design stacks and resizes the
+                        elements to be displayed in a format more
+                        suitable for mobile devices which are usually
+                        portait in orientation. Compare this to the
+                        Three Mobile top-up page<sup><a
+                        href="#3mobile">[4]</a></sup> which does not
+                        use a mobile-friendly design - ironic, given
+                        that they are a company selling mobile network
+                        services:</p>
+
+                    <div class="img-row">
+                        
+                        <div class="img-container inside desktop-small">
+                            <img src="img/ayrton/3mobile.png" width=300 />
+                            <p class="caption">3 non-mobile site.</p>
+                        </div>
+
+                        <div class="img-container inside desktop-small">
+                            <img src="img/ayrton/other-user-profile-mobile.png" width=300 />
+                            <p class="caption">Responsive, mobile-friendly.</p>
+                        </div>
+
+                    </div>
+
+                    <p>The <em>SmartLock</em> design on the right is
+                        clearly more user-friendly as the text is easily
+                        readable and the buttons are large enough to be
+                        pressed by a human finger without misclicking.</p>
+                    
+                </subsection>
+                    
             </section>
 
+            <section class="col-md-12">
+
+                <h1 class="page-header">Implementation</h1>
+
+                <p>In this section I will discuss aspects of the
+                    implementation including libraries and frameworks used
+                    and explanations of these choices, and discuss how the
+                    application has been designed with code re-use in
+                    mind.</p>
+
+                <subsection>
+                    
+                    <h2>Web Application Framework</h2>
+
+                    <p>I chose to use the Flask<sup><a
+                        href="#flask">[5]</a></sup> web application
+                        framework for this project, a lightweight web
+                        application framework which is more than
+                        adequate for producing applications such as
+                        the <em>SmartLock</em> management interface
+                        which require no database or significant
+                        back-end computation.</p>
+
+                    <p>One of the main reasons I chose this framework
+                        (other than its lightweight design) is that it
+                        is written in Python. When starting this
+                        project I wanted to stick to a language with
+                        which I was familiar. I faced a choice
+                        between the Flask and Django<sup><a
+                        href="#django">[6]</a></sup> frameworks. I
+                        decided that Flask was more appropriate given
+                        that Django is aimed at larger projects given
+                        its native extensions for databases and
+                        related administrative interfaces, in addition
+                        to the large number of apps available to
+                        extend its functionality. Whereas these
+                        features may have been useful for Michael's
+                        API, they would have added significant bloat
+                        to my project.</p>
+
+                </subsection>
+                    
+                <subsection>
+                    
+                    <h2>Typeahead</h2>
+
+                    <p>The typeahead functionality is provided by
+                        Twitter's typeahead.js<sup><a href="#typeahead">[7]</a></sup>.
+                        This library was chosen because of its
+                        robustness and the extreme ease with which
+                        typeahead search can be implemented. The
+                        library can produce a typeahead from JSON data with almost any format, provided that the developer configures it correctly.</p>
+
+                    <p>I created a new API endpoint<sup><a
+                        href="#friendpoint">[8]</a></sup> in my web
+                        application which transforms the API data into
+                        a format suitable for creating a
+                        typeahead. Given more time I would integrate
+                        this endpoint into the API and remove it from
+                        my code, but for now this method is
+                        acceptable.</p>
+
+                </subsection>
+                
+            </section>
+            
             <section class="col-md-12">
                 
                 <h1 class="page-header">References</h1>
@@ -922,6 +1050,35 @@
                             <em>SmartLock API Endpoints</em>.
                             Edinburgh, UK.
                         </a></li>
+                    <li><a name="3mobile"></a>
+                        <a href="https://www.three.co.uk/New_My3/My3_Home">
+                            Hutchison 3G UK Limited (2002).
+                            <em>3 Mobile Top-Up Page</em>.
+                            UK.
+                        </a></li>
+                    <li><a name="flask"></a>
+                        <a href="http://flask.pocoo.org/">
+                            Ronacher, A. (2014).
+                            <em>Flask (A Python Microframework)</em>.
+                        </a></li>
+                    <li><a name="django"></a>
+                        <a href="https://www.djangoproject.com/">
+                            Django Software Foundation. (2005).
+                            <em>Django: The web framework for perfectionists with deadlines.</em>.
+                        </a></li>
+                    <li><a name="typeahead"></a>
+                        <a href="https://twitter.github.io/typeahead.js/">
+                            Twitter, Inc. (2013).
+                            <em>typeahead.js</em>.
+                            US.
+                        </a></li>
+                    <li><a name="friendpoint"></a>
+                        <a href="https://github.com/ayrtonmassey/SLIP-D/blob/master/SmartLockWebApp/SmartLockWebApp.py#L146">
+                            Massey, A. (2015).
+                            <em>SmartLock Typeahead Search Data Endpoint</em>.
+                            Edinburgh, UK.
+                        </a></li>
+                    
                 </ol>
                 
             </section>

@@ -501,8 +501,17 @@
         </p>
 
         <p>
-        Below, I have included a chart detailing the power consumption for three different scenarios. Due to the uncertainty involved in the debugging features’ impact on performance, debugging was disabled entirely for all these scenarios.
-       
+        Below, I have included a chart detailing the power consumption for three different scenarios. Due to the uncertainty involved in the debugging features’ impact on performance, debugging was disabled entirely for all these scenarios. The chart plots power consumption against the input voltage for the three series. Data was collected by placing a multimeter set to measure current between the positive voltage rail of the QoE input and a variable power supply. The ground terminals were connected as usual. The scenarios were created by modifying the code running on the QoE board - thereby creating the small caveat that the microcontroller could consume different amounts of power for each type of program - but this effect is probably very marginal.       
+       </p>
+
+
+        <p>
+        The maximum request rate of the system was determined to be around 0.7 requests per second by slightly modifying the code to flash a light every time a request was sent. The number of flashes was determined over a time of 30 seconds, and the result was then normalised. While the code required to flash a light would introduce a delay into the loop, this is dwarfed by the time taken to send a request, wait for an answer, and set up the next request.
+        </p>
+
+        <p>
+
+        The scenarios were as follows:
 
             <ol>
                 <li>Sending as many HTTP requests per second as possible. (“Max Requests”)</li>
@@ -523,8 +532,35 @@
         </div>
 
         <p>
-        While the plots for 2 and 3 follow the expected pattern (due to the inefficiencies in the voltage regulator), the plot for the maximum request rate does not. This is most likely because of how bursty the SIM900 current draw is, which made it very hard to accurately measure the average consumption. What the chart does show however, is that the power consumption of keeping communications open is far below that of actively using the channel, with a factor of about 5.
+        While the plots for 2 and 3 follow the expected pattern of increased power consumption with increased input voltage (due to the inefficiencies in the voltage regulator), the plot for the maximum request rate does not. This is most likely because of how bursty the SIM900 current draw is, which made it very hard to accurately measure the average consumption. What the chart does show however, is that the power consumption of keeping communications open is far below that of actively using the channel. For a 12V input voltage, the exact measurements were as follows:
         </p>
+
+        <table class="table">
+                            <tr>
+                                <td>Scenario</td>
+                                <td>Current (mA)</td>
+                                <td>Power (mW)</td>
+                                <td>Power compared to Max Requests</td>
+                            </tr>
+                            <tr>
+                                <td>Max requests (0.7 req/s)</td>
+                                <td>130</td>
+                                <td>1560</td>
+                                <td>100%</td>
+                            </tr>
+                            <tr>
+                                <td>No Comms (S900 active)</td>
+                                <td>28.2</td>
+                                <td>338.4</td>
+                                <td>21.7%</td>
+                            </tr>
+                            <tr>
+                                <td>S900 Off</td>
+                                <td>14.3</td>
+                                <td>171.6</td>
+                                <td>11%</td>
+                            </tr>
+                        </table> 
 
         <p>
         Because the power required to send HTTP requests is so much higher than the power needed to maintain a connection to the cellular network, the power consumption of the QoE is roughly proportional to the frequency with which it queries the server, and if the lock was able to reduce the communication frequency during times of low activity, such as very early mornings, then potentially great energy savings could be made as a result. This could be feasible if the server, already receiving usage data in real-time from the lock thanks to the built-in sensors, could make predictions about future activity and advise the lock about appropriate request rates.
@@ -547,7 +583,7 @@
         </p>
 
         <p>
-        The QoE board, whilst a good development platform in general, was not an optimal platform for our lock. If a more customised board was made, the resulting savings in space inside the lock enclosure could be used to house a battery (which currently is fitted inside the demo door). 
+        The QoE board, whilst a good development platform in general, was not an optimal platform for our lock. If a more customised board was made, the resulting savings in space inside the lock enclosure could be used to for example house a battery (which currently is fitted inside the demo door) or provide a more robust locking mechanism. 
         </p>
 
         <p>
@@ -563,7 +599,7 @@
         </div>
 
         <p>
-        Going with a less complex system architecture seems to have been a wise decision. The GPRS connection was fairly reliable and fast enough to provide us with a throughput of about a request every 1.5 seconds. This could probably be improved, but the value of shaving a few milliseconds off it would be debatable.
+        Going with a less complex system architecture seems to have been a wise decision. The GPRS connection was fairly reliable and fast enough to provide us with a throughput of about 0.7 requests per second. This could probably be improved, but the value of shaving a few milliseconds off it would be debatable.
         </p>
 
         <p>
@@ -588,11 +624,13 @@
 
         <p>
             ARM mbed: <a href="https://www.mbed.com/en/">Link</a> <br/>
+            Lock Firmware repository: <a href="https://developer.mbed.org/teams/SLIP/code/lock/">Link</a> <br/>
             Nordic Semiconductor nRF51822: <a href="https://www.nordicsemi.com/eng/Products/Bluetooth-R-low-energy/nRF51822">Link</a> <br/>
             Bluetooth device list: <a href="https://www.bluetooth.org/tpg/listings.cfm">Link</a> <br/>
             Solenoid Datasheet: <a href="http://www.farnell.com/datasheets/13828.pdf">Link</a> <br/>
             LMX12003 Datasheet: <a href="http://www.ti.com/lit/ds/symlink/lmz12003.pdf">Link</a> <br/>
             SIM900 Datasheet: <a href="http://simcom.ee/documents/SIM900/SIM900_AT%20Command%20Manual_V1.11.pdf">Link</a> <br/>
+            Mischa Dohler, Professor at King's College, talks about M2M communications and IoT: <a href="http://en.blogthinkbig.com/2014/01/08/mischa-dohler-kings-worldsensing-ett/">Link</a> <br/>
             
         </p>
 

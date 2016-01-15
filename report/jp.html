@@ -25,7 +25,7 @@
 
 </head>
 
-<body>
+<body data-spy="scroll" data-target="#toc">
 
     <!-- Navigation -->
     <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
@@ -37,6 +37,9 @@
             </li>
             <li>
                 <a href="index.html">Home</a>
+            </li>
+            <li>
+                <a href="report.html">Group report</a>
             </li>
             <li>
                 <a href="ayrton.html">Ayrton Massey</a>
@@ -51,7 +54,7 @@
                 <a href="jp.html">JP Larsson</a>
             </li>
             <li>
-                <a href="michael.html">Michael Inglis</a>
+                <a href="michael.html">Micheal Inglis</a>
             </li>
             <li>
                 <a href="sam.html">Sam Davies</a>
@@ -60,23 +63,550 @@
     </nav>
 
     <!-- Header -->
-    <header id="top" class="banner-top">
-        <div class="" style="display: table-cell; display: table-cell;
-                             vertical-align: middle; padding-left: 80px;">
+     <header id="top" class="banner-top">
+        <div class="col-md-4">
             <img class="portrait" src="img/jp.jpg" width=200 height=200>
         </div>
         <div class="text-vertical-center">
             <h1>JP Larsson</h1>
-            <h3>Hardware</h3>
+            <p class="h3">Hardware</p>
         </div>
     </header>
-    Report goes here!
+    <div class="container">
+        <h2 style="visibility:hidden;">Introduction</h2>
 
+        <div class="col-sm-2 hidden-sm hidden-xs" >
+            <div data-spy="affix">
+                <p>Table of Contents</p>
+                <nav id="toc"  data-toggle="toc"></nav>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-8 container">
+        <p>
+            SmartLock is an IoT door lock.
+            It is connected to the cellular mobile network and lets users open or close the lock remotely from a range of devices using dedicated apps or a web interface. Clients communicate with the lock through an API, which relays information, authenticates users, and manages access permissions.
+        </p>
+
+        <div class="page-header">
+            <h2>My Role</h2>
+        </div>
+
+        <p>
+        As the only team member with previous experience in electronics, my role was mainly centred on the lock hardware and its firmware.
+
+        In addition to architecting the hardware subsystem, I collaborated with Douglas in the workshop to specify and design the mechanics of the lock. On the firmware side, I came up with a way of easily debugging the code, wrote the actuation and sensor control logic, and made performance improvements to the GPRS set-up routines. I was also influential in the discussions we had about system architecture early on in the project.
+        </p>
+
+        <div class="page-header">
+            <h2>System Requirements</h2>
+        </div>
+
+        <p>
+        We initially set out with the idea of a lock that could let users authenticate themselves using a smartphone instead of a key. As a secondary requirement, we liked the idea of users being able to grant temporary permissions to other users where anytime access would be unsuitable, for example in a business environment with contractors temporarily working in an area, or in a home setting where users might want to give their friends access to drop of something while they are at work. 
+        </p>
+
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <img class="img-responsive center-block" src="jp-img/yale-lock.jpg" alt="Example of a Yale lock">
+
+                </div>
+                <div class="panel-footer">A typical Yale lock, dismantled. <br/><small> Image source: broughtons.com</small></div>
+            </div>
+        </div>
+
+        <p>
+        Our idea for a product like that was more of an extension kit than a fully-fledged lock. We imagined that it would fit over any existing Yale lock, actuating the locking mechanism through the knob on the inside. This proved mechanically unfeasible however – the device would have to be very heavy due to the relatively high torque needed to twist the knob, and a multitude of possible underlying lock designs would have made the overlay design extremely complicated.
+        </p>
+
+        <p>
+        Instead, we set out to build a device that could replace a standard Yale lock, providing the same mechanical features as a lock, but with the added digital features mentioned earlier. The mechanical requirements of a Yale lock are surprisingly nontrivial – it must only allow access from the outside to a user presenting the correct key, but it must let anyone who wishes to exit to so regardless of the presence of a key or not. We wanted to keep this mechanical behaviour in our own design, partially as a safety feature, but also since it is the behaviour users expect intuitively. 
+        </p>
+
+        <p>
+        Finally, we set a requirement that the device should function as a normal Yale lock in the event of electrical failure or a software fault. This requirement, made from both a safety point-of-view as well as for the convenience of the users, made it impossible to put any electromechanical system in the “critical path” of the lock operation.
+        </p>
+
+        <p>
+        With these requirements in mind, we set out to architect the system.
+        </p>
+
+        <div class="page-header">
+            <h2>System Architecture</h2>
+        </div>
+    
+        <p>
+        Our system architecture design was influenced in part by the resources available to us at the time. We had been given an nRF51-DK Development Board from Nordic Semiconductor, featuring an ARM Cortex M0 microcontroller and Bluetooth Low Energy (BLE) capabilities. In addition, we had been offered to use a platform based on the same nRF51 SoC as the Development Board, called the QoE, which apart from the same BLE features as the nRF51-DK Development Board also featured an on-board 2G/GPRS cellular modem. The QoE was not backed by any semiconductor vendor however, but rather had been developed in-house in the School of Informatics.
+        </p>
+
+        <p>
+        Two different approaches were considered for the architecture: 
+        <ol>
+            <li>Letting the clients communicate directly with the lock, relaying information between the server and the lock if needed.</li>
+            <li>Having the authentication server act as an intermediary between the clients and the lock. </li>
+        </ol>
+        These are both illustrated below.
+        </p>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img class="img-responsive center-block" src="jp-img/sys-arch-alt.png" alt="Approach 1 Diagram">
+
+                    </div>
+                    <div class="panel-footer">Approach 1: The clients talk directly to both the lock and the authentication server.</div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img class="img-responsive center-block" src="jp-img/sys-arch.png" alt="Approach 2 Diagram">
+
+                    </div>
+                    <div class="panel-footer">Approach 2: The authentication server acts as an intermediary between the lock and the clients.</div>
+                </div>
+            </div>
+        </div>
+
+        <p>
+        Both approaches have benefits and drawbacks associated with them. For instance, the lock in approach 1 would not necessarily need to be connected to the Internet, but could rather rely on some short-range radio technology such as Bluetooth or WiFi to communicate with the smartphone, which in turn would handle the communications with the server. As most smartphone apps require Internet-connectivity to operate, such a requirement would probably seem reasonable to the end user. 
+        </p>
+
+        <br/>
+
+        <p>
+        Approach 1 could further be split into two distinct authentication methods: The first is to have the smartphone acting as a relay, passing on messages between the server and the lock (which could be encrypted to prevent tampering or eavesdropping by the smartphone user). This would require some cryptographic capabilities – for instance the use of TLS on both the lock and the server – to ensure secure operation.
+        </p>
+        <p>
+        The second authentication method is to have the smartphone store the access keys off-line, presenting them directly to the lock without any involvement of the authentication server. The benefit of this method is that it would not need any form of Internet connectivity at the time of unlocking, so it would be ideally suited for remote locations with no or unreliable Internet access. However, it requires significant cryptographic effort to ensure that temporary keys cannot be used after they expire, and it would be impossible altogether to reliably revoke access once it had been granted.
+        </p>
+        <p>
+        Approach 1 also suffers from a distinct drawback: Since the lock cannot communicate with the server on its own, it would be harder to send real-time usage data upstream to the server. The server would also lack the capability to determine that the lock was no longer available, for instance because of power failure or sabotage.
+        </p>
+    
+        <br/>
+        
+        <p>
+        Approach 2 relies on the server to authenticate and verify requests for the lock to open. These requests are then stored on the server until the lock sends a query, at which point the latest legitimate request is sent back to the lock. This means that the owner of a lock can grant and revoke access with immediate effect and that the server is notified almost immediately of communication problems, but also that the lock and the user both need to have Internet access at the time of unlocking.
+        </p>
+        <p>
+        As mentioned previously, we also factored in the resources we had available (the nRF51-DK and the QoE board) at the time of picking one of these architectures. Contemporary smartphones do usually support both BLE and WiFi (in addition to a range of wireless communication protocols not suitable for unlicensed use). Both the boards we considered supported BLE (albeit the QoE with a very weak signal), but none supported WiFi.
+        </p>
+
+        <br/>
+
+        <p>
+        Because Bluetooth is a slave-master protocol, which requires pairing of the slave to the master in a many-to-one relationship, we were worried that it would be hard to implement Bluetooth communications in a way that would let multiple users (each having their own smartphone) connect to the lock in a short timespan reliably and without any one user remaining connected to the lock and thereby preventing others from establishing communications. This, together with the smaller downsides such as the lacking availability of real-time analytics led us to drop Approach 1 altogether and architect the system according to Approach 2. 
+        </p>
+        
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img class="img-responsive center-block" src="jp-img/comm-arch.png" alt="Communication Architecture">
+
+                    </div>
+                    <div class="panel-footer">The architecture that we settled on.</div>
+                </div>
+            </div>
+            <p>
+            One way of providing Internet access to an IoT device without any long-range communication features of its own is to use a base station. We decided against this approach for three reasons: First, the addition of an extra piece of equipment would mean increased complexity, both for us as system designers, but also for the end user. Second, adding an extra piece of (fairly complex) equipment to the system meant adding another point of failure as well as adding another point that could be attacked by a malicious agent. Finally, we wanted the lock to be able to work satisfactory in places where mains electricity was difficult to get access to, such as temporary installations, sports events or similar. For these reasons we abandoned the idea of using Bluetooth and WiFi altogether.
+            </p>
+            <p>
+            We finally settled on using GPRS to establish a connection to the server. GPRS meant that in order to use the lock, the user would simply need to be in range of a 2G cellular base station. For the reason stated earlier, we also decided to power the lock solely by battery power.
+            </p>
+        </div>
+
+        <div class="page-header">
+            <h2>Lock Mechanics</h2>
+        </div>
+
+        <p>
+
+        In order for an electronic system to interact with a mechanical one, some sort of actuation device is needed. I explored the possibilities of using a servo motor and a solenoid together with Douglas, the workshop technician. We came to the conclusion that the solenoid option was better, both because they can be made smaller for a given power output, because they are inherently linear devices, and because a solenoid could better be integrated into the locking mechanism itself.
+        </p>
+
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <img class="img-responsive center-block" src="jp-img/sol-1920.png" alt="Solenoid Schematic">
+
+                </div>
+                <div class="panel-footer">A schematic representation of a solenoid, taken from a 1920's textbook.
+                <br/>
+                <small>Image source: commons.wikimedia.org</small>
+                </div>
+            </div>
+        </div>
+
+        <p>
+        Solenoids work by letting a metallic plunger move in one dimension inside a coil. When the coil is energised, a magnetic field is generated, and the plunger is pushed in some direction. Most typically, energising the coil causes the plunger to either push out or pull in, and when power is removed the rod stays where it is unless it is pushed back by a spring. There are also bi-stable varieties where the plunger is resting in one of two positions, and only moving between them requires power, but these are typically harder to source and are more expensive.
+        </p>
+
+        <p>
+        There are some downsides of using a solenoid. They usually have a very short throw (that is, the length that the plunger moves when the solenoid coil is energised). The force exerted is also proportional to the position of the plunger in a non-linear way, which usually makes them very powerful at resting position and very weak when fully extended, and they tend to draw significant amounts of power.
+        </p>
+        <p>
+        Solenoids come in virtually any imaginable configuration, and the model I ended up selecting was a trade-off between power consumption, throw, force, price, and stock availability. Because of the bi-stable nature of locks (they are either locked, or they are not), I would have liked to use a bi-stable solenoid. This would have meant that the solenoid only consumed power in the transitions between the two states, as opposed to consuming power whenever in one of them.
+        </p>
+        <p>
+        I opted for a configuration where the solenoid draws power to unlock the bolt, and removing power locks the bolt again. This was done both for fail-safe reasons (an attacker should not simply be able to remove power to gain access), and because the intuitive expectation of a Yale lock is that it spends more time being locked more than unlocked, so by making the unlocked state draw power and the locked state draw no power it would be possible to save energy overall.
+        </p>
+
+        
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <img class="img-responsive center-block" src="jp-img/lock-mechanism.png" alt="Diagram of the locking mechanism">
+
+                </div>
+                <div class="panel-footer">
+                    Diagram of the locking mechanism. The solenoid is coupled with the locking bolt, but does not lock up when de-energised. A clutch connects the bolt to the key drum, which allows the bolt to move backwards even when the drum is locked. A spring (not shown) forces the bolt back into its locked position when no power is applied.
+                </div>
+            </div>
+        </div>
+
+        <p>
+        In order to fulfil our initial requirements about the fail-safe operation and the ability to open the lock regardless of the presence of a key or not, the inner workings of the locking mechanism had to be architected carefully. The initial problem was coupling: The key drum locks in place whenever a key is removed, so if it was coupled to the bolt then the only way to open the door would be to insert a key. On the other hand, if it was to be fully de-coupled, then inserting and turning a key would have no effect whatsoever. The knob on the inside of the lock and the solenoid did not suffer from this problem, so they could be mechanically coupled. 
+        </p>
+        <p>
+        The solution was a three-way mechanical OR-gate of sorts: The solenoid and the manual override knob were connected directly to the bolt. The key drum was connected to the bolt by a clutch that allowed the bolt to move backwards when the drum was locked, but not forward when the key was turned. The lock would thus open whenever someone moved a sliding handle on the inside (acting as the manual override knob), turned a key from the outside, or when the solenoid became energised. A spring pushed the bolt back into its unlocked position when no power was applied to it, which also made it self-locking.
+        </p>
+
+        
+
+        <div class="page-header">
+            <h2>Firmware</h2>
+        </div>
+
+        <p>
+        Having made QoE board our platform of choice, mostly because of it having on-board support for GPRS, I started to work on the firmware for it – the rationale being that getting the GPRS communication working had highest priority.
+        </p>
+
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <img class="img-responsive center-block" src="jp-img/first-run.gif" alt="QoE board flashing">
+                </div>
+                <div class="panel-footer">
+                    The QoE board running a program for the first time.
+                </div>
+            </div>
+        </div> 
+        
+        
+
+        <p>
+        The first thing I did was to create a debugging console of sorts. Embedded platforms can be quite tricky to debug, and professional tools used to do it can be very expensive. While the QoE had two LEDs that could be used for as very rudimentary debugging interfaces, I thought it could be very handy to have some interface capable of showing more detailed information.
+        </p>       
+
+        <p>
+        Since we were not using the Bluetooth features of the QoE for anything to do with the project itself, I came up with the idea of using it for debugging purposes. The use of Bluetooth required linking in several libraries into the code, which added to the code size and memory requirement. Therefore, an IFDEF flag in the code was added to control whether the debug functionality be added at compile time or not. Using an Android app, the nRF UART 2.0 from Nordic Semiconductor, we could then connect to the QoE board and read debug messages in real-time. Bi-directional communication functionality was later added so to make it possible to send messages from the app to the QoE.
+        </p>
+
+        <p>
+        Whilst tremendously useful, the debugging features did have a rather large footprint - as can be seen in the table below, they contributed to 70% of the RAM usage alone! Unfortunately, I was not able to measure their impact on the execution speed of the control loop, but it is not unlikely that enabling debugging support had a significant impact on it. This did not seem like a problem though, because we did not have any issues fitting the firmware onto the microcontroller, even with debugging turned on.
+        </p>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img class="img-responsive center-block" src="jp-img/debug-phone.png" alt="nRF UART 2.0 displaying debug messages.">
+                    </div>
+                    <div class="panel-footer">
+                        nRF UART 2.0 displaying debug messages sent from the QoE board.
+                    </div>
+                </div>
+            </div> 
+
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <table class="table">
+                            <tr>
+                                <td>Metric</td>
+                                <td>Flash Used (kB)</td>
+                                <td>RAM Used (kB)</td>
+                            </tr>
+                            <tr>
+                                <td>Debugging Enabled</td>
+                                <td>29</td>
+                                <td>2.7</td>
+                            </tr>
+                            <tr>
+                                <td>Debugging Disabled</td>
+                                <td>15</td>
+                                <td>0.7</td>
+                            </tr>
+                            <tr>
+                                <td>Change (% smaller)</td>
+                                <td>47.93%</td>
+                                <td>74.07%</td>
+                            </tr>
+                        </table> 
+                    </div>
+                    <div class="panel-footer">
+                       Table detailing the performance impact of enabling debugging support.
+                    </div>
+                </div>
+            </div> 
+        </div>
+
+        <p>
+        Although the QoE board had been developed to provide a GPRS-capable IoT platform, it had not been tested thoroughly with the ARM mbed libraries that we had been asked to use. This resulted in a rather annoying issue where one pin on the 2-pin Serial connection between the microcontroller and the GPRS modem would get tied to ground by using mbed's serial routines, and required a re-write of one of the mbed libraries to solve – which was done by Janek, the Teaching Assistant. Prior to him fixing the issue I had spent about three weeks trying to debug the serial connection using an old logic analyser.
+        </p>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img class="img-responsive center-block" src="jp-img/qoe-under-test.jpg" alt="QoE board under test">
+                    </div>
+                    <div class="panel-footer">
+                        Testing the serial connection on the QoE board.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img class="img-responsive center-block" src="jp-img/logic-analyser.jpg" alt="Logic Analyser in action">
+                    </div>
+                    <div class="panel-footer">
+                        Logic analyser showing GND, RX and TX signal lines (RX tied to ground).
+                    </div>
+                </div>
+        </div>
+        </div>
+        
+        <p>
+        With the serial communication with the modem working, I implemented software buffering to enable messages of more than 8 characters to be sent (the hardware buffer in the device was very limited, and truncated data sent on the serial connection mercilessly), and subsequently handed over the development of the lock-server communications to Dan as he was the designated communications person. I then turned my attention to the electronics.
+        </p>
+
+
+        <div class="page-header">
+            <h2>Electronics</h2>
+        </div>
+
+        <p>
+        As previously mentioned, I had decided to use a solenoid to actuate the locking bolt. The solenoid selected for this purpose was a trade-off between power consumption, throw, force, price, and stock availability. Looking at the specifications of the on-board voltage regulator on the QoE board, a Texas Instruments LMZ12003, it had a maximum input voltage of 20V, and experiments indicated that the GPRS communications seemed to work down to an input voltage around 8-10 Volts (I suspect that the regulator had issues supplying enough peak current to the SIM900 module below this voltage range).
+        </p>
+
+        <p>
+        To keep the complexity of the electronics down, I wanted to use a single power supply, and selecting a 12V solenoid seemed appropriate as 12V was towards the lower end of the acceptable input voltages of the QoE. However, the only solenoid with enough throw (about 10mm) that was available for us to purchase was rated at 3W and could exert a maximum force of about 8N. However, mechanical reasons had forced Douglas, the workshop technician, to reverse the placement of the solenoid, placing it in a pull rather than push configuration. This meant that the solenoid was weakest when the bolt was at rest, and strongest when the bolt was fully retracted – which was good for usability (the bolt is less likely to get stuck halfway), but made the solenoid too weak to get the bolt moving in the first place. Most solenoids can be subjected to a fair amount of overvoltage before breaking down, and through empirical studies Douglas determined that it would need to be run at 24 Volts instead of its rated 12. This not only meant that the solenoid would draw four times as much power (P = V*I = V^2/R, R constant), but also that the required power supply would be far outside the maximum rated input voltage to the QoE regulator.
+        </p>
+
+        <p>
+        Furthermore, as solenoids are highly inductive they need to be carefully shielded to prevent large voltages building up and damaging other electrical components when switched off. With the solenoid consuming four times the nominal power, the potential for catastrophic voltage build up had increased proportionally. To isolate the solenoid from the rest of the system, I used a relay that could be operated by a 5V control signal from the QoE, whilst fully isolating the solenoid terminals from the QoE board itself.
+        </p>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img class="img-responsive center-block" src="jp-img/solenoid.jpg" alt="Solenoid used in the design">
+
+                    </div>
+                    <div class="panel-footer">
+                        The solenoid that was used in the design, a Keyswitch  SMO/12VDC.
+                        <br/>
+                        <small>Image source: cpc.farnell.com</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img class="img-responsive center-block" src="jp-img/sol-chart.png" alt="Diagram of Force vs Stroke length">
+
+                    </div>
+                    <div class="panel-footer">
+                        A chart showing the relationship between stroke length and force exerted for the solenoid we used.
+                        <br/>
+                        <small>Image source: cpc.farnell.com</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p>
+        Additionally, we wanted to include a range of sensors in the lock: Two micro-switches to sense the position of the locking bolt, and one magnetic reed switch to sense the position of the door itself (a lock can be closed while the door is open).
+        </p>
+
+        
+
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <img class="img-responsive center-block" src="jp-img/hw-arch.png" alt="Diagram of the Hardware Architecture">
+
+                </div>
+                <div class="panel-footer">
+                    A simplified diagram showing the hardware architecture.
+                </div>
+            </div>
+        </div>
+
+        <p>
+        I had originally wanted to use a single power supply for both the solenoid and the control electronics, and I investigated various ways of using a step-up converter to achieve 24V or using an additional step-down converter to take the solenoid supply voltage below 20V. Ultimately though, because the serial communications issue had taken so long to resolve, and because there was still plenty to be done on the lock before it could be ready to demonstrate, I resolved to using two separate battery packs for the solenoid and QoE board – one at 12V, and the other at 24V.
+        </p>
+
+        <p>
+        The last thing I did was to ask Garry to manufacture a printed circuit board that I had designed. The purpose of the board, other than housing the isolation circuitry for the solenoid, was to collate the three sensor signals and provide power to the sensors from a single source. This meant that less cables had to pass through the centre of the lock housing, thereby minimising the risk of cables getting caught in the locking mechanism without having to resolve to glue everything to the sides. If I had more time, it would also have housed the power regulation circuitry needed to power the whole lock from a single battery pack.
+        </p>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <img class="img-responsive center-block" src="jp-img/lock-assembly.jpg" alt="Lock internals">
+            </div>
+            <div class="panel-footer">
+                The internals of the lock, showing the QoE board with a programming cable coming out (top right), a power switch (top left), solenoid and locking mechanism (centre right), a micro-switch (centre left), custom-made PCB (bottom left), and the return spring (bottom right). The second micro-switch can just be seen behind the spring, and the two cables coming off the magnetic switch can be seen at the bottom right corner.
+            </div>
+        </div>
+
+
+
+        <div class="page-header">
+            <h2>Results</h2>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <img class="img-responsive center-block" src="jp-img/lock-outside.jpg" alt="Lock externals">
+            </div>
+            <div class="panel-footer">
+                The lock with the front panel in place.
+            </div>
+        </div>
+
+        <p>
+        As the lock is solely battery powered, it may be interesting to analyse the energy consumption of it.
+        </p>
+
+        <p>
+        Since the power consumed in opening the lock is constant – 12W – the energy required to open and close the lock is directly proportional to the amount of time it stays open. Since a typical lock remains closed more more of the time than it is open, the solenoid’s power consumption probably have only a small effect on the average power consumed.
+        </p>
+
+        <p>
+        The power used by the QoE board is a little more difficult to calculate. While the nRF51822 SoC does draw some power, the main source of energy expenditure is the GPRS communications. Additionally, because of the switched power regulator on-board the QoE has an efficiency of less than a 100%, the power consumed varies with the input voltage. 
+        </p>
+
+        <p>
+        Below, I have included a chart detailing the power consumption for three different scenarios. Due to the uncertainty involved in the debugging features’ impact on performance, debugging was disabled entirely for all these scenarios.
+       
+
+            <ol>
+                <li>Sending as many HTTP requests per second as possible. (“Max Requests”)</li>
+                <li>Maintaining a connection to the cellular network, but not sending any GPRS data. (“Comms Inactive”)</li>
+                <li>Switching off the SIM900 altogether. (“Comms Off”)</li>
+            </ol>
+
+        </p>
+        
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <img class="img-responsive center-block" src="jp-img/pow-vdd-chart.png" alt="Diagram showing voltage conversion losses.">
+
+            </div>
+            <div class="panel-footer">
+                Diagram showing the power consumption for different lock activities.
+            </div>
+        </div>
+
+        <p>
+        While the plots for 2 and 3 follow the expected pattern (due to the inefficiencies in the voltage regulator), the plot for the maximum request rate does not. This is most likely because of how bursty the SIM900 current draw is, which made it very hard to accurately measure the average consumption. What the chart does show however, is that the power consumption of keeping communications open is far below that of actively using the channel, with a factor of about 5.
+        </p>
+
+        <p>
+        Because the power required to send HTTP requests is so much higher than the power needed to maintain a connection to the cellular network, the power consumption of the QoE is roughly proportional to the frequency with which it queries the server, and if the lock was able to reduce the communication frequency during times of low activity, such as very early mornings, then potentially great energy savings could be made as a result. This could be feasible if the server, already receiving usage data in real-time from the lock thanks to the built-in sensors, could make predictions about future activity and advise the lock about appropriate request rates.
+        </p>
+
+        <div class="page-header">
+            <h2>Improvements</h2>
+        </div>
+
+        <p>
+        Considering the high power consumption of the GPRS communications, I think that the lock would have to be mains-powered in order to be useful in any practical scenario.
+        </p>
+
+        <p>
+        Having a battery backup would be very useful, as it would allow collection of usage data and access even during power cuts, but without mains access the lock could only be expected to operate for a few days or so.
+        </p>
+
+        <p>
+        Regardless of whether the lock could be mains powered or not the power control circuitry could be improved to split an incoming voltage into two voltages appropriate for use in the lock, for example 24V and 12V. This would mean that the lock could be powered off a single battery.
+        </p>
+
+        <p>
+        The QoE board, whilst a good development platform in general, was not an optimal platform for our lock. If a more customised board was made, the resulting savings in space inside the lock enclosure could be used to house a battery (which currently is fitted inside the demo door). 
+        </p>
+
+        <p>
+        Using a bi-stable solenoid would greatly improve the lock. Because the current solenoid was rated for continuous usage at 12V (3W), overvolting it would likely mean that it would heat up and get hot after a period of continuous use (that is, if the lock was opened for a long period of time). By using a bi-stable solenoid on the other hand, the solenoid would only need to be powered in the transition between the opened and closed state, and could thus be drawing much more power momentarily than the uni-stable solenoid could without breaking down.
+        </p>
+
+        <p>
+        Finally, it would be tremendously useful to have some sort of user interface on the lock itself. The QoE board had two LED’s, one red and one green, and by combining them a variety of fairly easy-to-understand meanings could be conveyed, for example a slowly flashing green light when everything was working, or a quickly flashing red light for when some fault had been detected. These status lights were used in debugging the device, but could have been useful to a user as well. It would also have been nice to have a power switch on the outside of the lock, because as it was now, the front panel had to be unscrewed every time a reset had to be performed.
+        </p>
+
+        <div class="page-header">
+            <h2>Conclusions</h2>
+        </div>
+
+        <p>
+        Going with a less complex system architecture seems to have been a wise decision. The GPRS connection was fairly reliable and fast enough to provide us with a throughput of about a request every 1.5 seconds. This could probably be improved, but the value of shaving a few milliseconds off it would be debatable.
+        </p>
+
+        <p>
+        Unfortunately, the server seemed unable to cope with more than a few requests per second, and simulating multiple locks using the utility that Ayrton developed often caused it to start returning HTTP error codes instead of valid data. This led to the realisation that the lock should lock itself after not receiving valid data for some time, which was a useful security addition.
+        </p>
+
+        <p>
+        Knowing more about the power consumption of the device, it would have been a better choice to make it mains-powered with a battery backup.
+        </p>
+
+        <p>
+        Whilst the SIM900 GSM module supported HTTPS, this was not enabled in the particular revision of the device that was mounted on our QoE board, and would have required an upgrade of the modem firmware to solve. We were therefore unable to secure the communications between the lock and the server, which did not affect the demonstration of the lock but nonetheless would make the device useless for protecting anything valuable. 
+        </p>
+
+        <p>
+        The custom-made PCB worked well, but could be made more complex to save on power and space. It would have been useful to include a user-facing interface of some sort – for example a multi-coloured LED and a simple push button, to provide feedback to the user.
+        </p>
+
+        <div class="page-header">
+            <h2>References</h2>
+        </div>
+
+        <p>
+            ARM mbed: <a href="https://www.mbed.com/en/">Link</a> <br/>
+            Nordic Semiconductor nRF51822: <a href="https://www.nordicsemi.com/eng/Products/Bluetooth-R-low-energy/nRF51822">Link</a> <br/>
+            Bluetooth device list: <a href="https://www.bluetooth.org/tpg/listings.cfm">Link</a> <br/>
+            Solenoid Datasheet: <a href="http://www.farnell.com/datasheets/13828.pdf">Link</a> <br/>
+            LMX12003 Datasheet: <a href="http://www.ti.com/lit/ds/symlink/lmz12003.pdf">Link</a> <br/>
+            SIM900 Datasheet: <a href="http://simcom.ee/documents/SIM900/SIM900_AT%20Command%20Manual_V1.11.pdf">Link</a> <br/>
+            
+        </p>
+
+    </div>
+    </div>
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/2f761d4/dist/bootstrap-toc.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/2f761d4/dist/bootstrap-toc.min.css">
 
     <!-- Custom Theme JavaScript -->
     <script>

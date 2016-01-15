@@ -70,7 +70,7 @@
         </div>
         <div class="text-vertical-center">
             <h1>Sam Davies</h1>
-            <h3>iOS App</h3>
+            <h3>iOS App & Flask API</h3>
         </div>
     </header>
 
@@ -113,35 +113,34 @@
 
                 <p> I contributed considerably to the success of this task. My
                 main contribution was the design and implementation of the iOS
-                application, the element which ultimately controlled by the
-                lock, via the API. I also worked extensively on both the design
-                and implementation of the API, collaboration closely with
+                application, the element which ultimately controlled the
+                lock. I also worked extensively on both the design
+                and implementation of the API, collaborating closely with
                 Michael to ensure it was extensive enough for the feature set I
                 wanted to implement within the iOS Application and to give us a
-                strong integration, fully utilising every aspect of the API.
+                strong integration, fully utilising every aspect of the system.
                 </p>
-
-                <p> I designed and structure the oral and visual presentation
-                which the team gave earlier in the semester. To efficiently
-                incorporate the aspects of the system that the team wanted to
-                describe in the presentation, I opened the content up in a
-                google slide collaboration document. On the day of the
-                presentation I was also the main speaker. </p>
 
                 <p> The server would handle all the traffic between the lock and
                 the server; providing an API to register users, open locks and
                 grant access to friends in order to open the locks.
                 </p>
 
-                <p> Nowadays we consider a smartphone a very common device and
-                therefore it seemed a logical choice of front end. We decided to
-                implement the front end on the two main operating systems, iOS
-                and Android. Furthermore, since we had the skill set and
-                resources available we also implemented an admin interface on a
-                web app. </p>
+                <p>I designed and structured the oral and visual presentation
+                which the team gave earlier in the semester. In order to efficiently
+                incorporate the aspects of the system that the team wanted to
+                describe in the presentation, I opened the content up in a
+                Google slide collaboration document. On the day of the
+                presentation I was also the main speaker. </p>
+
+                <p>In today's society a smartphone is considered a very common device. It
+                seemed a logical choice to implement the front end on the two
+                main operating systems, iOS and Android. Furthermore, since we
+                had the skill set and resources available, we also implemented an
+                admin interface on a web app. </p>
 
                 <p> In this report I will further detail and explain my work
-                load.  </p>
+                load.</p>
 
             </subsection>
 
@@ -153,15 +152,16 @@
 
             <subsection class="col-md-12">
 
-                <p> I chose to do Behaviour driven development from the outset
-                of the project, so the collaborative code that we developed as a
-                team always had the behaviour that we intended. The people who
-                benefit most from software testing are the people who are
-                further adding to the lines of code and therefore instead of
-                waiting till the end of the project to write the tests we
-                developed them simultaneously to the application code. </p>
+                <p>I chose to develop the system using <i>Behaviour Driven
+                Development</i> from the outset of the project, such that the
+                collaborative code we develop as a team always has the
+                behaviour that we intended. The people who benefit most from
+                software testing are the people who are further adding to the
+                lines of code. Therefore, instead of waiting till the end of
+                the project to write the tests we developed them simultaneously
+                to the application code. </p>
 
-
+                The <i>Behaviour Driven Development</i> is performed as follows:
                 <ol>
                     <li>Write a test</li>
                     <li>Run all of the tests, making sure that the new test fails</li>
@@ -170,7 +170,7 @@
                     <li>Refactor your code</li>
                 </ol>
 
-                <p> Behaviour driven development provides a scaffold for when
+                <p>Behaviour driven development provides a scaffold for when
                 one is unsure about how to implement something. It allows you to
                 have a conversation with the code, asking it questions, getting
                 answers and then adjusting. This makes it a great exploratory
@@ -180,12 +180,12 @@
                 piece of logic can be tested and therefore changed confidently.
                 </p>
 
-                <p> The benefits of Behaviour driven development are:
+                <p> The benefits of <i>Behaviour Driven Development</i> are:
                     <ul>
                         <li>Reduced number of lines of code</li>
-                        <li>Prevents breaking of old code (regressions)</li>
-                        <li>Better APIs since the API naturally written from an user’s perspective</li>
-                        <li>Refactoring Encourages Improvements therefore the codebase does not grow unless it needs to</li>
+                        <li>Prevents the breaking of old code (regressions)</li>
+                        <li>Better APIs since the API is naturally written from an user’s perspective</li>
+                        <li>Refactoring encourages improvements, therefore the codebase does not grow unless it needs to</li>
                         <li>Provides executable documentation which is a series of example on how the code works</li>
                     </ul>
                 </p>
@@ -201,20 +201,18 @@
 
             <subsection class="col-md-12">
 
-                <h2 class="page-header">A System Level View</h2>
-
-                <p> The API is the central hub of the SmartLock system,
+                <p>The API is the central hub of the SmartLock system,
                 therefore it is vital that the reliability of the API remains
                 very high. The API maintains a database which records
-                information about the locks and users. Additionally the lock
+                information about the locks and users. Additionally, the lock
                 interface corresponds with the API to record the locks current
-                state, being either locked or unlocked. The applications allow
+                state, being either locked or unlocked. The application allows
                 the user to manage their locks, friends and lock permissions.
                 </p>
 
                 <p> When the apps send a request to open a lock, the API updates
                 the database. When the lock next communicates with the API, the
-                API will tell it to open.  </p>
+                API will tell it to open.</p>
 
                 <div class="img-row">
 
@@ -234,10 +232,10 @@
 
             <subsection class="col-md-12">
 
-                <p> When I designed the API, I had several frameworks to choose
-                from, in many languages. In the end, I chose Flask. The decision
+                <p> When I designed the API, we had several frameworks to choose
+                from, in many languages. In the end, Michael and I chose Flask. The decision
                 to adopt Flask was primarily based on the opinion that we felt
-                it best suited the style of development I wanted to use
+                it best suited the style of development that I wanted to use
                 throughout the project, enabling us to prototype the system and
                 iteratively improve it. </p>
 
@@ -272,7 +270,7 @@
                 database could offer. I spent a vast amount of time optimising
                 the SQLAlchemy code on the API such that this could be achieved.
                 This meant that the response time to the iOS Application and the
-                physical lock was as short as possible. </p>
+                physical lock were as short as possible. </p>
 
                 <p> The Cyclic Dependencies in python gave us some problems with
                 the boilerplate code when beginning the project. By moving the
@@ -282,36 +280,37 @@
                 not surface again.
                 </p>
 
-                <p> Ayrton, Michael, JP and myself spent a considerable amount
+                <p> Michael, Ayrton, JP and myself spent a considerable amount
                 of time designing the part of the API which interfaced with the
                 Lock itself. I came up with a ‘follow the leader’ protocol which
                 makes the lock follow the state of the lock on the server which
-                Ayrton and I implemented in the flask API. I then went onto
-                design a use case which would simulate every possible scenario
+                Ayrton and I implemented in the flask API. I then
+                designed a use case which would simulate every possible scenario
                 for this protocol and create automated unit tests to ensure that
                 this important behavior remained the same. I think this was
                 imperative to enable our system to reach maximum efficiency; the
-                protocol is further explained in Aytrons report, here.
+                protocol is further explained in Aytons report <a href="ayrton.html#LockCommunication">here</a>.
                 </p>
 
                 <p> The friends endpoint required very specific behavior on the
                 API so that we could utilise it properly in the front end web
-                application and the mobile applications. We needed it to have a
-                nested structure which lists user who the currently logged in
-                user was friends with. Subsequently for each user, it listed the
-                locks which the the currently logged in user owns and which of
-                those this friend had access to.  I implemented a complex
+                application and the mobile applications. To explain it in the
+                next 2 lines I will refer to the currently logged in user as
+                Dave. We needed it to have a nested structure which lists users
+                whom Dave was friends with. Subsequently for each user, it
+                lists the locks which Dave owns, along with a flag indicating if
+                that friend has access to the lock. I implemented a complex
                 database query and the accompanying automated tests to perform
                 this query efficiently. </p>
 
                 <p> As the API scaled, there became a need for more standardised
                 class names and endpoints. I devised a simple naming scheme for
-                both the classes of API, requiring them to adhere to either
+                2 types of classes in the API, requiring them to adhere to either
                 “ClassDetail” or “ClassList”, where “Class” is the name of the
-                class obviously and the methods in the “Detail” classes return
+                class. The methods in the “Detail” classes return
                 the detail of a singular instance of that class and “list”
                 returning multiple instances of that class as well as creating
-                new instance.  </p>
+                new instances.</p>
 
             </subsection>
 
@@ -319,7 +318,7 @@
 
                 <h2 class="page-header">API Security</h2>
 
-                <p> I want the system to be created initially as a minimum
+                <p>I wanted the system to be created initially as a minimum
                 viable product which could be iteratively improved in the
                 future. The authentication protocol that I chose to implement
                 between the application and the server was <a
@@ -338,7 +337,7 @@
                 <p> Basic auth is not inherently a secure protocol since it
                 involves sending the username and password with every request.
                 An attacker can gain access to a user's account buy simply
-                intercepting the transmutation of the request. However by
+                intercepting the transmission of the request. However, by
                 attaching the authentication in the header of the request and
                 sending it over HTTPS using the ssl encryption, the
                 authentication details now become encrypted and the protocol has
@@ -355,16 +354,17 @@
 
                 </div>
 
-                <p> If we were to move the project into production we would use
-                the more secure <a href="http://oauth.net/2/">OAuth protocol</a> which involves passing tokens with
-                the request instead of the user's password and email. This means
-                that even if a request was intercepted and decrypted, the attack
-                would only gain access to the users account for a limited time.
-                We have allowed this implementation to be inserted into both the
-                API and the iOS application by abstracting away the network
-                level security protocols from the rest of the application code.
-                This means the if we needed a greater level of security in the
-                future then it could be implemented with minimal cost. </p>
+                <p>If we were to move the project into production we would use
+                the more secure <a href="http://oauth.net/2/">OAuth protocol</a>
+                which involves passing tokens with the request instead of the
+                user's password and email. This means that even if a request was
+                intercepted and decrypted, the attacker would only gain access to
+                a users account for a limited time. We have allowed this
+                implementation to be inserted into both the API and the iOS
+                application by abstracting away the network level security
+                protocols from the rest of the application code. This means the
+                if we needed a greater level of security in the future then it
+                could be implemented with minimal cost.</p>
 
             </subsection>
 
@@ -372,14 +372,14 @@
 
                 <h2 class="page-header">Automated Testing</h2>
 
-                <p> The Flask Web server is the centre of the entire system, it
+                <p>The Flask Web server is the centre of the entire system, it
                 is therefore imperative that it is as reliable as possible.
                 Ultimately, if the server fails then all the other components in
                 the system will stop working.  </p>
 
                 <p> Since collaboration commonly occurs in the Python code on
-                the server,  having accompanying tests provided protection for
-                the API for every push of code. Integration tests were also used
+                the server, having accompanying tests provides protection for
+                the API after every push of code. Integration tests were also used
                 to test the endpoints of the server, to ensure that they have
                 the desired behaviour and do not have any undesired side
                 effects. </p>
@@ -393,11 +393,12 @@
                 that we expected and the they did not have any undesired side
                 effects. </p>
 
-                <p> Acceptance were also required to evaluate system from the
-                user interface on the app to the API on the server and through
-                to the lock. We used only a mock version of the application and
-                created acceptance tests in a few specific use cases to ensure
-                that the system as a whole has the required behaviour. </p>
+                <p> Acceptance tests were also required to evaluate the user
+                interface on the app and how it communicates to the API on the
+                server and through to the lock. We used only a mock version of
+                the application and created acceptance tests in a few specific
+                use cases to ensure that the system as a whole has the required
+                behaviour </p>
 
             </subsection>
 
@@ -407,20 +408,22 @@
 
                 <p> The Flask framework which was chosen at the start of the
                 project is a good framework, however we should have used the
-                more mature framework called Django. Django offer a better
+                more mature framework called Django. Django offers a better
                 integrated ORM (Object Relational Mapper) than the ORM called
                 SQLAlchemy which we used. It also offers ‘out of the box’ user
-                models along with authentication which we reduce the amount of
-                time we have spent developing this in our own API and would also
-                produce a more secure and more modular solution. Django also has
-                a superior REST framework which is the most advanced and mature
-                of its kind called Django Rest Framework.</p>
+                models along with authentication which reduces the amount of
+                time we would spent developing this in our own API and would
+                also produce a more secure and more modular solution. Django
+                also has a superior REST framework which is the most advanced
+                and mature of its kind called <a
+                href="http://www.django-rest-framework.org">Django Rest
+                Framework</a>.</p>
 
-                <p> To increase the level of security that our application
+                <p>To increase the level of security that our application
                 offers we should have used Facebook authentication. This is
                 based on the OAuth protocol which was discussed in the security
                 section and would have provided a more secure way of
-                authenticating the iOS app with our API. </p>
+                authenticating the iOS app with our API.</p>
 
             </subsection>
 
@@ -435,7 +438,7 @@
                 <h2 class="page-header">Requirements</h2>
 
                 <p> This is a list of requirements which I laid out at the start
-                of the project which encompasses the main functionality of the
+                of the project and which encompasses the main functionality of the
                 iOS mobile application.
 
                 <ul>
@@ -521,13 +524,13 @@
 
                 <h2 class="page-header">Design</h2>
 
-                <p> The iOS application has been designed for home users where
+                <p>The iOS application has been designed for home users where
                 we assume that they will have a small number of locks and a
                 large number of friends.</p>
 
                 <h3>Application Logo</h3>
 
-                <p> I designed the logo of my app, which came to represent the
+                <p>I designed the logo of my app, which came to represent the
                 entire project. The logo encompasses a brain and a lock in an
                 effort to visually represent the name of the project, SmartLock.
                 Upon pressing the app icon, individuals are brought to a screen

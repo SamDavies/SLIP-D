@@ -262,3 +262,39 @@ hr.small {
 footer {
     padding: 100px 0;
 }
+
+.img-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.img-container {
+    flex: 0 0 auto;
+    text-align: center;
+    position: relative;
+}
+
+.img-container.mobile {
+    flex-basis: 200px;
+}
+
+.img-container.desktop {
+    flex-basis: 500px;
+}
+
+.img-container.outside {
+    padding-bottom: 2em;
+}
+
+.caption {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    color: #fff;
+    height: 2em;
+    line-height: 2em;
+    width: 100%;
+    font-style: italic;
+    margin: 0;
+}

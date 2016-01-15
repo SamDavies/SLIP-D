@@ -86,9 +86,9 @@
                 <h1 class="page-header">Introduction</h1>
 
                 <p>In this report I will discuss my contributions to
-                the <em>SmartLock</em> project, discussing the motivation for
-                design choices, technical implementation details and
-                critical evaluation of the work produced.</p>
+                    the <em>SmartLock</em> project, discussing the motivation for
+                    design choices, technical implementation details and
+                    critical evaluation of the work produced.</p>
 
                 <p>My contribution to the project can be summarised as
                     the following:</p>
@@ -99,15 +99,15 @@
                         <em>SmartLock</em> devices</li>
                     <li>Developed a <em>SmartLock</em> device
                         communication emulator<sup><a
-                        href="#gh-lock-emulator">[1]</a></sup> to
+                                                       href="#gh-lock-emulator">[1]</a></sup> to
                         allow development of the software components
                         independently from the hardware</li>
                     <li>Improved the API logic<sup><a
-                        href="#gh-lock-logic">[2]</a></sup> for
+                                                       href="#gh-lock-logic">[2]</a></sup> for
                         communicating with the <em>SmartLock</em>
                         device.</li>
                     <li>Contributed endpoints<sup><a
-                        href="#gh-api-endpoints">[3]</a></sup> to the
+                                                      href="#gh-api-endpoints">[3]</a></sup> to the
                         API to provide data required by the web
                         application.</li>
                 </ul>
@@ -169,27 +169,27 @@
                     <h2>Problem Analysis</h2>
                     
                     <p>To create the door lock we would need an
-                    <strong>integrated system</strong> to handle
-                    communication between the device and the user. We
-                    also wanted to provide <strong>iOS</strong>,
-                    <strong>Android</strong> and <strong>web</strong>
-                    applications to allow users to access the lock
-                    wherever they are, using whatever device they have
-                    available.</p>
+                        <strong>integrated system</strong> to handle
+                        communication between the device and the user. We
+                        also wanted to provide <strong>iOS</strong>,
+                        <strong>Android</strong> and <strong>web</strong>
+                        applications to allow users to access the lock
+                        wherever they are, using whatever device they have
+                        available.</p>
 
                     <p>I was tasked with development of the web
-                    application, which was intended to be an
-                    <strong>administrative interface</strong> where a
-                    user could control their devices and who has
-                    access to them. We later extended this
-                    functionality to the mobile applications,
-                    providing consistency across all devices.</p>
+                        application, which was intended to be an
+                        <strong>administrative interface</strong> where a
+                        user could control their devices and who has
+                        access to them. We later extended this
+                        functionality to the mobile applications,
+                        providing consistency across all devices.</p>
 
                     <p>We felt it was important that the application use
-                    <strong>responsive design</strong> techniques to
-                    provide access to users on operating systems other
-                    than iOS and Android (such as Windows Phones and
-                    Blackberry devices).</p>
+                        <strong>responsive design</strong> techniques to
+                        provide access to users on operating systems other
+                        than iOS and Android (such as Windows Phones and
+                        Blackberry devices).</p>
 
                     <p>The application would need to provide the
                         following core functionality:</p>
@@ -204,7 +204,7 @@
                     </ul>
                     
                 </subsection>
-                    
+                
             </section>
 
             <section class="col-md-12">
@@ -212,61 +212,66 @@
                 <h1 class="page-header">Design</h1>
 
                 <p>In this section I will discuss the motivation for
-                design decisions, as well as describe the overall
-                architecture of the integrated system.</p>
+                    design decisions, as well as describe the overall
+                    architecture of the integrated system.</p>
                 
                 <subsection>
 
                     <h2>Communication</h2>
-                
+                    
                     <p>After establishing the requirements for the
-                    project we discussed the system architecture. We
-                    considered a few methods of communication: one in
-                    which the mobile device acts as the base station
-                    for the lock, communicating with it via bluetooth
-                    and passing communications over a 4G / WiFi
-                    network to and from an API; another in which the
-                    mobile device connected to and authenticated with
-                    the lock directly.</p>
+                        project we discussed the system architecture. We
+                        considered a few methods of communication: one in
+                        which the mobile device acts as the base station
+                        for the lock, communicating with it via bluetooth
+                        and passing communications over a 4G / WiFi
+                        network to and from an API; another in which the
+                        mobile device connected to and authenticated with
+                        the lock directly.</p>
 
                     <p>However, we decided that these systems were too
-                    insecure. In the first system the mobile device
-                    could easily spoof communications from the API,
-                    bypassing any authentication system in place. In
-                    the second, the lock would not have a trusted
-                    authority for authentication at all and would thus
-                    have to trust the mobile device completely. In
-                    both systems there would be no way for a user to
-                    monitor the lock's status if there were no mobile
-                    devices present nearby, violating the requirement
-                    for users to be able to view the status of their
-                    devices at all times.</p>
+                        insecure. In the first system the mobile device
+                        could easily spoof communications from the API,
+                        bypassing any authentication system in place. In
+                        the second, the lock would not have a trusted
+                        authority for authentication at all and would thus
+                        have to trust the mobile device completely. In
+                        both systems there would be no way for a user to
+                        monitor the lock's status if there were no mobile
+                        devices present nearby, violating the requirement
+                        for users to be able to view the status of their
+                        devices at all times.</p>
 
                     <p>We designed a third system in which the lock
-                    communicates with an API directly over a WiFi or
-                    mobile network. This system removed the security
-                    issues present in the other two designs, as a
-                    mobile device would need to authenticate with a
-                    central API server and the lock would only
-                    communicate with a trusted authority. Having the
-                    lock repeatedly ping the server would provide
-                    status updates to the API at regular intervals,
-                    notifying users when their lock disappears from
-                    the network (perhaps due to a power outage or
-                    vandalism) and keeping information about the lock
-                    up-to-date at all times.</p>
+                        communicates with an API directly over a WiFi or
+                        mobile network. This system removed the security
+                        issues present in the other two designs, as a
+                        mobile device would need to authenticate with a
+                        central API server and the lock would only
+                        communicate with a trusted authority. Having the
+                        lock repeatedly ping the server would provide
+                        status updates to the API at regular intervals,
+                        notifying users when their lock disappears from
+                        the network (perhaps due to a power outage or
+                        vandalism) and keeping information about the lock
+                        up-to-date at all times.</p>
+
+                    <div class="img-container outside">
+                        <img src="img/ayrton/communications.png" />
+                        <p class="caption">Communication between the Web Application and a SmartLock device</p>
+                    </div>
 
                     <p>Communicating this information to the user is
-                    where I come in. Using a central API allows us to
-                    develop a suite of applications to display
-                    information collected by the API. All of the
-                    authentication, user and device management is
-                    handled by the API, providing a uniform experience
-                    across all devices and removing the need for
-                    separate implementations of the same logic. All I
-                    would need to do is develop a means of
-                    communication between my application and the API
-                    alongside <a href="michael.html">Michael</a>.</p>
+                        where I come in. Using a central API allows us to
+                        develop a suite of applications to display
+                        information collected by the API. All of the
+                        authentication, user and device management is
+                        handled by the API, providing a uniform experience
+                        across all devices and removing the need for
+                        separate implementations of the same logic. All I
+                        would need to do is develop a means of
+                        communication between my application and the API
+                        alongside <a href="michael.html">Michael</a>.</p>
 
                     <subsection>
                         
@@ -373,7 +378,10 @@
 
                     <subsection>
 
-                        <h3>Lock Communication</h3>
+                        <h3>
+                            Lock Communication
+                            <sup><a href="#gh-lock-logic">[2]</a></sup>
+                        </h3>
 
                         <p>Once the lock hardware was built we
                             discovered that our initial design for the
@@ -387,8 +395,8 @@
                             physical key: if the lock believed it
                             should be closed, it would continue to try
                             to close the lock even when a key was
-                            used. Together with <a href="jp.html">JP</a>, <a
-                            href="sam.html">Sam</a>, and Michael, I
+                            used. Together with <a href="jp.html">JP</a>,
+                            <a href="sam.html">Sam</a>, and Michael, I
                             re-designed the logic for the lock system
                             to use a follow-the-leader approach with
                             the lock being the leader. This design
@@ -485,11 +493,137 @@
                             </tbody>
 
                         </table>
-                        
-                </subsection>
-                
-            </section>
 
+                    </subsection>
+                    
+                </subsection>
+
+                <subsection>
+
+                    <h2>Management Interface</h2>
+
+                    <p>The task assigned to me was to develop the
+                        device management interface. In the following
+                        sections I will discuss how I designed each
+                        section of application.</p>
+
+                    <p>The main purpose of the management application
+                        to display large amount of information in an
+                        easily to digestible format. For this reason I
+                        have opted for a simple design theme throughout,
+                        with as little visual distraction as
+                        possible. This means that my application will not
+                        use flashy animations or other elements that serve
+                        no functional purpose.</p>
+
+                    <p>Opting for a simple design enables me to focus
+                        on providing a fully-functional, bug-free
+                        experience to the user. This will reduce
+                        frustration and confusion for the user and give
+                        them confidence that their device is functioning
+                        as expected - if a user sees the application
+                        falsely report that a lock is closed when it is in
+                        fact open the product will make them feel less
+                        secure.</p>
+
+                    <subsection>
+
+                        <h3>User Profile</h3>
+
+                        <p>The profile page to displays the user's
+                            personal information in a clear, concise
+                            manner. I have opted to move the user's
+                            locks to their own section of the
+                            application (see the next section) to
+                            avoid overloading the user with
+                            information and provide quick access to
+                            the specific functionality they require.</p>
+
+                        <subsection>
+                            
+                            <h4>Possible Improvements</h4>
+                                                        
+                            <p>Currently, the user is unable </p>
+
+                        </subsection>
+
+                        
+                        <div class="img-row">
+                            
+                            <div class="img-container inside desktop">
+                                <img src="img/ayrton/profile.png" width=500 />
+                                <p class="caption">The user profile page on a desktop computer.</p>
+                            </div>
+                            
+                            <div class="img-container inside mobile">
+                                <img src="img/ayrton/profile-mobile.png" width=200 />
+                                <p class="caption">...and on a mobile device.</p>
+                            </div>
+                            
+                        </div>
+                        
+                    </subsection>
+                    
+                    <subsection>
+
+                        <h3>Registered Devices Overview</h3>
+
+                        <p>The lock overview page displays a user's
+                            locks along with their current state. Each
+                            lock links to its own profile page (see next
+                            section). The states are actually buttons
+                            which can be used to control the respective
+                            lock.</p>
+
+                        <subsection>
+                            
+                            <h4>Possible Improvements</h4>
+                            
+                            <p>To improve this display I could separate
+                                the user's own locks from locks they have
+                                been granted access to. This would help
+                                users see the status of their own locks at
+                                a glance (which they likely care more
+                                about) and find what they're looking for
+                                more efficiently.</p>
+                            
+                            <p>Taking this even further, a user could be
+                                allowed to add a lock to a list of favourites
+                                so that they could access frequently used
+                                locks more quickly. By collecting data about
+                                when a lock was opened and how often, we could
+                                order the locks by most frequently or most
+                                recently used.</p>
+
+                        </subsection>           
+                        
+                        <div class="img-row">
+                            
+                            <div class="img-container inside desktop">
+                                <img src="img/ayrton/locks.png" width=500 />
+                                <p class="caption">The user profile page on a desktop computer.</p>
+                            </div>
+                            
+                            <div class="img-container inside mobile">
+                                <img src="img/ayrton/locks-mobile.png" width=200 />
+                                <p class="caption">...and on a mobile device.</p>
+                            </div>
+
+                        </div>
+
+                    </subsection>
+                    
+                    <subsection>
+                        
+                        <h3>Lock Detail</h3>
+                        
+                        <p>This
+                        
+                    </subsection>
+                    
+                </subsection>
+                        
+            </section>
 
             <section class="col-md-12">
                 

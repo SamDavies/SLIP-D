@@ -13,7 +13,7 @@
 
     <!-- tocify CSS -->
     <link type="text/css" rel="stylesheet" href="css/jquery.tocify.css" />
-    
+
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -74,13 +74,7 @@
         </div>
     </header>
 
-    <div class="col-md-3" id="toc-container">
-        <div style="padding-top:40px">
-        </div>
-        <div id="toc">
-        </div>
-    </div>
-    
+
     <div class="col-md-9" id="report-context">
         <section class="col-md-12">
             <h1 class="page-header">Introduction</h1>
@@ -129,20 +123,165 @@
                   final version of the system that is available to see and interact with
                   online<sup><a href="#ref-api">[3]</a></sup>. I will give a detailed analysis as
                   to how we arrived at the system described below in the
-                  Implementation section.
+                  Implementation section. The endpoints may be seen in the table below.
                 </p>
-                <div class="img-row">
-                  <div class="img-container inside desktop">
-                      <img src="img/michael/api_diagram.jpg" width=100% />
 
+                <div class="container">
+  <div class="col-md-8">
+<table class="table table-striped table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>API Endpoint</th>
+                                    <th>Functionality</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>/user</code></td>
+                                    <td>
+                                        <ul>
+                                            <li>GET: Returns list of all users</li>
+                                            <li>POST: Registers user</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>/user/&lt;user_id&gt;</code></td>
+                                    <td>
+                                        <ul>
+                                            <li>GET: Returns all information associated with user_id</li>
+
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>/me</code></td>
+                                    <td>
+                                        <ul>
+                                            <li>GET: Returns all information associated with logged in user</li>
+
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>/lock</code></td>
+                                    <td>
+                                        <ul>
+                                            <li>GET: Returns list of logged in user's locks</li>
+                                            <li>POST: Registers a lock with a user</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>/lock/&lt;lock_id&gt;</code></td>
+                                    <td>
+                                        <ul>
+                                            <li>GET: Returns information associated with lock_id</li>
+
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>/open/&lt;lock_id&gt;</code></td>
+                                    <td>
+                                        <ul>
+                                            <li>PUT: requests lock of lock_id to open</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>/close/&lt;lock_id&gt;</code></td>
+                                    <td>
+                                        <ul>
+                                            <li>PUT: requests lock of lock_id to close</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>/im-open/&lt;lock_id&gt;</code></td>
+                                    <td>
+                                        <ul>
+                                            <li>GET: lock authenticates with server it's open state</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>/im-closed/&lt;lock_id&gt;</code></td>
+                                    <td>
+                                        <ul>
+                                            <li>GET: lock authenticates with server it's closed state</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>/friend</code></td>
+                                    <td>
+                                        <ul>
+                                            <li>GET: Return list of friends with access to user's locks</li>
+                                            <li>POST: Register a friend</li>
+                                            <li>DELETE: Delete a friend</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td><code>/friend-lock</code></td>
+                                    <td>
+                                        <ul>
+                                            <li>POST: Enable a friend to access lock</li>
+                                            <li>DELETE: Revoke friend's access to lock</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>/hello</code></td>
+                                    <td>
+                                        <ul>
+                                            <li>GET: Endpoint for unit testing</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>/protected-resource</code></td>
+                                    <td>
+                                        <ul>
+                                            <li>GET: Endpoint for unit testing</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                      </div>
                     </div>
-                </div>
+
+
                 <p>
                   The System was designed in Flask, a Python Framework following
                   the MVC (Model-View-Controller) design pattern<sup><a href="#ref-mvc">[4]</a></sup>. To explain each
                   element of the system, I will break it down into three sections,
                   one about the Model, the Controller and the View respectively.
                 </p>
+                <div class="img-row">
+                  <div class="img-container inside desktop">
+                      <img src="img/michael/api_diagram.jpg" width=100% />
+                    </div>
+                </div>
+
                 <h2 class="page-header">Models</h2>
                 <p>
                   The Model in the system is a collection of Databases on the
@@ -848,7 +987,7 @@
     <script src="js/jquery-ui-1.9.1.custom.min.js"></script>
     <script src="js/jquery.tocify.min.js""></script>
 
-    
+
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
@@ -894,7 +1033,7 @@
              fixDiv();
          });
      });
-     
+
     </script>
 
 </body>

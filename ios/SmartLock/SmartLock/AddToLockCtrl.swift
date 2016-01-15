@@ -1,16 +1,17 @@
 //
-//  User.swift
+//  AddToLockCtrl.swift
 //  SmartLock
 //
-//  Created by Sam Davies on 02/11/2015.
-//  Copyright © 2015 Sam Davies. All rights reserved.
+//  Created by Sam Davies on 14/01/2016.
+//  Copyright © 2016 Sam Davies. All rights reserved.
 //
 
 import UIKit
 
-class UserCtrl: PromiseTableFeed {
+class AddToLockCtrl: PromiseTableFeed {
     
-    var users: [User] = []
+    var locks: [Lock] = []
+    var user: User!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +19,8 @@ class UserCtrl: PromiseTableFeed {
         self.navigationController!.navigationBar.translucent = false
         self.automaticallyAdjustsScrollViewInsets = false
         self.table.allowsSelection = false
+        
+        self.navigationItem.title = user.firstName + " " + user.lastName
     }
     
     /*
@@ -25,20 +28,20 @@ class UserCtrl: PromiseTableFeed {
     */
     override func getGridObjects() {
         //        self.spinner.startAnimating()
-        User.getUserList(nil).then {
-            (users) -> Void in
-            self.users = users
+        Lock.getLockList().then {
+            (locks) -> Void in
+            self.locks = locks
             self.reloadCells()
         }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.users.count
+        return self.locks.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = table.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! UserCell
-        cell.create(users[indexPath.item])
+        let cell = table.dequeueReusableCellWithIdentifier("AddToLockCell", forIndexPath: indexPath) as! AddToLockCell
+        cell.create(self.locks[indexPath.item])
         return cell
     }
 }

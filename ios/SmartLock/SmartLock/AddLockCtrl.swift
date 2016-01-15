@@ -20,9 +20,12 @@ class AddLockCtrl: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var userPrompt: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    @IBOutlet var addLockButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        addLockButton.layer.cornerRadius = 8.0
     }
     
     @IBAction func onAddLock(sender: AnyObject) {

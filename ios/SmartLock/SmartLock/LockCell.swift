@@ -19,7 +19,7 @@ class LockCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        openCloseButton.layer.cornerRadius = 40.0
+        openCloseButton.layer.cornerRadius = 45.0
         openCloseButton.layer.masksToBounds = true
         
         openCloseButton.layer.shadowColor = UIColor.blackColor().CGColor
@@ -131,7 +131,7 @@ class LockCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
                 dispatch_after(time, dispatch_get_main_queue()) {
                     //put your code which should be executed with a delay here
                     debugPrint("waiting to open")
-                    self.pollLockIsOpen(lock.id)
+//                    self.pollLockIsOpen(lock.id)
                 }
             }
         }
@@ -147,7 +147,7 @@ class LockCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
                 dispatch_after(time, dispatch_get_main_queue()) {
                     //put your code which should be executed with a delay here
                     debugPrint("waiting to close")
-                    self.pollLockIsClosed(lock.id)
+//                    self.pollLockIsClosed(lock.id)
                 }
             }
         }
@@ -156,21 +156,22 @@ class LockCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
     func setClosed() {
         dispatch_async(dispatch_get_main_queue(), {
             // swap the open state
-            self.openCloseButton.setTitle("-", forState: UIControlState.Normal)
+            self.openCloseButton.setImage(UIImage(named: "closed.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), forState: UIControlState.Normal)
         })
     }
     
     func setWaiting() {
         dispatch_async(dispatch_get_main_queue(), {
             // swap the open state
-            self.openCloseButton.setTitle("...", forState: UIControlState.Normal)
+            self.openCloseButton.setImage(UIImage(named: "loading.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), forState: UIControlState.Normal)
         })
     }
     
     func setOpen() {
         dispatch_async(dispatch_get_main_queue(), {
             // swap the open state
-            self.openCloseButton.setTitle("O", forState: UIControlState.Normal)
+            
+            self.openCloseButton.setImage(UIImage(named: "open.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), forState: UIControlState.Normal)
         })
     }
 }

@@ -12,6 +12,8 @@ class FriendCtrl: PromiseTableFeed {
     
     var friends: [User] = []
     
+    var selectedFriend: User!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
@@ -32,6 +34,20 @@ class FriendCtrl: PromiseTableFeed {
         
     }
     
+    @IBAction func selectThing(sender: UIButton){
+        let cell = sender.superview!.superview as! FriendCell
+        selectedFriend = cell.user
+        self.performSegueWithIdentifier("openLocks", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "openLocks") {
+            // pass the selected thing ID to Post Feed
+            let lockCtrl = (segue.destinationViewController as! AddToLockCtrl)
+            lockCtrl.user = self.selectedFriend
+        }
+    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.friends.count
     }
@@ -40,5 +56,24 @@ class FriendCtrl: PromiseTableFeed {
         let cell = table.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! FriendCell
         cell.create(friends[indexPath.item])
         return cell
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+            // handle delete (by removing the data from your array and updating the tableview)
+            let friendId: Int = friends[indexPath.item].id
+            friends.removeAtIndex(indexPath.item)
+            
+            User.deleteFriend(friendId).then  {
+                user -> Void in
+                
+            }
+            
+            self.reloadCells()
+        }
     }
 }

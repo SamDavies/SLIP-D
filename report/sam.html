@@ -126,14 +126,14 @@
                 grant access to friends in order to open the locks.
                 </p>
 
-                <p>I designed and structure the oral and visual presentation
-                which the team gave earlier in the semester. To efficiently
+                <p>I designed and structured the oral and visual presentation
+                which the team gave earlier in the semester. In order to efficiently
                 incorporate the aspects of the system that the team wanted to
                 describe in the presentation, I opened the content up in a
-                google slide collaboration document. On the day of the
+                Google slide collaboration document. On the day of the
                 presentation I was also the main speaker. </p>
 
-                <p>Nowadays we consider a smartphone a very common device. It
+                <p>In today's society a smartphone is considered a very common device. It
                 seemed a logical choice to implement the front end on the two
                 main operating systems, iOS and Android. Furthermore, since we
                 had the skill set and resources available, we also implemented an
@@ -154,7 +154,7 @@
 
                 <p>I chose to develop the system using <i>Behaviour Driven
                 Development</i> from the outset of the project, such that the
-                collaborative code we develope as a team always has the
+                collaborative code we develop as a team always has the
                 behaviour that we intended. The people who benefit most from
                 software testing are the people who are further adding to the
                 lines of code. Therefore, instead of waiting till the end of
@@ -180,12 +180,12 @@
                 piece of logic can be tested and therefore changed confidently.
                 </p>
 
-                <p> The benefits of Behaviour driven development are:
+                <p> The benefits of <i>Behaviour Driven Development</i> are:
                     <ul>
                         <li>Reduced number of lines of code</li>
                         <li>Prevents the breaking of old code (regressions)</li>
-                        <li>Better APIs since the API naturally written from an user’s perspective</li>
-                        <li>Refactoring Encourages Improvements therefore the codebase does not grow unless it needs to</li>
+                        <li>Better APIs since the API is naturally written from an user’s perspective</li>
+                        <li>Refactoring encourages improvements, therefore the codebase does not grow unless it needs to</li>
                         <li>Provides executable documentation which is a series of example on how the code works</li>
                     </ul>
                 </p>
@@ -204,9 +204,9 @@
                 <p>The API is the central hub of the SmartLock system,
                 therefore it is vital that the reliability of the API remains
                 very high. The API maintains a database which records
-                information about the locks and users. Additionally the lock
+                information about the locks and users. Additionally, the lock
                 interface corresponds with the API to record the locks current
-                state, being either locked or unlocked. The applications allow
+                state, being either locked or unlocked. The application allows
                 the user to manage their locks, friends and lock permissions.
                 </p>
 
@@ -289,7 +289,7 @@
                 for this protocol and create automated unit tests to ensure that
                 this important behavior remained the same. I think this was
                 imperative to enable our system to reach maximum efficiency; the
-                protocol is further explained in Aytrons report <a href="ayrton.html#LockCommunication">here</a>.
+                protocol is further explained in Aytons report <a href="ayrton.html#LockCommunication">here</a>.
                 </p>
 
                 <p> The friends endpoint required very specific behavior on the
@@ -372,14 +372,14 @@
 
                 <h2 class="page-header">Automated Testing</h2>
 
-                <p> The Flask Web server is the centre of the entire system, it
+                <p>The Flask Web server is the centre of the entire system, it
                 is therefore imperative that it is as reliable as possible.
                 Ultimately, if the server fails then all the other components in
                 the system will stop working.  </p>
 
                 <p> Since collaboration commonly occurs in the Python code on
-                the server,  having accompanying tests provided protection for
-                the API for every push of code. Integration tests were also used
+                the server, having accompanying tests provides protection for
+                the API after every push of code. Integration tests were also used
                 to test the endpoints of the server, to ensure that they have
                 the desired behaviour and do not have any undesired side
                 effects. </p>
@@ -393,11 +393,12 @@
                 that we expected and the they did not have any undesired side
                 effects. </p>
 
-                <p> Acceptance were also required to evaluate system from the
-                user interface on the app to the API on the server and through
-                to the lock. We used only a mock version of the application and
-                created acceptance tests in a few specific use cases to ensure
-                that the system as a whole has the required behaviour. </p>
+                <p> Acceptance tests were also required to evaluate the user
+                interface on the app and how it communicates to the API on the
+                server and through to the lock. We used only a mock version of
+                the application and created acceptance tests in a few specific
+                use cases to ensure that the system as a whole has the required
+                behaviour </p>
 
             </subsection>
 
@@ -407,20 +408,22 @@
 
                 <p> The Flask framework which was chosen at the start of the
                 project is a good framework, however we should have used the
-                more mature framework called Django. Django offer a better
+                more mature framework called Django. Django offers a better
                 integrated ORM (Object Relational Mapper) than the ORM called
                 SQLAlchemy which we used. It also offers ‘out of the box’ user
-                models along with authentication which we reduce the amount of
-                time we have spent developing this in our own API and would also
-                produce a more secure and more modular solution. Django also has
-                a superior REST framework which is the most advanced and mature
-                of its kind called Django Rest Framework.</p>
+                models along with authentication which reduces the amount of
+                time we would spent developing this in our own API and would
+                also produce a more secure and more modular solution. Django
+                also has a superior REST framework which is the most advanced
+                and mature of its kind called <a
+                href="http://www.django-rest-framework.org">Django Rest
+                Framework</a>.</p>
 
-                <p> To increase the level of security that our application
+                <p>To increase the level of security that our application
                 offers we should have used Facebook authentication. This is
                 based on the OAuth protocol which was discussed in the security
                 section and would have provided a more secure way of
-                authenticating the iOS app with our API. </p>
+                authenticating the iOS app with our API.</p>
 
             </subsection>
 
@@ -435,7 +438,7 @@
                 <h2 class="page-header">Requirements</h2>
 
                 <p> This is a list of requirements which I laid out at the start
-                of the project which encompasses the main functionality of the
+                of the project and which encompasses the main functionality of the
                 iOS mobile application.
 
                 <ul>
@@ -521,13 +524,13 @@
 
                 <h2 class="page-header">Design</h2>
 
-                <p> The iOS application has been designed for home users where
+                <p>The iOS application has been designed for home users where
                 we assume that they will have a small number of locks and a
                 large number of friends.</p>
 
                 <h3>Application Logo</h3>
 
-                <p> I designed the logo of my app, which came to represent the
+                <p>I designed the logo of my app, which came to represent the
                 entire project. The logo encompasses a brain and a lock in an
                 effort to visually represent the name of the project, SmartLock.
                 Upon pressing the app icon, individuals are brought to a screen

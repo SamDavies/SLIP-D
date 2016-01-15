@@ -71,6 +71,11 @@
                 <h1>Ayrton Massey</h1>
                 <h3>Web Application</h3>
             </div>
+
+            <div class="text-vertical-center">
+                <h3><a href="http://github.com/ayrtonmassey/SLIP-D"><i class="fa fa-github"></i> Source Code</a></h3>
+                <h3><a href="http://slip-d-web.herokuapp.com">Live Application</a></h3>
+            </div>
         </header>
         
         <div class="col-md-3" id="toc-container">
@@ -1306,17 +1311,248 @@
 
                     <h2>Critical Evaluation of Work</h2>
 
+                    <p>When discussing the project we initially identified the following requirements:</p>
                     
+                    <ul>
+                        <li>Provide a means to <strong>register devices</strong> to a user</li>
+                        <li>Allow users to <strong>operate</strong> their registered devices remotely</li>
+                        <li>Display the <strong>status</strong> of their registered devices at all times</li>
+                        <li>Provide <strong>shared access controls</strong></li>
+                        <li>Allow <strong>secure communication</strong> between the user and their device</li>
+                        <li>Display correctly across a <strong>range of mobile and desktop platforms</strong></li>
+                    </ul>
+
+                    <p>I believe that our application meets most of
+                        the identified requirements. We have provided all
+                        the required functionality: the ability to manage
+                        and control devices, share access with friends and
+                        keep the user informed of the status of the
+                        device.</p>
+
+                    <p>I took a mobile-first approach using responsive
+                        design techniques in order to make the application
+                        truly cross-platform.</p>
+
+                    <p>The only requirement I feel I could have
+                        improved was the security aspect, which I will
+                        discuss below.</p>
 
                     <subsection>
 
                         <h3>Highlights</h3>
+
+                        <p>Some aspects of the project I am especially
+                            proud of and would like to draw attention
+                            to.</p>
+
+                        <p>Firstly, the robustness of the
+                            application. I have extensively
+                            user-tested my application and have found
+                            that in the majority of cases the
+                            application functions as expected. When an
+                            unavoidable issue occurs (e.g. when the
+                            API is unavailable due to the limitation
+                            on free Heroku apps) descriptive error
+                            messages inform the user of the cause of
+                            the issue and encourage them to try again
+                            at a later time.</p>
+
+                        <p>Second, the effort put in to targeting
+                            mobile devices. Due to the way the pages
+                            re-arrange themselves (which required a
+                            moderate amount of custom extensions for
+                            the lock detail page button) our system
+                            can truly claim to be cross-platform. We
+                            are now able to function upon any device
+                            with an internet connection with the same
+                            quality as a native application.</p>
+
+                        <p>Finally, the effort which was expended to
+                            integrate various libraries with the
+                            design of the application. The default
+                            typeahead search does not provide any
+                            built-in style formatting, so I modified
+                            some Bootstrap-targeted CSS to add custom
+                            buttons to the form field and JavaScript
+                            to update the buttons' status depending on
+                            the field's contents. The typeahead is now
+                            seamlessly integrated with the rest of the
+                            page, providing as little distraction as
+                            possible.</p>
 
                     </subsection>
 
                     <subsection>
 
                         <h3>Areas for Improvement</h3>
+
+                        <p>Although I feel that I excelled in some
+                        areas, I recognise that I could have made some
+                        improvements to my work which I will discuss
+                        further below.</p>
+
+                        <subsection>
+                            
+                            <h4>Documentation</h4>
+                                
+                                <p>The documentation of the code for
+                                    this project is slim to
+                                    none. Although I have tried my
+                                    best to write code which is as
+                                    clean and readable as possible, I
+                                    have failed to document much of
+                                    the code's functionality. One of
+                                    my biggest weaknesses is lack of
+                                    documentation of code - often
+                                    hampering my ability to understand
+                                    my own code. Many developers fall
+                                    in to the trap of believing their
+                                    code is <em>self-describing</em>
+                                    but fail to see that they have not
+                                    done any
+                                    <em>actual-describing</em>. When
+                                    coding to tight deadlines it is
+                                    often tempting to skimp on
+                                    documentation. If I were to make
+                                    one change to the way I completed
+                                    this project, it would be to
+                                    better describe the functionality
+                                    and thought process that went into
+                                    development, and is certainly
+                                    something I will put more focus on
+                                    in future projects.</p>
+                                
+                        </subsection>
+
+                        <subsection>
+
+                                <h4>Co-ordination</h4>
+
+                                <p>When developing the application we
+                                    sometimes found it difficult to
+                                    co-ordinate our efforts. For example,
+                                    I might be working on one feature
+                                    while Michael works on something
+                                    else. Because we mostly kept to our
+                                    own sections of the project it became
+                                    difficult to understand and make
+                                    changes to each others' work, so if I
+                                    required a feature from the API I
+                                    would have to wait for Michael to
+                                    implement it before I could continue.</p>
+
+                                <p>Due to the delays in the
+                                    construction of the lock (which was no
+                                    fault on the part of the team -
+                                    unfortunately, the Prospeckz board and
+                                    some of the lock hardware were
+                                    arriving as late as <em>7 weeks</em> in to the
+                                    project) we struggled to properly
+                                    design the communication between the
+                                    hardware and software. The software
+                                    team were unaware that the board was
+                                    only able to make HTTP
+                                    <code>GET</code> requests over GPRS,
+                                    which meant we had to re-design the
+                                    code to fit this new system at a very
+                                    late stage.</p>
+
+                                <p>However, in some areas we excelled
+                                    at communication. Much of the
+                                    development went without a hitch and
+                                    team members were more than willing to
+                                    contribute to any area of the project
+                                    they could - although everyone had
+                                    their own area of development, we
+                                    often crossed paths and wrote code for
+                                    each other to help produce a fully
+                                    integrated system. I can say that
+                                    without a doubt this was the most
+                                    enjoyable group project I have
+                                    participated in, which is wholly due
+                                    to the positive attitude and work
+                                    ethic of the rest of the team.</p>
+
+                        </subsection>
+
+                        <subsection>
+
+                            <h4>Security</h4>
+
+                            <p>Although we discussed security at
+                                length (see <a href="dan.html">Dan</a>'s
+                                report), we elected to focus on
+                                functionality over security throughout
+                                development of this project. I think that
+                                we certainly could have improved in this
+                                respect - and if I were to continue this
+                                project, it would be a priority - as the
+                                very nature of a lock requires it to be
+                                secure.</p>
+
+                            <p>The way we implemented security between
+                                the API and my application was extremely
+                                insecure: the base 64 encoding of
+                                sensitive data is incredibly easy to
+                                reverse and not a method of
+                                encryption. Sensitive information such as
+                                e-mail addresses are displayed on the
+                                pages of all users, regardless of whether
+                                they are a trusted friend.</p>
+
+                            <p>In a real system we would have to be
+                                much more careful to secure sensitive
+                                data. We would need to secure all
+                                information sent between the user, the
+                                application and the API using SSL
+                                encryption. We would also need to set
+                                access controls to sensitive data,
+                                avoiding giving out information such as
+                                e-mail addresses to people without the
+                                proper authorization.</p>
+
+                            <p>However, I personally feel that the aim
+                                of the project was to produce a proof of
+                                concept and not a production system. Many
+                                of the choices we made were influenced by
+                                the limited time and resources we had
+                                available (for example, the changes to the
+                                lock hardware from an over-the-lock device
+                                to a custom-built lock, or the fact that
+                                an SSL certificate costs upwards of £30
+                                and I don't have that kind of money to
+                                spend). In some areas we provided basic
+                                security: the session data is all
+                                encrypted using a secret key only known to
+                                the application, and adding at least basic
+                                username/password authentication prevents
+                                users from simply accessing all the data
+                                with no barrier at all.</p>
+
+                        </subsection>
+
+                    </subsection>
+
+                    <subsection>
+
+                        <h3>Concluding Remarks</h3>
+
+                        <p>Through pure effort and great teamwork we
+                            successfully produced a proof-of-concept
+                            of a fully integrated system, and in my
+                            opinion through this we achieved the true
+                            goal of the project. Thanks to the robust
+                            design and implementation of the
+                            application, using many modern web and
+                            design standards, I have produced a truly
+                            reusable and versatile application which
+                            is a testament to the quality of the
+                            team's work.  If you'd like to check out
+                            our application you can see it in action
+                            <a
+                            href="http://slip-d-web.herokuapp.com">here</a>,
+                            or view the source code on <a
+                            href="http://github.com/ayrtonmassey/SLIP-D">GitHub</a>.</p>
 
                     </subsection>
 

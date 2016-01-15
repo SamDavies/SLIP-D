@@ -315,3 +315,20 @@ h4 {
 	-moz-box-shadow: -5px 10px 20px 3px rgba(0,0,0,0.80);
 	box-shadow: -5px 10px 20px 3px rgba(0,0,0,0.80);
 }
+
+h3 a:link {
+    text-decoration: none;
+    color: #ccc;
+}
+
+h3 a:visited {
+    color: #ccc;
+}
+
+h3 a:hover {
+    color: #eee;
+}
+
+h3 a:active {
+    color: #fff;
+}

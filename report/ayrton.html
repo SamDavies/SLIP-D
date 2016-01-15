@@ -966,10 +966,8 @@
                 <h1 class="page-header">Implementation</h1>
 
                 <p>In this section I will discuss aspects of the
-                    implementation including libraries and frameworks used
-                    and explanations of these choices, and discuss how the
-                    application has been designed with code re-use in
-                    mind.</p>
+                    implementation, including libraries and frameworks
+                    used and explanations of these choices.</p>
 
                 <subsection>
                     
@@ -1001,27 +999,326 @@
                         API, they would have added significant bloat
                         to my project.</p>
 
+                    <p>The application uses Flask's session cookie
+                        mechanism to keep users logged in and handle
+                        session data.<p>
+
+                </subsection>
+
+                <subsection>
+
+                    <h2>Communication with the API</h2>
+
+                    <p>The application makes heavy use of the
+                        <code>requests</code> library<sup><a
+                        href="#python-requests">[7]</a></sup> to
+                        communicate with Michael's API. The library
+                        makes it very simple to create and process
+                        HTTP requests.</p>
+
+                    <p>Since the back-end handled authentication and
+                        session data, I created local endpoints which
+                        forwarded requests to the API. This allowed me
+                        to make AJAX calls to the API from the
+                        JavaScript code without implementing separate
+                        JavaScript authentication, keeping all of the
+                        communication functionality in one place and
+                        ensuring that changes in communication
+                        (e.g. an update to token authentication) would
+                        be reflected in all areas of the code.</p>
+
+                </subsection>
+
+                <subsection>
+
+                    <h2>Responsive Design</h2>
+
+                    <p>To make the application's design responsive, I
+                        took a mobile-first approach using the
+                        Bootstrap<sup><a
+                        href="#bootstrap">[8]</a></sup>
+                        framework. Bootstrap is a style framework
+                        which allows developers to create sites using
+                        a grid system which rearrange content
+                        depending on the size and orientation of the
+                        user's screen.</p>
+
+                    <p>Bootstrap is in such wide use that it could
+                        almost be considered a web standard. By using
+                        Bootstrap I have made it much easier for other
+                        developers to understand and access my code, as
+                        the majority of web developers will have at least
+                        a passing familiarity with the code. In addition,
+                        Bootstrap's functionality is well documented,
+                        making it easy for even the novice developer to
+                        dive in at the deep end. The alternative would be
+                        to use a lesser-known framework or roll my own CSS
+                        from scratch, which besides being extremely time
+                        consuming would also make it more challenging for
+                        someone else to re-use my code without extensive
+                        documentation.</p>
+
+                </subsection>
+
+                <subsection>
+
+                    <h2>Client-side Functionality</h2>
+                    
+                    <p>The application relies on clientside
+                        functionality to perform some actions. For
+                        example when the user clicks the lock button,
+                        an AJAX (asynchronous JavaScript and XML)
+                        request is made to the API in order to open
+                        the lock. This creates a more seamless
+                        end-user experience by removing the need for a
+                        page reload to update the content; the button
+                        changes its status live on-screen depending
+                        upon the status of the lock.</p>
+
+                    <p>The jQuery library<sup><a
+                        href="#jquery">[9]</a></sup> was used to
+                        perform AJAX requests and update page
+                        content. jQuery abstracts away a lot of
+                        JavaScript's notoriously verbose and
+                        unintuitive syntax. Compare the code for an
+                        AJAX request between native JavaScript and the
+                        jQuery library:</p>
+
+                    <pre><code>function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+  if (xhttp.readyState == 4 && xhttp.status == 200) {
+    document.getElementById("demo").innerHTML = xhttp.responseText;
+  }
+};</code></pre>
+                    <p><em>XMLHttPRequest example from W3Schools<sup><a href="#w3xhr">[10]</a></sup></em></p>
+
+                    <pre><code>$.ajax({
+  url: "test.html",
+  context: document.body
+}).done(function() {
+  $( this ).addClass( "done" );
+});</pre></code>
+                    <p><em>jQuery <code>.ajax()</code> example from the library's documentation<sup><a href="#jquery-ajax">[11]</a></sup></em></p>
+
+                    <p>The <code>XMLHttpRequest</code> native code
+                    performs very similar functionality to the jQuery
+                    code. However, the jQuery example is much more
+                    readable: "make a request to
+                    <code>test.html</code>. Once the request is done,
+                    change the CSS class of this element" compared to
+                    "make a new XMLHttpRequest object, then when the
+                    ready state changes check if the ready state is 4
+                    and the status is 200, then set the HTML of the
+                    <code>demo</code> element to the response text".</p>
+                    
+                    <p>This library was chosen for similar reasons as
+                        Bootstrap: its wide use and promotion of clean
+                        code allows the majority of developers to jump
+                        right in and begin coding without needing to
+                        study the library's documentation.</p>
+
                 </subsection>
                     
                 <subsection>
                     
-                    <h2>Typeahead</h2>
+                    <h2>Typeahead Search</h2>
 
                     <p>The typeahead functionality is provided by
-                        Twitter's typeahead.js<sup><a href="#typeahead">[7]</a></sup>.
-                        This library was chosen because of its
-                        robustness and the extreme ease with which
-                        typeahead search can be implemented. The
-                        library can produce a typeahead from JSON data with almost any format, provided that the developer configures it correctly.</p>
+                        Twitter's <code>typeahead.js</code><sup><a
+                        href="#typeahead">[12]</a></sup>.  This library
+                        was chosen because of its robustness and the
+                        extreme ease with which typeahead search can
+                        be implemented. The library can produce a
+                        typeahead from JSON data with almost any
+                        structure provided that the developer configures
+                        it correctly.</p>
 
                     <p>I created a new API endpoint<sup><a
-                        href="#friendpoint">[8]</a></sup> in my web
+                        href="#friendpoint">[13]</a></sup> in my web
                         application which transforms the API data into
                         a format suitable for creating a
                         typeahead. Given more time I would integrate
                         this endpoint into the API and remove it from
                         my code, but for now this method is
                         acceptable.</p>
+
+                </subsection>
+
+                <subsection>
+
+                    <h2>Cloud Hosting</h2>
+
+                    <p>The management application uses the free tier
+                        of the Heroku hosting platform-as-a-service
+                        (PaaS). The application has been configured
+                        specifically for deployment to Heroku,
+                        although other options are available.</p>
+
+                    <p>The application is available live at <a
+                        href="http://slip-d-web.herokuapp.com/">slip-d-web.herokuapp.com</a>,
+                        using a copy of the API with my additions
+                        (which is hosted at <a
+                        href="http://slip-d-api.herokuapp.com/">slip-d-api.herokuapp.com</a>). <em>Note:
+                        The application may run slowly on Heroku since
+                        it is hosted on the free tier. The free tier
+                        forces applications to "sleep" for at least 6
+                        hours per day and after 30 minutes of
+                        receiving no requests, causing performance
+                        issues. This can be easily rectified by
+                        upgrading the platform to the paid version -
+                        however, the free tier is fine for
+                        demonstration.</em></p>
+
+                    <p>If you would like to try out the web
+                    application, you can register with the site by
+                    following the link above. You need to obtain a
+                    copy of the <a
+                    href="https://github.com/ayrtonmassey/SLIP-D/blob/master/fakelock.py">lock
+                    emulator script</a> and change the <code>API_BASE_ADDR</code>
+                    variable to the following value:</p>
+                        
+                    <pre><code>API_BASE_ADDR="http://slip-d-api.herokuapp.com/"</code></pre>
+
+                    <p>You can then run the script from a terminal in the following way:</p>
+
+                    <pre><code>$ python fakelock.py $LOCK_ID</code></pre>
+
+                    <p>Where <code>$LOCK_ID</code> is the ID of the
+                    lock you want to emulate, for example,
+                    <code>1234</code>. You must have the
+                    <code>requests</code> library installed to use
+                    this script which can be installed by
+                    running:</p>
+                    
+                    <pre><code>$ pip install requests</code></pre>
+
+                    <p>in a terminal.</p>
+                    
+                </subsection>
+
+                <subsection>
+
+                    <h2>API Contribution</h2>
+
+                    <p>I contributed a couple of features to the
+                    API. As discussed in the design section, I helped
+                    design and subsequently implemented<sup><a
+                    href="gh-lock-logic">[2]</a></sup> the lock
+                        communication logic.</p>
+
+                    <p>After the group presentations I implemented new
+                        functionality in the <code>friends</code> and
+                        <code>users</code> endpoints to help finish my
+                        application; namely, the data provided about
+                        access granted to devices to and from other
+                        users. This allowed me to create the friend
+                        profile page and display which locks a
+                        particular user has been granted access to or
+                        has shared with you. This information was
+                        previously available on the lock endpoint but
+                        not alongside the user data.</p>
+
+                </subsection>
+
+                <subsection>
+
+                    <h2>Device Emulator</h2>
+
+                    <p>In order to test the functionality of the apps
+                        before the hardware lock had been created, I
+                        implemented a device emulator script<sup><a
+                        href="#gh-lock-emulator">[1]</a></sup> in
+                        Python. This script uses the
+                        <code>requests</code> library to simulate
+                        communications to and from a
+                        <em>SmartLock</em> device.</p>
+
+                    <p>This script allowed each of the developers to
+                        work on their applications
+                        independently. Since we only have one physical
+                        lock, we would not have been able to work on
+                        our applications at the same time without
+                        it. The script was essential to the
+                        development of the entire team's projects, and
+                        also helped us debug the communications with
+                        the physical lock: myself and JP worked
+                        together to determine why the lock was
+                        initially unable to connect to the API. With
+                        the help of the code I had written to emulate
+                        the device we were able to determine the source
+                        of the problem and recitfy it.</p>
+
+                </subsection>
+                    
+            </section>
+
+            <section class="col-md-12">
+
+                <h1 class="page-header">Evaluation</h1>
+                
+                <subsection>
+
+                    <h2>Design for Reuse</h2>
+
+                    <p>The web application was designed with code
+                        reuse in mind. As discussed previously, I
+                        chose to use libraries and frameworks which
+                        were in wide use to allow new developers to
+                        better understand my source code without
+                        having to send significant amounts of time
+                        reading the documentation. Sticking to widely
+                        used frameworks also makes my application more
+                        robust; since the projects are contributed to
+                        by many software engineers security
+                        vulnerabilities and bugs will be patched very
+                        quickly.</p>
+
+                    <p>I have taken great care to promote code reuse
+                        wherever possible. All of the API requests go
+                        through the same function which crafts a
+                        request from its parameters - by abstracting
+                        commonly used functionality in this way, to
+                        its own function or class, I am able to modify
+                        all uses of that code in the same place, and
+                        prevent security issues or bugs which arise
+                        from multiple <em>slightly varied</em>
+                        instances of the same code (a common
+                        side-effect of copy-pasting).</p>
+
+                    <p>Not only that, but I can take the demonstration
+                        of my code reuse one step further: my own
+                        personal website<sup><a
+                        href="#portfolio">[14]</a></sup> shares some
+                        of its codebase with the management
+                        application. The basic Flask setup (including
+                        the WSGI configuration for running the server
+                        process) has proven very valuable in
+                        configuring my own site. My portfolio is
+                        hosted on a DigitalOcean VPS, proving that
+                        while the management application is configured
+                        for Heroku it can easily be deployed to
+                        another service.</p>
+
+                </subsection>
+
+                <subsection>
+
+                    <h2>Critical Evaluation of Work</h2>
+
+                    
+
+                    <subsection>
+
+                        <h3>Highlights</h3>
+
+                    </subsection>
+
+                    <subsection>
+
+                        <h3>Areas for Improvement</h3>
+
+                    </subsection>
 
                 </subsection>
                 
@@ -1032,53 +1329,98 @@
                 <h1 class="page-header">References</h1>
                 
                 <ol>
+
                     <li><a name="gh-lock-emulator"></a>
                         <a href="https://github.com/ayrtonmassey/SLIP-D/blob/master/fakelock.py">
                             Massey, A. (2015).
                             <em>SmartLock Emulator Script</em>.
                             Edinburgh, UK.
                         </a></li>
+
                     <li><a name="gh-lock-logic"></a>
                         <a href="https://github.com/mingles-/SLIP-D/commit/54069f208cef5fe4d8626ed465c650b4225fc8b8">
                             Massey, A. (2015).
                             <em>SmartLock API Logic</em>.
                             Edinburgh, UK.
                         </a></li>
+
                     <li><a name="gh-api-endpoints"></a>
                         <a href="https://github.com/mingles-/SLIP-D/commit/05f432d7ad2e27e135e1ae4c4c1ba7f9f1cb825e">
                             Massey, A. (2016).
                             <em>SmartLock API Endpoints</em>.
                             Edinburgh, UK.
                         </a></li>
+
                     <li><a name="3mobile"></a>
                         <a href="https://www.three.co.uk/New_My3/My3_Home">
                             Hutchison 3G UK Limited (2002).
                             <em>3 Mobile Top-Up Page</em>.
                             UK.
                         </a></li>
+
                     <li><a name="flask"></a>
                         <a href="http://flask.pocoo.org/">
                             Ronacher, A. (2014).
                             <em>Flask (A Python Microframework)</em>.
                         </a></li>
+
                     <li><a name="django"></a>
                         <a href="https://www.djangoproject.com/">
                             Django Software Foundation. (2005).
-                            <em>Django: The web framework for perfectionists with deadlines.</em>.
+                            <em>Django: The web framework for perfectionists with deadlines</em>.
                         </a></li>
+
+                    <li><a name="python-requests"></a>
+                        <a href="http://docs.python-requests.org/en/latest/">
+                            Reitz, K. (2015).
+                            <em>Requests: HTTP for Humans</em>.
+                        </a></li>
+
+                    <li><a name="bootstrap"></a>
+                        <a href="http://getbootstrap.com/">
+                            Otto, M. & Thornton, J. (2015).
+                            <em>Bootstrap: The world's most popular mobile-first and responsive front-end framework</em>.
+                        </a></li>
+                    
+                    <li><a name="jquery"></a>
+                        <a href="https://jquery.com/">
+                            The jQuery Foundation. (2016).
+                            <em>jQuery: write less, do more</em>.
+                        </a></li>
+                    
+                    <li><a name="w3xhr"></a>
+                        <a href="http://www.w3schools.com/ajax/ajax_xmlhttprequest_onreadystatechange.asp">
+                            Refsnes Data. (1999).
+                            <em>AJAX - The onreadystatechange Event</em>.
+                        </a></li>
+
+                    <li><a name="jquery-ajax"></a>
+                        <a href="http://api.jquery.com/jquery.ajax/">
+                            The jQuery Foundation. (2016).
+                            <em>jQuery.ajax()</em>.
+                        </a></li>
+
                     <li><a name="typeahead"></a>
                         <a href="https://twitter.github.io/typeahead.js/">
                             Twitter, Inc. (2013).
                             <em>typeahead.js</em>.
                             US.
                         </a></li>
+                    
                     <li><a name="friendpoint"></a>
                         <a href="https://github.com/ayrtonmassey/SLIP-D/blob/master/SmartLockWebApp/SmartLockWebApp.py#L146">
                             Massey, A. (2015).
                             <em>SmartLock Typeahead Search Data Endpoint</em>.
                             Edinburgh, UK.
                         </a></li>
-                    
+
+                    <li><a name="portfolio"></a>
+                        <a href="http://www.ayrtonmassey.com">
+                            Massey, A. (2015).
+                            <em>Software Engineer Portfolio</em>.
+                            Edinburgh, UK.
+                        </a></li>
+
                 </ol>
                 
             </section>

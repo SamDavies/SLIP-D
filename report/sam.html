@@ -294,22 +294,23 @@
 
                 <p> The friends endpoint required very specific behavior on the
                 API so that we could utilise it properly in the front end web
-                application and the mobile applications. We needed it to have a
-                nested structure which lists user who the currently logged in
-                user was friends with. Subsequently for each user, it listed the
-                locks which the the currently logged in user owns and which of
-                those this friend had access to.  I implemented a complex
+                application and the mobile applications. To explain it in the
+                next 2 lines I will refer to the currently logged in user as
+                Dave. We needed it to have a nested structure which lists users
+                whom Dave was friends with. Subsequently for each user, it
+                lists the locks which Dave owns, along with a flag indicating if
+                that friend has access to the lock. I implemented a complex
                 database query and the accompanying automated tests to perform
                 this query efficiently. </p>
 
                 <p> As the API scaled, there became a need for more standardised
                 class names and endpoints. I devised a simple naming scheme for
-                both the classes of API, requiring them to adhere to either
+                2 types of classes in the API, requiring them to adhere to either
                 “ClassDetail” or “ClassList”, where “Class” is the name of the
-                class obviously and the methods in the “Detail” classes return
+                class. The methods in the “Detail” classes return
                 the detail of a singular instance of that class and “list”
                 returning multiple instances of that class as well as creating
-                new instance.  </p>
+                new instances.</p>
 
             </subsection>
 
@@ -317,7 +318,7 @@
 
                 <h2 class="page-header">API Security</h2>
 
-                <p> I want the system to be created initially as a minimum
+                <p>I wanted the system to be created initially as a minimum
                 viable product which could be iteratively improved in the
                 future. The authentication protocol that I chose to implement
                 between the application and the server was <a
@@ -336,7 +337,7 @@
                 <p> Basic auth is not inherently a secure protocol since it
                 involves sending the username and password with every request.
                 An attacker can gain access to a user's account buy simply
-                intercepting the transmutation of the request. However by
+                intercepting the transmission of the request. However, by
                 attaching the authentication in the header of the request and
                 sending it over HTTPS using the ssl encryption, the
                 authentication details now become encrypted and the protocol has
@@ -353,16 +354,17 @@
 
                 </div>
 
-                <p> If we were to move the project into production we would use
-                the more secure <a href="http://oauth.net/2/">OAuth protocol</a> which involves passing tokens with
-                the request instead of the user's password and email. This means
-                that even if a request was intercepted and decrypted, the attack
-                would only gain access to the users account for a limited time.
-                We have allowed this implementation to be inserted into both the
-                API and the iOS application by abstracting away the network
-                level security protocols from the rest of the application code.
-                This means the if we needed a greater level of security in the
-                future then it could be implemented with minimal cost. </p>
+                <p>If we were to move the project into production we would use
+                the more secure <a href="http://oauth.net/2/">OAuth protocol</a>
+                which involves passing tokens with the request instead of the
+                user's password and email. This means that even if a request was
+                intercepted and decrypted, the attacker would only gain access to
+                a users account for a limited time. We have allowed this
+                implementation to be inserted into both the API and the iOS
+                application by abstracting away the network level security
+                protocols from the rest of the application code. This means the
+                if we needed a greater level of security in the future then it
+                could be implemented with minimal cost.</p>
 
             </subsection>
 
